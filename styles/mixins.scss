@@ -1,0 +1,33 @@
+@import "variables";
+
+// -----文字样式-----
+// 注释
+@mixin font-small {
+  font-size: $font-size-small;
+  line-height: $font-line-height-normal;
+  font-weight: normal;
+}
+
+// 正文
+@mixin font-normal {
+  font-size: $font-size-normal;
+  line-height: $font-line-height-normal;
+  font-weight: normal;
+}
+
+// 大标题
+@mixin font-large {
+  font-size: $font-size-large;
+  line-height: $font-line-height-small;
+  font-weight: normal;
+}
+
+// -----公共mixin-----
+// 输入框基本样式和下划线
+@mixin input-underline($line-color) {
+  border: none;
+  box-shadow: 0 1px $line-color !important;
+  height: 50px;
+  padding: 0;
+  border-radius: 0;
+}

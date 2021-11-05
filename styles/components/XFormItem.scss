@@ -1,0 +1,48 @@
+@import '../variables';
+@import '../mixins';
+
+.smartui-form-item:not(raw) {
+  // label
+  .ant-form-item-label {
+    @include font-normal;
+    padding-bottom: 10px;
+  }
+  // 成功提示不显示
+  .ant-form-item-explain-success {
+    display: none;
+  }
+  // 错误提示
+  .ant-form-item-explain-error {
+    position: absolute;
+    top: -72px;
+    background-color: white;
+    padding: 14px 12px;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px #00000026;
+
+    &:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      border-left: 16px solid white;
+      border-bottom: 16px solid transparent;
+      filter: drop-shadow(3px 4px 4px #00000026)
+    }
+  }
+
+  // 验证失败时的表单（因为有嵌套表单的存在，这里必须一层层下探到指定元素）
+  &.ant-form-item-has-error {
+    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input-affix-wrapper {
+      @include input-underline($color-danger);
+      &-focused, &:hover {
+        @include input-underline($color-danger);
+      }
+    }
+    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input {
+      @include input-underline($color-danger);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.smartui-select {
+  .ant-select-arrow .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ant-select-selector {
+    padding: 0 10px;
+  }
+  .ant-select-selection-placeholder {
+    font-size: 12px;
+  }
+}
