@@ -1,0 +1,94 @@
+@import "../../variables";
+
+//  -----按钮颜色-----
+$white: #FFF;
+$btn-color-primary-blue: $color-primary-blue; // 主色调-蓝色
+
+$btn-text-color: $color-text; // 字体颜色/正文
+$text-annotation-color: $color-text-comment; // 字体颜色/注释
+$line-deep: $color-line-bold; // 线/深
+
+//  -----按钮字体-----
+$font-size: $font-size-small;
+$btn-line-height-base: $font-line-height-normal;
+
+$background-color-base: $line-deep;
+
+$btn-padding-md: 10px;
+
+// -----border------
+// 目前 base，仅用于【线性按钮】（default）的 disabled 状态
+$btn-border-color-base: $text-annotation-color;
+$btn-border-width-base: 1px;
+$btn-border-radius-base: 4px;
+
+$btn-disabled-color: $text-annotation-color;
+$btn-disabled-bg-color: $background-color-base;
+
+// -----margin------
+$btn-margin-xs: 5px; // 为什么不是 4 的倍数？？
+
+// -----Buttons 基本样式-----
+$btn-height-base: 30px;
+$btn-padding-horizontal-base: 10px;
+$btn-border-radius-base: $btn-border-radius-base;
+$bth-padding-horizontal-base: $btn-padding-md;
+$btn-line-height: $btn-line-height-base;
+
+// -----【面形】按钮的配色-----
+// 正常配色
+$btn-primary-color: $white;
+$btn-primary-bg-color: $btn-color-primary-blue;
+// primary 下，border-color 同 bg-color
+
+// 禁用配色
+$btn-primary-disabled-color: $btn-disabled-color;
+$btn-primary-disabled-bg-color: $btn-disabled-bg-color;
+
+// 点击配色（较正常配色，仅变换背景色）
+$btn-primary-active-bg-color: #4343FF;
+
+// -----【线性】按钮的配色-----
+// 正常配色
+$btn-default-color: $btn-color-primary-blue;
+$btn-default-bg-color: $white;
+$btn-default-border-color: $btn-color-primary-blue;
+
+// 禁用配色
+$btn-default-disabled-color: $btn-disabled-color;
+$btn-default-disabled-bg-color: $white;
+$btn-default-disabled-border-color: $btn-border-color-base;
+
+// 点击配色
+$btn-default-active-color: $white;
+$btn-default-active-bg-color: $btn-color-primary-blue;
+$btn-default-active-border-color: $btn-color-primary-blue;
+
+// 超大按钮的大小
+$btn-big-width: 355px;
+$btn-big-height: 50px;
+
+// -----【超大】按钮的配色-----
+// 正常配色
+$btn-big-color: $btn-text-color;
+$btn-big-bg-color: $white;
+$btn-big-border-color: $line-deep;
+
+// 悬停配色
+$btn-big-hover-color: $btn-text-color;
+$btn-big-hover-color: $white;
+$btn-big-hover-border-color: $btn-text-color;
+
+// 禁用配色
+$btn-big-disabled-color: $btn-disabled-color;
+$btn-big-disabled-bg-color: $white;
+$btn-big-disabled-border-color: $line-deep;
+
+// 点击配色
+$btn-big-active-color: $btn-text-color;
+$btn-big-active-bg-color: $white;
+$btn-big-active-border-color: $btn-color-primary-blue;
+
+// -----icon svg-----
+$btn-anticon-svg-width: 18px;
+$btn-anticon-svg-height: 18px;

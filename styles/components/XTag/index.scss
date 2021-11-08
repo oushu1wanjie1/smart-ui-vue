@@ -1,0 +1,140 @@
+@import "../../variables";
+@import "mixin";
+
+// tag 垂直、水平方向的内边距
+$ant-tag-padding-vertical: 6px;
+$ant-tag-padding-horizontal: 10px;
+
+// tag 默认配色
+$ant-tag-primary-color: $color-primary-blue;
+$ant-tag-primary-bg-color: rgba(67, 134, 255, 0.2);
+
+// tag 禁用配色
+$ant-tag-disabled-color: $color-text-comment;
+$ant-tag-disabled-bg-color: $color-line-bold;
+
+// tag 点击配色
+$ant-tag-active-color: white;
+$ant-tag-active-bg-color: $color-primary-blue;
+
+// tag typographical
+$ant-tag-font-size: $font-size-small;
+$ant-tag-font-line-height: $font-line-height-normal;
+
+// tag 圆角
+$ant-tag-border-radius: 4px;
+
+$ant-tag-checkable-height-normal: 60px;
+$ant-tag-checkable-height-hover: 80px;
+
+// 基本配色
+$ant-tag-checkable-color: $color-text;
+$ant-tag-checkable-bg-color: $color-line-light;
+
+// 未选中【disabled】配色
+$ant-tag-checkable-unchecked-disabled-color: $color-text-comment;
+$ant-tag-checkable-unchecked-disabled-bg-color: $color-line-light;
+
+// 选中配色
+$ant-tag-checkable-checked-color: white;
+$ant-tag-checkable-checked-bg-color: $color-primary-blue;
+
+// 选中【disabled】配色
+$ant-tag-checkable-checked-disabled-color: white;
+$ant-tag-checkable-checked-disabled-bg-color: $color-text-comment;
+
+// 内边距
+$ant-tag-checkable-padding-left: 10px;
+$ant-tag-checkable-padding-vertical: 17.5px;
+
+.x-tag:not(.raw) {
+
+  &.ant-tag {
+    @include tag-variant-primary($ant-tag-primary-color, $ant-tag-primary-bg-color);
+
+    // 基本样式
+    padding: $ant-tag-padding-vertical $ant-tag-padding-horizontal;
+    font-size: $ant-tag-font-size;
+    line-height: $ant-tag-font-line-height;
+    border: 0;
+    border-radius: $ant-tag-border-radius;
+
+    // 非【disabled】状态下，hover 上移
+    &:not(&[disabled]):hover {
+      transform: translateY(-2px);
+    }
+
+    // 点击颜色变化
+    &:not(&[disabled]):active {
+      @include tag-variant-primary($ant-tag-active-color, $ant-tag-active-bg-color)
+    }
+
+    // 【disabled】状态变化
+    @include tag-disabled();
+
+    // 覆盖 antd 默认内边距效果
+    .ant-tag > .anticon + span, .ant-tag > span + .anticon {
+      margin-left: 0;
+    }
+
+    // 此写法，比较丑陋，见谅
+    > span:nth-child(1) {
+      margin-right: 5px;
+    }
+
+    > span:nth-child(2) {
+      margin-right: 10px;
+      font-weight: 600;
+    }
+
+    // > span:nth-child(4) {
+    > span:last-child {
+      margin-left: 15px;
+    }
+  }
+
+  &.ant-tag-checkable {
+    // flex 一把梭
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: $ant-tag-checkable-height-normal;
+    padding: $ant-tag-checkable-padding-vertical $ant-tag-checkable-padding-left;
+
+
+    // 基本配色 + 未选中时【disabled】配色
+    @include tag-variant-primary($ant-tag-checkable-color, $ant-tag-checkable-bg-color);
+    @include tag-disabled($ant-tag-checkable-unchecked-disabled-color, $ant-tag-checkable-unchecked-disabled-bg-color);
+
+    // 选中配色 + 选中时【disabled】配色
+    &-checked {
+      @include tag-variant-primary($ant-tag-checkable-checked-color, $ant-tag-checkable-checked-bg-color);
+      @include tag-disabled($ant-tag-checkable-checked-disabled-color, $ant-tag-checkable-checked-disabled-bg-color);
+    }
+
+    // 单独配置，与普通 tag 分开
+    // 设置该属性，避免触发原标签 JS 点击事件
+    // side effect：使 cursor 属性失效
+    &[disabled] {
+      pointer-events: none;
+    }
+
+    // hover 放大效果
+    &:not(&[disabled]):hover {
+      height: $ant-tag-checkable-height-hover;
+      padding: $ant-tag-checkable-padding-vertical + 10px $ant-tag-checkable-padding-left + 35px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    // 覆盖 antd 自带 hover 效果
+    &:not(&[disabled]):not(&-checked):hover {
+      color: $ant-tag-checkable-color;
+    }
+
+    // 点击、选中效果
+    &:not(&[disabled]):not(&-checked):active,
+    &:not(&[disabled]):not(&-checked):focus {
+      @include tag-variant-primary($ant-tag-checkable-checked-color, $ant-tag-checkable-checked-bg-color);
+    }
+  }
+}

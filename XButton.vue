@@ -1,5 +1,5 @@
 <template>
-  <a-button>
+  <a-button class="x-btn">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -19,6 +19,6 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import './styles/components/XButton/index.scss';
 </style>

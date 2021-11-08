@@ -1,0 +1,139 @@
+@import "button-variables";
+// mixins for button
+// ------------------------
+// button 大小：高度、内边距、字号、border 圆角
+@mixin button-size($height, $padding-horizontal, $font-size, $border-radius) {
+  // 计算垂直边距，移植自 antd less 写法，报错实际上有生效
+  //$padding-vertical: max(((round((($height - $font-size * $btn-line-height-base) / 2) * 10) / 10) - $btn-border-width-base), 0);
+  $padding-vertical: 0;
+  height: $height;
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  border-radius: $border-radius;
+}
+
+// button 配色：字体颜色、背景颜色、border 颜色
+@mixin button-color($color, $background-color, $border-color) {
+  color: $color;
+  background-color: $background-color;
+  border-color: $border-color;
+}
+
+// button 禁用配色：字体颜色、背景颜色、border 颜色
+@mixin button-disabled($color, $background-color, $border-color) {
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      @include button-color($color, $background-color, $border-color);
+    }
+  }
+}
+
+// 面形按钮会用到
+// button 【主】配色方案：字体颜色、背景颜色（border颜色同背景颜色）
+@mixin button-variant-primary($color, $background-color) {
+  @include button-color($color, $background-color, $background-color);
+
+  &:hover,
+  &:focus {
+    @include button-color($color, $background-color, $background-color);
+  }
+
+  &:active {
+    @include button-color($color, $btn-primary-active-bg-color, $btn-primary-active-bg-color);
+  }
+
+  @include button-disabled($btn-primary-disabled-color, $btn-primary-disabled-bg-color, $btn-primary-disabled-bg-color);
+}
+
+// 线性按钮会用到
+// button 配色方案：字体颜色、背景颜色、border颜色同背景颜色
+@mixin button-variant-other($color, $background-color, $border-color) {
+  @include button-color($color, $background-color, $border-color);
+}
+
+// Base styles of buttons
+// ---------------------------------------
+// button 基本样式：布局、排列方式、大小
+@mixin btn() {
+  // transition: 用 antd 自带的
+  // 受不了了，flex 一把梭
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
+
+  &:not(&[disabled]):hover {
+    transform: translateY(-2px);
+  }
+}
+
+// 面形按钮
+// primary button 配色的配置接口
+@mixin btn-primary() {
+  @include button-variant-primary($btn-primary-color, $btn-primary-bg-color);
+}
+
+// 线性按钮
+// default（默认） button 配色的配置接口
+@mixin btn-default() {
+  @include button-variant-other($btn-default-color, $btn-default-bg-color, $btn-default-border-color);
+
+  // 不放到 button-variant-other 中的原因：
+  // button-variant-other 考虑后续 button 样式拓展，可能有其他的按钮也会用到，
+  // 目前是按照 antd 的格式写的，会有些冗余，后续再进行简化
+  &:hover,
+  &:focus{
+    @include button-variant-other($btn-default-color, $btn-default-bg-color, $btn-default-border-color);
+  }
+
+  &:active {
+    @include button-color($btn-default-active-color, $btn-default-active-bg-color, $btn-default-active-border-color);
+  }
+
+  // 不放到 button-variant-other 中的原因：
+  // 同上
+  @include button-disabled($btn-default-disabled-color, $btn-default-disabled-bg-color, $btn-default-disabled-border-color);
+}
+
+// large button 配置接口
+@mixin btn-lg() {
+  @include button-size($btn-big-height, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
+  width: $btn-big-width;
+
+  @include button-variant-other($btn-big-color, $btn-big-bg-color, $btn-big-border-color);
+
+  &:hover {
+    // 去除上浮效果
+    transform: none !important;
+    @include button-variant-other($btn-big-color, $btn-big-bg-color, $btn-big-hover-border-color)
+  }
+
+  &:active,
+  &:focus {
+    @include button-color($btn-big-active-color, $btn-big-active-bg-color, $btn-big-active-border-color);
+  }
+
+  @include button-disabled($btn-big-disabled-color, $btn-big-disabled-bg-color, $btn-big-disabled-border-color)
+}
+
+@mixin btn-link {
+  @include button-variant-other($btn-default-color, transparent, transparent);
+  border: none;
+
+  &:hover {
+    // 去除上浮效果
+    transform: none !important;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    @include button-variant-other($btn-default-color, transparent, transparent);
+  }
+
+  @include button-disabled($btn-default-disabled-color, $btn-default-disabled-bg-color, $btn-default-disabled-border-color);
+}

@@ -1,0 +1,59 @@
+@import "button-variables.scss";
+@import "mixin.scss";
+
+.x-btn:not(.raw):not(.ant-btn-text) {
+  &.ant-btn {
+    line-height: $btn-line-height;
+
+    // 基本样式（字体等）
+    @include btn();
+
+    // 默认按钮配色
+    @include btn-default();
+
+    // primary 配色
+    &-primary {
+      @include btn-primary();
+    }
+
+    // 超大按钮配色
+    &-lg {
+      @include btn-lg();
+    }
+
+    &-link {
+      @include btn-link();
+    }
+
+    &-block {
+      width: 100%;
+    }
+
+    // To ensure that a space will be placed between character and 'Icon'
+    > .anticon + span,
+    span + .anticon, {
+      margin-left: $btn-margin-xs;
+    }
+
+    // 自己封装的icon
+    > .icon + span,
+    span + .icon, {
+      margin-left: $btn-margin-xs;
+    }
+
+    svg {
+      width: $btn-anticon-svg-width;
+      height: $btn-anticon-svg-height;
+    }
+
+    // 能用，原理不是很清楚，日后得深入学习
+    > .anticon {
+      vertical-align: middle;
+
+      > svg {
+        width: $btn-anticon-svg-width;
+        height: $btn-anticon-svg-height;
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+@import "modal-variables";
+@import "../../mixins";
+
+.x-modal:not(.raw) {
+  &.ant-modal {
+    // antd modal 的 width 是内联样式，只能加 !important 关键字覆盖
+    width: $modal-width !important;
+
+    // 内容区域，包含 close、header、body、footer
+    &-content {
+      border-radius: $modal-content-radius;
+    }
+
+    // 右上角 'x' 区域
+    &-close {
+      top: $modal-close-top;
+      color: white;
+
+      // 'x' svg 大小设置
+      &-x {
+        width: $modal-close-x-width;
+        height: $modal-close-x-height;
+        line-height: $modal-close-x-line-height;
+      }
+
+      &:focus,
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
+    }
+
+    &-header {
+      padding: $modal-header-padding-top $modal-header-padding-horizontal $modal-header-padding-bottom;
+      background: none;
+      border: 0;
+
+      .ant-modal-title {
+        // flex 永远滴神
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+
+        @include font-large();
+        color: $color-text;
+        word-wrap: break-word;
+
+        > .icon + span,
+        span + .icon {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    &-body {
+      padding: $modal-body-padding-vertical $modal-body-padding-horizontal;
+      font-size: $font-size-normal;
+      // 特定行高 30 px
+      line-height: $modal-body-line-height;
+      text-align: center;
+    }
+
+    &-footer {
+      padding: $modal-footer-padding-top $modal-footer-padding-horizontal $modal-footer-padding-bottom;
+      border: 0;
+
+      // 包裹 footer 底部按钮的 div 盒子
+      > div {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      // 只有一个 ok 按钮时，撑满
+      // 有 ok 还有 cancel 时，两个均分
+      button {
+        flex: 1 1 100%;
+        margin: 0;
+
+        &:empty {
+          display: none;
+        }
+      }
+
+      // ok 和 cancel 都显示时，两个按钮中间加边距
+      button:not(button:empty) + button {
+        margin-left: $modal-footer-button-margin-left;
+      }
+    }
+  }
+}

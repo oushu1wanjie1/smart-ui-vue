@@ -1,0 +1,27 @@
+@mixin tag-variant-primary($color, $background-color) {
+  @include tag-color($color, $background-color, $background-color)
+}
+
+@mixin tag-color($color, $background-color, $border-color) {
+  color: $color;
+  background-color: $background-color;
+  border-color: $border-color;
+}
+
+@mixin tag-disabled($color: $ant-tag-disabled-color, $bg-color: $ant-tag-disabled-bg-color) {
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      @include tag-variant-primary($color, $bg-color);
+
+      cursor: not-allowed;
+      user-select: none;
+
+      > * {
+        pointer-events: none;
+      }
+    }
+  }
+}

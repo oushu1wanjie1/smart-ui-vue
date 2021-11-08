@@ -1,0 +1,84 @@
+@import '../../variables';
+
+// 颜色
+$tooltip-inner-color: $color-text;
+$tooltip-inner-color-danger: $color-danger;
+
+// 行高
+$tooltip-line-height: $font-line-height-normal;
+
+// 内边距基准值
+$tooltip-padding-vertical-base: 10px;
+
+// 箭头内边距
+$tooltip-arrow-content-padding-vertical: 10px;
+$tooltip-arrow-content-padding-horizontal: 30px;
+$tooltip-arrow-border-radius: 8px;
+
+// 圆角
+$tooltip-content-border-radius: 4px;
+
+.x-tooltip:not(.raw) {
+  &.ant-tooltip {
+    &-inner {
+      border-radius: $tooltip-content-border-radius;
+    }
+
+    // 左上角、左下角的通用配置
+    &-placement-bottomLeft &-arrow,
+    &-placement-topLeft &-arrow {
+      // 使 svg 在 x 轴上到达合适的位置
+      left: -15px;
+      // 大小为 svg 图片的大小
+      width: 40px;
+      height: 38px;
+      // 以编译后的路径为起点的相对路径
+      background-image: url('assets/images/triangle.svg');
+      background-size: cover;
+    }
+
+    &-placement-bottomLeft &-arrow {
+      // hack 写法，很丑陋，先用着
+      // 使 svg 图片在 y 轴上到达合适的位置
+      top: -20px;
+      transform: rotateX(180deg);
+
+      &-content {
+        // hack 写法，很丑陋，先用着
+        transform: translateY(30.536px) translateX(-21.464px) rotate(90deg);
+      }
+    }
+
+    &-placement-topLeft &-arrow {
+      // 使 svg 图片在 y 轴上到达合适的位置
+      bottom: -20px;
+
+      // 隐藏默认 arrow
+      &-content {
+        display: none;
+      }
+    }
+
+    // 左上角、左下角提示中的内容区域配置：内边距、字体、字体颜色、背景色
+    &-placement-topLeft &-inner,
+    &-placement-bottomLeft &-inner {
+      padding: $tooltip-padding-vertical-base;
+      @include font-small();
+      color: $tooltip-inner-color;
+      background-color: white;
+    }
+
+    // 危险
+    &-red &-inner {
+      color: $tooltip-inner-color-danger;
+    }
+
+    &-placement-bottomLeft &-inner {
+      border-top-left-radius: 0;
+    }
+
+    &-placement-topLeft &-inner {
+      border-bottom-left-radius: 0;
+    }
+  }
+}

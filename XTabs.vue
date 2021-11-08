@@ -1,7 +1,7 @@
 <template>
   <a-tabs
     ref="tabsRef"
-    :class="{'x-tabs-fix-top': isFixTop}"
+    :class="{'x-tabs': true, 'x-tabs-fix-top': isFixTop}"
     :activeKey="localActiveKey"
     @change="onChange"
   >
@@ -155,6 +155,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './styles/components/XTabs/index';
+
 .x-tabs-fix-top {
   :deep(.ant-tabs-top-bar) {
     position: fixed;
