@@ -2,6 +2,7 @@
 @import '../mixins';
 
 .smartui-form-item:not(raw) {
+  margin-bottom: 0;
   // label
   .ant-form-item-label {
     @include font-normal;
