@@ -4,11 +4,55 @@ import XRangePicker from './XRangePicker'
 import XForm from './XForm'
 import XFormItem from './XFormItem'
 import XInput from './XInput'
+import XAvatar from "./XAvatar";
+import XButton from "./XButton";
+import XSwitch from "./XSwitch";
+import XSteps from "./XSteps";
+import XStep from "./XStep";
+import XSpin from "./XSpin";
+import XSlider from "./XSlider";
+import XSelectOption from "./XSelectOption";
+import XRadioGroup from "./XRadioGroup";
+import XRadio from "./XRadio";
+import XPopover from "./XPopover";
+import XPagination from "./XPagination";
+import XModal from "./XModal";
+import XMenuItem from "./XMenuItem";
+import XMenu from "./XMenu";
+import XInputNumber from "./XInputNumber";
+import XDropdown from "./XDropdown";
+import XDrawer from "./XDrawer";
+import XDatePicker from "./XDatePicker";
+import XCheckboxGroup from "./XCheckboxGroup";
+import XCheckbox from "./XCheckbox";
+import XCard from "./XCard";
 export default {
   utils,
-  XSelect,
-  XRangePicker,
+  XAvatar,
+  XButton,
+  XCard,
+  XCheckbox,
+  XCheckboxGroup,
+  XDatePicker,
+  XDrawer,
+  XDropdown,
   XForm,
   XFormItem,
-  XInput
+  XInput,
+  XInputNumber,
+  XMenu,
+  XMenuItem,
+  XModal,
+  XPagination,
+  XPopover,
+  XRadio,
+  XRadioGroup,
+  XRangePicker,
+  XSelect,
+  XSelectOption,
+  XSlider,
+  XSpin,
+  XStep,
+  XSteps,
+  XSwitch,
 }
