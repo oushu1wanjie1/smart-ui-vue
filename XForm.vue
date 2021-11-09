@@ -1,5 +1,5 @@
 <template>
-  <a-form>
+  <a-form class="smartui-form">
     <slot></slot>
   </a-form>
 </template>

@@ -1,17 +1,18 @@
 <template>
-  <a-model class="x-modal">
+  <a-modal dialogClass="x-modal">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
-  </a-model>
+  </a-modal>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, Prop} from "vue";
+import { computed, defineComponent, Prop } from 'vue'
 
 export default defineComponent({
   name: 'XModal',
   setup(props, context) {
+    console.log(props)
     return {
       slots: computed(() => Object.keys(context.slots))
     }

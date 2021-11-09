@@ -2,12 +2,12 @@
 @import "../../mixins";
 
 .x-modal:not(.raw) {
-  &.ant-modal {
+  .ant-modal {
     // antd modal 的 width 是内联样式，只能加 !important 关键字覆盖
-    width: $modal-width !important;
 
     // 内容区域，包含 close、header、body、footer
     &-content {
+      width: $modal-width !important;
       border-radius: $modal-content-radius;
     }
 
