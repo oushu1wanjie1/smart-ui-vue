@@ -3,6 +3,9 @@
 
 .smartui-form-item:not(raw) {
   margin-bottom: 0;
+  &.ant-form-item-with-help {
+    margin-bottom: 0;
+  }
   // label
   .ant-form-item-label {
     @include font-normal;
@@ -13,24 +16,33 @@
     display: none;
   }
   // 错误提示
-  .ant-form-item-explain-error {
-    position: absolute;
-    top: -72px;
-    background-color: white;
-    padding: 14px 12px;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px #00000026;
-
-    &:before {
-      content: '';
-      width: 0;
-      height: 0;
+  &:not(:hover) {
+    .ant-form-item-explain-error {
+      display: none;
+    }
+  }
+  &:hover {
+    .ant-form-item-explain-error {
       position: absolute;
-      bottom: -16px;
+      top: -48px;
       left: 0;
-      border-left: 16px solid white;
-      border-bottom: 16px solid transparent;
-      filter: drop-shadow(3px 4px 4px #00000026)
+      z-index: 10000;
+      background-color: white;
+      padding: 14px 12px;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px #00000026;
+
+      &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        bottom: -16px;
+        left: 0;
+        border-left: 16px solid white;
+        border-bottom: 16px solid transparent;
+        filter: drop-shadow(3px 4px 4px #00000026)
+      }
     }
   }
 
