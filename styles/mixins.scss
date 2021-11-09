@@ -26,7 +26,8 @@
 // 输入框基本样式和下划线
 @mixin input-underline($line-color) {
   border: none;
-  box-shadow: 0 1px $line-color !important;
+  border-bottom: 1px solid $line-color;
+  box-shadow: none;
   height: 50px;
   padding: 0;
   border-radius: 0;
