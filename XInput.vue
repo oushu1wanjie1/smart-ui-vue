@@ -1,10 +1,12 @@
 <template>
   <single-form-wrapper :rules="rules" :class="`smartui-input ${attrs.class}`">
-    <a-input v-bind="formattedAttrs">
-      <template v-for="item in slots" v-slot:[item]>
-        <slot :name="item"></slot>
-      </template>
-    </a-input>
+    <template #default="attrs">
+      <a-input v-bind="attrs">
+        <template v-for="item in slots" v-slot:[item]>
+          <slot :name="item"></slot>
+        </template>
+      </a-input>
+    </template>
   </single-form-wrapper>
 </template>
 
@@ -20,6 +22,7 @@ export default {
     rules: Array,
   },
   setup(props, context) {
+    console.log('attr', context.attrs)
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
     // 根据是否有表单验证，控制传给a-input的attrs里的class名称

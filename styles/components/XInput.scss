@@ -44,6 +44,7 @@
   .ant-input-affix-wrapper, &.ant-input-affix-wrapper {
     &:not(.ant-input-search) {
       @include input-underline($color-line-bold);
+      overflow: hidden;
       // prefix
       .ant-input-prefix {
         @include prefix-suffix-active-toggle(false);
@@ -51,6 +52,7 @@
       // 输入框本体
       .ant-input {
         box-shadow: none !important;
+        border: none;
       }
       // suffix
       .ant-input-suffix {

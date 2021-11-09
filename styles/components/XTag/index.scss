@@ -58,6 +58,19 @@ $ant-tag-checkable-padding-vertical: 17.5px;
     line-height: $ant-tag-font-line-height;
     border: 0;
     border-radius: $ant-tag-border-radius;
+    display: inline-flex;
+    align-items: center;
+
+    .ant-tag-close-icon {
+      color: currentColor;
+      width:18px;
+      height: 18px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
 
     // 非【disabled】状态下，hover 上移
     &:not(&[disabled]):hover {
@@ -77,20 +90,26 @@ $ant-tag-checkable-padding-vertical: 17.5px;
       margin-left: 0;
     }
 
-    // 此写法，比较丑陋，见谅
-    > span:nth-child(1) {
-      margin-right: 5px;
+    & > span {
+      display: inline-flex;
+      align-items: center;
+      height: 18px;
     }
 
-    > span:nth-child(2) {
-      margin-right: 10px;
-      font-weight: 600;
-    }
-
-    // > span:nth-child(4) {
-    > span:last-child {
-      margin-left: 15px;
-    }
+    //// 此写法，比较丑陋，见谅
+    //> span:nth-child(1) {
+    //  margin-right: 5px;
+    //}
+    //
+    //> span:nth-child(2) {
+    //  margin-right: 10px;
+    //  font-weight: 600;
+    //}
+    //
+    //// > span:nth-child(4) {
+    //> span:last-child {
+    //  margin-left: 15px;
+    //}
   }
 
   &.ant-tag-checkable {
