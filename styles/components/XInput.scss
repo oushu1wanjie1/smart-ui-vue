@@ -15,7 +15,7 @@
   }
 }
 
-.smartui-input:not(raw) {
+.smartui-input:not(.raw) {
   // input输入框(输入框没有伪元素，只能用border)
   .ant-input, &.ant-input {
     @include input-underline($color-line-bold);
