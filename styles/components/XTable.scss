@@ -1,0 +1,6 @@
+.smartui-table:not(.raw) {
+  .ant-table-thead > tr > th {
+    background-color: white;
+    color: $color-text-comment;
+  }
+}

@@ -5,9 +5,8 @@
     :activeKey="localActiveKey"
     @change="onChange"
   >
-    <slot></slot>
-    <template #tabBarExtraContent>
-      <slot name="tabBarExtraContent"></slot>
+    <template v-for="item in slots" v-slot:[item]>
+      <slot :name="item"></slot>
     </template>
   </a-tabs>
 </template>
@@ -149,7 +148,7 @@ export default defineComponent({
       }
     })
 
-    return { localActiveKey, tabsRef, isFixTop, tabBarTop, tabBarWidth, onChange }
+    return { localActiveKey, tabsRef, isFixTop, tabBarTop, tabBarWidth, onChange, slots: computed(() => Object.keys(context.slots)) }
   }
 })
 </script>

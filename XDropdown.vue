@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {computed, Prop} from 'vue'
+import { computed, Prop } from 'vue'
 export default {
   name: 'XDropdown',
   setup(props: Prop<any>, context: any ) {

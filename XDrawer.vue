@@ -1,5 +1,5 @@
 <template>
-  <a-drawer>
+  <a-drawer wrapper-class-name="smartui-drawer">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -19,6 +19,6 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import './styles/components/XDrawer';
 </style>
