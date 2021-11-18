@@ -52,6 +52,10 @@ $ant-tag-checkable-padding-vertical: 17.5px;
   &.ant-tag {
     @include tag-variant-primary($ant-tag-primary-color, $ant-tag-primary-bg-color);
 
+    &.x-tag-gray {
+      @include tag-variant-primary($color-text-comment, #f6f6f6);
+    }
+
     // 基本样式
     padding: $ant-tag-padding-vertical $ant-tag-padding-horizontal;
     font-size: $ant-tag-font-size;
@@ -73,9 +77,9 @@ $ant-tag-checkable-padding-vertical: 17.5px;
     }
 
     // 非【disabled】状态下，hover 上移
-    &:not(&[disabled]):hover {
-      transform: translateY(-2px);
-    }
+    //&:not(&[disabled]):hover {
+    //  transform: translateY(-2px);
+    //}
 
     // 点击颜色变化
     &:not(&[disabled]):active {

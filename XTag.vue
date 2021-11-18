@@ -1,5 +1,5 @@
 <template>
-  <a-tag class="x-tag">
+  <a-tag :class="`x-tag x-tag-${colorType}`">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -19,9 +19,14 @@ import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'XTag',
+  props: {
+    // 预设的tag配色方案
+    colorType: String
+  },
   setup(props, context) {
     return {
-      slots: computed(() => Object.keys(context.slots))
+      slots: computed(() => Object.keys(context.slots)),
+      attrs: context.attrs
     }
   }
 })
