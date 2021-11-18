@@ -1,16 +1,16 @@
 <template>
-  <a-tab-pane>
+  <a-divider>
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
-  </a-tab-pane>
+  </a-divider>
 </template>
 
-<script>
-import { computed, defineComponent } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, Prop } from 'vue'
 
 export default defineComponent({
-  name: 'XTabPane',
+  name: 'XDivider',
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))
@@ -18,3 +18,7 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+
+</style>
