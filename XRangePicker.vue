@@ -9,18 +9,19 @@
 <script>
 import { useModel } from './utils'
 import { computed } from 'vue'
+
 export default {
   name: 'XRangePicker',
   props: {
-    value: Array
+    value: Array,
   },
   setup(props, context) {
     const slots = computed(() => Object.keys(context.slots))
     return {
       slots,
-      valueLocal: useModel('value', props, context)
+      valueLocal: useModel('value', props, context),
     }
-  }
+  },
 }
 </script>
 <style lang="scss">

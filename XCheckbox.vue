@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, Prop} from "vue";
+import { computed, defineComponent, Prop } from 'vue'
 
 export default defineComponent({
   name: 'XCheckbox',
   setup(props, context) {
     return {
-      slots: computed(() => Object.keys(context.slots))
+      slots: computed(() => Object.keys(context.slots)),
     }
-  }
+  },
 })
 </script>
 
