@@ -2,11 +2,9 @@
 @import '../mixins';
 
 .smartui-form-item {
-  background: red !important;
   margin-bottom: 0;
   &.ant-form-item-with-help {
     margin-bottom: 0;
-    background: red !important;
   }
   // label
   .ant-form-item-label {
