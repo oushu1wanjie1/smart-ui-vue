@@ -1,5 +1,5 @@
 <template>
-  <a-tooltip class="x-tooltip">
+  <a-tooltip overlay-class-name="x-tooltip">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>

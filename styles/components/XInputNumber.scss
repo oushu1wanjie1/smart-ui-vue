@@ -1,0 +1,62 @@
+@import '../variables';
+@import '../mixins';
+
+.smartui-number-input {
+  margin-left: 46px;
+  margin-right: 46px;
+  width: 120px;
+  height: 36px;
+  border-radius: 4px;
+
+  .ant-input-number-input {
+    text-align: center;
+  }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1;
+    background: transparent;
+    width: 100%;
+    border: none;
+    pointer-events: none;
+  }
+
+  .ant-input-number-handler {
+    pointer-events: all;
+    width: 36px;
+    height: 36px !important;
+    border: 1px solid #282B2E;
+    border-radius: 4px;
+    top: -1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #282B2E;
+
+    .anticon {
+      display: none;
+    }
+
+    &-up {
+      position: absolute;
+      left: calc(100% + 10px);
+
+      &:after {
+        content: '+';
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+
+    &-down {
+      position: absolute;
+      left: -46px;
+
+      &:after {
+        content: '-';
+        font-size: 24px;
+        font-weight: 400;
+        margin-top: -2px;
+      }
+    }
+  }
+}
