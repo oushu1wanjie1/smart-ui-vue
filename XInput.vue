@@ -1,7 +1,7 @@
 <template>
-  <single-form-wrapper :rules="rules" :class="`smartui-input ${attrs.class}`">
-    <template #default="attrs">
-      <a-input v-bind="attrs">
+  <single-form-wrapper :rules="rules" :class="`smartui-input`">
+    <template #default="slotAttrs">
+      <a-input v-bind="slotAttrs">
         <template v-for="item in slots" v-slot:[item]>
           <slot :name="item"></slot>
         </template>
