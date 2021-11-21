@@ -13,21 +13,21 @@ export function useModel(name: string, props: any, context: any) {
 
 export function getModelType(formItemType: any) {
   switch (formItemType) {
-  case 'XSelect':
-  case 'XRangePicker':
-    return []
-  default:
-    return null
+    case 'XSelect':
+    case 'XRangePicker':
+      return []
+    default:
+      return null
   }
 }
 
 export function getModelName(formItemType: any) {
   switch (formItemType) {
-  case 'XSelect':
-  case 'XRangePicker':
-    return 'value'
-  default:
-    return 'modelValue'
+    case 'XSelect':
+    case 'XRangePicker':
+      return 'value'
+    default:
+      return 'modelValue'
   }
 }
 
