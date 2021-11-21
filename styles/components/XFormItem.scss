@@ -1,7 +1,7 @@
 @import '../variables';
 @import '../mixins';
 
-.smartui-form-item:not(raw) {
+.smartui-form-item {
   margin-bottom: 0;
   &.ant-form-item-with-help {
     margin-bottom: 0;
