@@ -1,6 +1,33 @@
+@import '../variables';
+@import '../mixins';
+
 .smartui-table:not(.raw) {
-  .ant-table-thead > tr > th {
-    background-color: white;
-    color: $color-text-comment;
+  &.ant-table-wrapper {
+    .ant-table-content {
+      padding: 0 25px;
+    }
+    .ant-table-thead > tr > th {
+      background-color: white;
+      color: $color-text-comment;
+      padding: 7px 0;
+      font-weight: normal;
+      font-size: 12px;
+    }
+    .ant-table-tbody .ant-table-row:hover:after {
+      position: absolute;
+      pointer-events: none;
+      content: '';
+      width: calc(100% + 40px);
+      top: 0;
+      left: -20px;
+      height: 100%;
+      border: 1px solid $color-text-comment;
+      border-radius: 4px;
+    }
+    .ant-table-tbody > tr > td {
+      background-color: white;
+      font-size: 14px;
+      padding: 7px 0;
+    }
   }
 }

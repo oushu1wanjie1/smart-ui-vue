@@ -153,7 +153,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './styles/components/XTabs/index';
 
 .x-tabs-fix-top {
