@@ -13,10 +13,10 @@
       font-weight: normal;
       font-size: 12px;
     }
-    .ant-table-tbody .ant-table-row {
+    .ant-table-tbody > tr {
       position: relative
     }
-    .ant-table-tbody .ant-table-row:hover:after {
+    .ant-table-tbody > tr:hover > td:after {
       position: absolute;
       pointer-events: none;
       content: '';
@@ -30,7 +30,15 @@
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
-      padding: 7px 0;
+      padding: 0;
+      height: 70px;
+
+      .ant-btn-link {
+        padding: 0;
+      }
+    }
+    .ant-table-tbody > tr:hover > td {
+      background-color: white;
     }
   }
 }
