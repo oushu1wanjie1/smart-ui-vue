@@ -26,6 +26,8 @@ import XDatePicker from './XDatePicker'
 import XCheckboxGroup from './XCheckboxGroup'
 import XCheckbox from './XCheckbox'
 import XCard from './XCard'
+import XTabs from './XTabs'
+import XTabPane from './XTabPane'
 export default {
   utils,
   XAvatar,
@@ -55,4 +57,6 @@ export default {
   XStep,
   XSteps,
   XSwitch,
+  XTabs,
+  XTabPane
 }
