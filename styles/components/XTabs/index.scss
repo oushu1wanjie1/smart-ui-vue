@@ -8,50 +8,56 @@
       border-bottom-color: $color-line-bold;
     }
 
-    .ant-tabs {
-      .ant-tabs-nav {
-        // tab 标签
-        .ant-tabs-tab {
-          padding: 0 0 10px 0;
-          @include font-normal();
+    .ant-tabs-nav {
+      // tab 标签
+      .ant-tabs-tab {
+        padding: 0 0 10px 0;
+        @include font-normal();
 
-          // 覆盖默认间距
-          .anticon {
-            margin-right: 0;
-          }
-
-          // 配置图标大小、间距
-          svg {
-            width: $svg-width-normal;
-            height: $svg-height-normal;
-            margin-right: 5px;
-          }
+        // 覆盖默认间距
+        .anticon {
+          margin-right: 0;
         }
 
-        // tab 间距
-        .ant-tabs-tab:not(:last-child) {
-          margin-right: 48px;
-        }
-
-        // 【禁用】时，tab 样式
-        .ant-tabs-tab-disabled,
-        .ant-tabs-tab-disabled:hover {
-          color: $color-text-comment;
-          cursor: not-allowed;
-        }
-
-        // 【选中】时，tab 样式
-        .ant-tabs-tab-active {
-          font-weight: normal;
-          color: $color-primary-blue;
+        // 配置图标大小、间距
+        svg {
+          width: $svg-width-normal;
+          height: $svg-height-normal;
+          margin-right: 5px;
         }
       }
 
-      // tab 【选中】时，底线配色、圆角
-      .ant-tabs-ink-bar {
-        background-color: $color-primary-blue;
-        border-radius: 2px;
+      .ant-tabs-tab-active {
+        color: $color-primary-blue;
       }
+
+      .ant-tabs-tab:hover {
+        color: $color-primary-blue;
+      }
+
+      // tab 间距
+      .ant-tabs-tab:not(:last-child) {
+        margin-right: 48px;
+      }
+
+      // 【禁用】时，tab 样式
+      .ant-tabs-tab-disabled,
+      .ant-tabs-tab-disabled:hover {
+        color: $color-text-comment;
+        cursor: not-allowed;
+      }
+
+      // 【选中】时，tab 样式
+      .ant-tabs-tab-active {
+        font-weight: normal;
+        color: $color-primary-blue !important;
+      }
+    }
+
+    // tab 【选中】时，底线配色、圆角
+    .ant-tabs-ink-bar {
+      background-color: $color-primary-blue;
+      border-radius: 2px;
     }
   }
 }
