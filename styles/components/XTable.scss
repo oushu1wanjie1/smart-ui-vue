@@ -13,6 +13,9 @@
       font-weight: normal;
       font-size: 12px;
     }
+    .ant-table-tbody .ant-table-row {
+      position: relative
+    }
     .ant-table-tbody .ant-table-row:hover:after {
       position: absolute;
       pointer-events: none;
