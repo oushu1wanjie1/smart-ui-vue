@@ -27,6 +27,8 @@ import XCheckboxGroup from './XCheckboxGroup'
 import XCheckbox from './XCheckbox'
 import XCard from './XCard'
 import XTable from './XTable'
+import XTabs from './XTabs'
+import XTabPane from './XTabPane'
 export default {
   utils,
   XAvatar,
@@ -57,4 +59,6 @@ export default {
   XSteps,
   XSwitch,
   XTable,
+  XTabs,
+  XTabPane
 }
