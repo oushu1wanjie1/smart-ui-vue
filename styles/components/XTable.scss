@@ -16,7 +16,7 @@
     .ant-table-tbody > tr {
       position: relative
     }
-    .ant-table-tbody > tr:hover > td:after {
+    .ant-table-tbody > tr:hover > td:first-of-type:after {
       position: absolute;
       pointer-events: none;
       content: '';

@@ -1,7 +1,7 @@
 @import "button-variables.scss";
 @import "mixin.scss";
 
-.x-btn:not(.raw):not(.ant-btn-link) {
+.x-btn:not(.raw) {
   &.ant-btn {
     line-height: $btn-line-height;
 
