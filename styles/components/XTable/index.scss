@@ -1,38 +1,45 @@
-@import '../variables';
-@import '../mixins';
+@import '../../variables';
+@import '../../mixins';
+@import './fixed-table.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
+    .ant-table.ant-table-layout-fixed {
+      @include fixed-table-row-hover
+    }
+    .ant-table:not(.ant-table-layout-fixed) {
+      .ant-table-tbody > tr:hover > td:first-of-type:before {
+        position: absolute;
+        pointer-events: none;
+        content: '';
+        width: 100%;
+        top: 0;
+        left: 0px;
+        height: 100%;
+        border: 1px solid $color-text-comment;
+        border-radius: 4px;
+      }
+    }
     .ant-table-content {
       padding: 0 25px;
     }
     .ant-table-thead > tr > th {
       background-color: white;
       color: $color-text-comment;
-      padding: 7px 0;
+      padding-top: 7px;
+      padding-bottom: 7px;
       font-weight: normal;
       font-size: 12px;
     }
     .ant-table-tbody > tr {
       position: relative
     }
-    .ant-table-tbody > tr:hover > td:first-of-type:after {
-      position: absolute;
-      pointer-events: none;
-      content: '';
-      width: calc(100% + 40px);
-      top: 0;
-      left: -20px;
-      height: 100%;
-      border: 1px solid $color-text-comment;
-      border-radius: 4px;
-    }
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
-      padding: 0;
-      padding-right: 20px;
+      padding: 25px 15px;
       height: 70px;
+      // border-bottom: 0;
 
       &.ant-table-selection-column {
         padding-right: 0;

@@ -1,0 +1,51 @@
+@import '../../variables';
+@import '../../mixins';
+
+// 固定表头表尾的表格hover样式
+@mixin row-hover-base {
+  position: absolute;
+  pointer-events: none;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0px;
+}
+
+@mixin fixed-table-row-hover {
+  // 非fixed部分，只有border-top和border-bottom
+  // 取.ant-table-cell-fix-left-last后的第一个元素
+  .ant-table-tbody > tr:hover > td.ant-table-cell-fix-left-last + td:before {
+    @include row-hover-base;
+    // position:static的td:before默认的高度为tr的高度，而非static的td:before默认为td的高度
+    // 中间差了一个border的宽度，所以需要减掉
+    height: calc(100% - 1px);
+    border-top: 1px solid $color-text-comment;
+    border-bottom: 1px solid $color-text-comment;
+    border-radius: 4px;
+  }
+  // fixed左边部分，只有border-top和border-bottom
+  .ant-table-tbody > tr:hover > td.ant-table-cell-fix-left:before {
+    @include row-hover-base;
+    border-top: 1px solid $color-text-comment;
+    border-bottom: 1px solid $color-text-comment;
+  }
+  // 左边第一个元素，显示border-left
+  .ant-table-tbody > tr:hover > td:first-of-type:before {
+    @include row-hover-base;
+    border-left: 1px solid $color-text-comment;
+    border-radius: 4px 0 0 4px;
+  }
+  // fixed右边部分，只有border-top和border-bottom
+  .ant-table-tbody > tr:hover > td.ant-table-cell-fix-right:before {
+    @include row-hover-base;
+    border-top: 1px solid $color-text-comment;
+    border-bottom: 1px solid $color-text-comment;
+  }
+  // 右边第一个元素 显示border-right
+  .ant-table-tbody > tr:hover > td:last-of-type:before {
+    @include row-hover-base;
+    border-right: 1px solid $color-text-comment;
+    border-radius: 0 4px 4px 0;
+  }
+}
