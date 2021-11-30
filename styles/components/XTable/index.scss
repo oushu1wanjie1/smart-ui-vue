@@ -1,7 +1,7 @@
 @import '../../variables';
 @import '../../mixins';
 @import './fixed-table.scss';
-@import './td-with-divider.scss';
+@import './table-with-divider.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -30,11 +30,21 @@
     // 表头thead
     .ant-table-thead > tr > th {
       background-color: white;
+      position: relative;
       color: $color-text-comment;
       padding-top: 7px;
       padding-bottom: 7px;
       font-weight: normal;
       font-size: 12px;
+    }
+    // thead with divider 
+    .ant-table-thead > tr.thead-tr-with-divider {
+      th:before {
+        @include th-with-divider
+      }
+      th:last-of-type:before {
+        display: none;
+      }
     }
     // 表格tr
     .ant-table-tbody > tr {

@@ -1,5 +1,13 @@
 <template>
-  <a-table class="smartui-table" :columns="formattedColumns">
+  <a-table
+    class="smartui-table"
+    :columns="formattedColumns"
+    :customHeaderRow="record => {
+      return {
+        'className': divider && 'thead-tr-with-divider'
+      }
+    }"
+  >
     <template v-for="item in slots" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
@@ -16,6 +24,7 @@ export default defineComponent({
       type: Array,
       default: () => []
     },
+    // 是否加上纵向分隔线，暂不可用于template风格，之后有需求会优化
     divider: {
       type: Boolean,
       default: false

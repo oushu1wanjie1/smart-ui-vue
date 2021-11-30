@@ -15,3 +15,13 @@
     display: none;
   }
 }
+
+@mixin th-with-divider {
+  content: '';
+  height: calc(100% - 10px);
+  width: 1px;
+  background: $color-line-bold;
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
