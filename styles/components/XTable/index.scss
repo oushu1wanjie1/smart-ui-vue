@@ -42,7 +42,7 @@
       th:before {
         @include th-with-divider
       }
-      th:last-of-type:before {
+      th:last-of-type:before, th.ant-table-selection-column:before {
         display: none;
       }
     }
@@ -57,10 +57,6 @@
       padding: 25px 15px;
       height: 70px;
       
-      // 多选框列
-      &.ant-table-selection-column {
-        padding-right: 0;
-      }
       // td中的btn-link配置
       .ant-btn-link {
         padding: 0;
