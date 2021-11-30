@@ -22,7 +22,6 @@ export default {
     rules: Array,
   },
   setup(props, context) {
-    console.log('attr', context.attrs)
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
     // 根据是否有表单验证，控制传给a-input的attrs里的class名称

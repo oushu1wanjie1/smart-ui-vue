@@ -1,0 +1,17 @@
+@mixin td-with-divider {
+  .td-with-divider {
+    position: relative;
+  }
+  .td-with-divider:after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: calc(100% + 30px);
+    background-color: $color-line-bold;
+    top: -15px;
+    right: -15px;
+  }
+  &:last-of-type .td-with-divider:after {
+    display: none;
+  }
+}

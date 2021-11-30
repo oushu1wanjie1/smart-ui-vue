@@ -1,12 +1,15 @@
 @import '../../variables';
 @import '../../mixins';
 @import './fixed-table.scss';
+@import './td-with-divider.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
+    // 有固定列的表格hover样式
     .ant-table.ant-table-layout-fixed {
       @include fixed-table-row-hover
     }
+    // 无固定列的表格hover样式
     .ant-table:not(.ant-table-layout-fixed) {
       .ant-table-tbody > tr:hover > td:first-of-type:before {
         position: absolute;
@@ -20,9 +23,11 @@
         border-radius: 4px;
       }
     }
+    // 表格与外部容器的间距
     .ant-table-content {
       padding: 0 25px;
     }
+    // 表头thead
     .ant-table-thead > tr > th {
       background-color: white;
       color: $color-text-comment;
@@ -31,24 +36,29 @@
       font-weight: normal;
       font-size: 12px;
     }
+    // 表格tr
     .ant-table-tbody > tr {
       position: relative
     }
+    // 表格td
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
       padding: 25px 15px;
       height: 70px;
-      // border-bottom: 0;
-
+      
+      // 多选框列
       &.ant-table-selection-column {
         padding-right: 0;
       }
-
+      // td中的btn-link配置
       .ant-btn-link {
         padding: 0;
       }
+      // td with divider配置
+      @include td-with-divider;
     }
+    // 取消默认的表格hover样式
     .ant-table-tbody > tr:hover > td {
       background-color: white;
     }
