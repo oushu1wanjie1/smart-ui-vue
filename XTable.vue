@@ -63,5 +63,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import './styles/components/XTable';
+@import './styles/components/XTable/index.scss';
 </style>
