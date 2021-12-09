@@ -1,0 +1,33 @@
+@import '../variables';
+@import '../mixins';
+
+.smartui-anchor:not(.raw) {
+  .ant-anchor {
+    .ant-anchor-ink:before {
+      width: 1px;
+      transform: translate(50%, 0);
+      background-color: $color-line-bold;
+    }
+    // 当前锚点小球
+    .ant-anchor-ink-ball {
+      border-radius: 0;
+      border: none;
+      background:transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5px;
+      // width: 9px;
+      z-index: 2;
+  
+      &:before {
+        content: '';
+        display: block;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background: $color-primary-blue;
+      }
+    }
+  }
+}
