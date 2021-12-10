@@ -21,8 +21,8 @@ export default defineComponent({
   name: 'XTable',
   props: {
     columns: {
-      type: Array,
-      default: () => []
+      type: [Array, null],
+      default: null
     },
     // 是否加上纵向分隔线，暂不可用于template风格，之后有需求会优化
     divider: {
@@ -32,6 +32,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const formattedColumns = computed(() => {
+      if (!props.columns) return null
       let result = [...props.columns]
       if (!props.divider) return result
       result = result.map(item => {
