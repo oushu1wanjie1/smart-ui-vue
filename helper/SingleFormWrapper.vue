@@ -1,5 +1,5 @@
 <template>
-  <x-form :ref="formInstance" v-if="rules">
+  <x-form v-if="rules">
     <x-form-item v-bind="validateInfos.value">
       <slot v-bind="attrs"></slot>
     </x-form-item>
@@ -22,11 +22,13 @@ export default {
   name: 'SingleFormWrapper',
   components: { XFormItem, XForm },
   props: {
-    rules: Array,
+    rules: {
+      type: Array,
+      default: () => []
+    }
   },
   setup(props, context) {
     const { rules } = toRefs(props)
-    const formInstance = ref(null)
     const hiddenForm = computed(() => {
       return {
         value: context.attrs.value
@@ -54,7 +56,6 @@ export default {
       attrs: mergedAttrs,
       validateInfos,
       hiddenForm,
-      formInstance,
       resetFields,
       validate,
       clearValidate,
