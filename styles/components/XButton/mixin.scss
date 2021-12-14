@@ -45,7 +45,16 @@
     @include button-color($color, $btn-primary-active-bg-color, $btn-primary-active-bg-color);
   }
 
-  @include button-disabled($btn-primary-disabled-color, $btn-primary-disabled-bg-color, $btn-primary-disabled-bg-color);
+  // 实心按钮配色不变，改全局透明度
+  @include button-disabled($color, $background-color, $background-color);
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: .3;
+    }
+  }
 }
 
 // 线性按钮会用到
@@ -66,7 +75,7 @@
 
   @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
 
-  &:not(&[disabled]):hover {
+  &:not(.ant-btn[disabled]):hover {
     transform: translateY(-2px);
   }
 }

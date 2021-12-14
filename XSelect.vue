@@ -28,7 +28,7 @@ export default {
   name: 'XSelect',
   inheritAttrs: false,
   props: {
-    value: [String, Array],
+    value: [String, Number, Array],
     /**
      * 扩展功能 - 滚动到底时是否自动异步加载
      * 扩展了focus和search事件，两个事件的回调函数现在将拥有第二个参数page（从1开始），用于表示当前页数。
