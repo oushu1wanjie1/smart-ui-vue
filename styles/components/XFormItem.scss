@@ -21,6 +21,11 @@
       display: none;
     }
   }
+  &:not(.ant-form-item-has-error) {
+    .ant-form-item-explain-error {
+      display: none;
+    }
+  }
   &:hover {
     .ant-form-item-explain-error {
       position: absolute;

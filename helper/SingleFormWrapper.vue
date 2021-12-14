@@ -10,9 +10,15 @@
 <script>
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import { computed, provide, ref, toRefs } from 'vue'
+import { computed, ref, toRefs } from 'vue'
 import { useForm } from 'ant-design-vue/es/form'
+
+export function upperFirstLetter(str = '') {
+  if (!str.length) return ''
+  return str[0].toUpperCase() + str.substring(1)
+}
 export default {
+  inheritAttrs: false,
   name: 'SingleFormWrapper',
   components: { XFormItem, XForm },
   props: {
@@ -27,12 +33,31 @@ export default {
       }
     })
     const hiddenRules = ref({ value: rules })
-    const { validateInfos } = useForm(hiddenForm, hiddenRules)
+    const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
 
-    provide('form', formInstance)
+    const mergedAttrs = computed(() => {
+      const triggers = rules.value.filter(rule => rule.trigger).reduce((prev, item) => {
+        const key = `on${upperFirstLetter(item.trigger)}`
+        return {
+          [key]: () => {
+            validate('value', { trigger: item.trigger }).catch(() => {})
+          }
+        }
+      }, {})
+      return {
+        ...triggers,
+        ...context.attrs
+      }
+    })
+
     return {
-      attrs: context.attrs,
+      attrs: mergedAttrs,
       validateInfos,
+      hiddenForm,
+      formInstance,
+      resetFields,
+      validate,
+      clearValidate,
     }
   },
 }
