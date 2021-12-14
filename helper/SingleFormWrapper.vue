@@ -42,7 +42,7 @@ export default {
         const key = `on${upperFirstLetter(item.trigger)}`
         return {
           [key]: () => {
-            validate('value', { trigger: item.trigger }).catch(() => {})
+            validate('value', { trigger: item.trigger })
           }
         }
       }, {})
