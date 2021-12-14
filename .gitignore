@@ -5,4 +5,4 @@ dist-ssr
 *.local
 .vscode
 .idea
-/src/SmartUI
+/src/smart-ui-vue
