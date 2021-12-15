@@ -5,10 +5,44 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
   .ant-select-selector {
     padding: 0 10px;
   }
+
   .ant-select-selection-placeholder {
     font-size: 12px;
+  }
+}
+
+// 影响全局样式
+.ant-select-dropdown {
+  padding: 40px 20px;
+  @include font-normal();
+  color: $color-primary-black;
+  border-radius: 0 0 4px 4px;
+
+  .ant-select-dropdown-content {
+    // 滚动条
+    .rc-virtual-list-scrollbar-thumb {
+      background-color: $color-primary-blue !important;
+    }
+
+    .ant-select-item {
+      padding: 8px 20px;
+      border-radius: 4px;
+    }
+
+    .ant-select-item-option {
+    }
+
+    .ant-select-item-option-selected {
+      color: #4386FF;
+      background-color: unset;
+    }
+
+    .ant-select-item-option-active {
+      background-color: rgba(67, 134, 255, 0.2);
+    }
   }
 }
