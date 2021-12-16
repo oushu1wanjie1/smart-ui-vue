@@ -40,7 +40,7 @@
       font-weight: normal;
       font-size: 12px;
     }
-    // thead with divider 
+    // thead with divider
     .ant-table-thead > tr.thead-tr-with-divider {
       th:before {
         @include th-with-divider
@@ -57,9 +57,8 @@
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
-      padding: 25px 15px;
-      height: 70px;
-      
+      padding: 10px 15px;
+
       // td中的btn-link配置
       .ant-btn-link {
         padding: 0;
