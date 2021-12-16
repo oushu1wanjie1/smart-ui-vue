@@ -66,6 +66,10 @@
       // td with divider配置
       @include td-with-divider;
     }
+    // 最后一行没有线
+    .ant-table-tbody > tr:last-of-type > td {
+      border-bottom: none;
+    }
     // 取消默认的表格hover样式
     .ant-table-tbody > tr:hover > td {
       background-color: white;
