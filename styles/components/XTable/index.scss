@@ -23,6 +23,9 @@
         border-radius: 4px;
       }
     }
+    .ant-table .ant-table-tbody > tr.unhoverable > td:before {
+      border: none !important;
+    }
     // 表格与外部容器的间距
     .ant-table-content {
       padding: 0 25px;

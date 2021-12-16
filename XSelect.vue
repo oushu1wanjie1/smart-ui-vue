@@ -16,7 +16,7 @@
  * - 添加了自动异步加载选项的功能
  */
 import { useModel } from './utils'
-import { computed, toRefs } from 'vue'
+import { computed, onBeforeUpdate, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
@@ -28,7 +28,7 @@ export default {
   name: 'XSelect',
   inheritAttrs: false,
   props: {
-    value: [String, Array],
+    value: [String, Number, Array],
     /**
      * 扩展功能 - 滚动到底时是否自动异步加载
      * 扩展了focus和search事件，两个事件的回调函数现在将拥有第二个参数page（从1开始），用于表示当前页数。
@@ -56,6 +56,8 @@ export default {
     let page = 1
     // 可输入状态下，缓存的输入内容
     let inputCache = ''
+    // 处理过后的attrs
+    const mergedAttrs = ref({})
 
     /**
      * @handler
@@ -100,8 +102,10 @@ export default {
       if (context.attrs.onDropdownVisibleChange) context.attrs.onDropdownVisibleChange.apply(null, args)
     }
 
-    // 处理过的attrs，注入自动异步加载时需求的方法
-    const mergedAttrs = computed(() => {
+    /**
+     * 更新attrs，添加注入的事件
+     */
+    const updateAttrs = () => {
       const result = {
         ...context.attrs,
         onSearch: handleSearch,
@@ -110,7 +114,14 @@ export default {
       }
       if (isAutoLoadMore.value) result.onPopupScroll = handleMoreData
       return result
+    }
+
+    onBeforeUpdate(() => {
+      mergedAttrs.value = updateAttrs()
     })
+
+    // 处理过的attrs，注入自动异步加载时需求的方法
+    mergedAttrs.value = updateAttrs()
 
     return {
       slots,

@@ -31,18 +31,18 @@
       color: $color-text-comment;
     }
     // hover
-    &:hover {
+    &:not(.ant-input[disabled]):hover {
       @include input-underline($color-primary-black);
     }
     // focus
-    &:focus {
+    &:not(.ant-input[disabled]):focus {
       @include input-underline($color-primary-blue);
     }
   }
 
 
   .ant-input-affix-wrapper, &.ant-input-affix-wrapper {
-    &:not(.ant-input-search) {
+    &:not(.ant-input-search):not(.ant-input-affix-wrapper-disabled) {
       @include input-underline($color-line-bold);
       overflow: hidden;
       // prefix
@@ -64,7 +64,7 @@
         @include input-underline($color-primary-black);
       }
     }
-    &-focused, &-focused:hover, &:focus {
+    &-focused:not(.ant-input-affix-wrapper-disabled), &-focused:not(.ant-input-affix-wrapper-disabled):hover, &:not(.ant-input-affix-wrapper-disabled):focus {
       &:not(.ant-input-search) {
         // 下划线
         @include input-underline($color-primary-blue);
