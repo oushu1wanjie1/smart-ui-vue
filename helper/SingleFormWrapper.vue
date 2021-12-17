@@ -1,6 +1,6 @@
 <template>
   <x-form v-if="rules">
-    <x-form-item v-bind="validateInfos.value">
+    <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value">
       <slot v-bind="attrs"></slot>
     </x-form-item>
   </x-form>
@@ -25,6 +25,10 @@ export default {
     rules: {
       type: Array,
       default: () => []
+    },
+    errorTipPosition: {
+      type: String,
+      default: 'top'
     }
   },
   setup(props, context) {

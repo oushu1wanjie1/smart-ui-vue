@@ -1,5 +1,5 @@
 <template>
-  <single-form-wrapper ref="form" :rules="rules" :class="`smartui-input`">
+  <single-form-wrapper ref="form" :rules="rules" :class="`smartui-input`" :error-tip-position="errorTipPosition">
     <template #default="slotAttrs">
       <a-input v-bind="slotAttrs">
         <template v-for="item in slots" v-slot:[item]>
@@ -19,7 +19,14 @@ export default {
     SingleFormWrapper
   },
   props: {
-    rules: Array,
+    rules: {
+      type: Array || null,
+      default: null
+    },
+    errorTipPosition: {
+      type: String,
+      default: 'top'
+    }
   },
   setup(props, context) {
     // 全部slots

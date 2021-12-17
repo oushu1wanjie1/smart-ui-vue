@@ -26,7 +26,7 @@
       display: none;
     }
   }
-  &:hover {
+  &:not(.error-bottom):hover {
     .ant-form-item-explain-error {
       position: absolute;
       top: -48px;
@@ -47,6 +47,31 @@
         border-left: 16px solid white;
         border-bottom: 16px solid transparent;
         filter: drop-shadow(3px 4px 4px #00000026)
+      }
+    }
+  }
+  // 当上方空间不够时错误tooltip显示在下方
+  &.error-bottom:hover {
+    .ant-form-item-explain-error {
+      position: absolute;
+      bottom: -52px;
+      left: 0;
+      z-index: 10000;
+      background-color: white;
+      padding: 14px 12px;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px #00000026;
+
+      &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: -16px;
+        left: 0;
+        border-left: 16px solid white;
+        border-top: 16px solid transparent;
+        filter: drop-shadow(3px -4px 4px #00000026)
       }
     }
   }
