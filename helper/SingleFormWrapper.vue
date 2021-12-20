@@ -42,7 +42,7 @@ export default {
     const attrs = ref({})
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const updateAttrs = () => {
-      const triggers = rules.value.filter(rule => rule.trigger).reduce((prev, item) => {
+      const triggers = (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
         const key = `on${upperFirstLetter(item.trigger)}`
         return {
           [key]: () => {
