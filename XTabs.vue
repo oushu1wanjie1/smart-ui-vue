@@ -1,7 +1,7 @@
 <template>
   <a-tabs
     ref="tabsRef"
-    :class="{'x-tabs': true, 'x-tabs-fix-top': isFixTop}"
+    :class="{'smartui-tabs': true, 'x-tabs-fix-top': isFixTop}"
     :activeKey="localActiveKey"
     @change="onChange"
   >

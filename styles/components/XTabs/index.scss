@@ -2,7 +2,7 @@
 @import "../../mixins";
 
 // tabs 下面的一条灰线的配色
-.x-tabs:not(.raw) {
+.smartui-tabs:not(.raw) {
   &.ant-tabs {
     .ant-tabs-bar {
       border-bottom-color: $color-line-bold;
