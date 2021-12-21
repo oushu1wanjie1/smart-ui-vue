@@ -1,6 +1,6 @@
 <template>
   <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition">
-    <a-input :class="`smartui-input ${wrapperClass}`" v-bind="props">
+    <a-input :class="`smartui-input ${wrapperClass}`" v-bind="props" :style="wrapperStyle">
       <template v-for="item in slots" v-slot:[item]>
         <slot :name="item"></slot>
       </template>
@@ -34,7 +34,8 @@ export default {
     // 表单wrapper实例
     const form = ref({})
     // 表单class
-    const wrapperClass = ref(context.attrs.class)
+    const wrapperClass = ref(context.attrs.class || '')
+    const wrapperStyle = ref(context.attrs.style)
     let resetFields = null
     let validate = null
     let clearValidate = null
@@ -50,7 +51,8 @@ export default {
       validate,
       clearValidate,
       slots,
-      wrapperClass
+      wrapperClass,
+      wrapperStyle
     }
   }
 }
