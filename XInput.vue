@@ -1,6 +1,6 @@
 <template>
   <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition">
-    <a-input class="smartui-input" v-bind="props">
+    <a-input :class="`smartui-input ${wrapperClass}`" v-bind="props">
       <template v-for="item in slots" v-slot:[item]>
         <slot :name="item"></slot>
       </template>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import SingleFormWrapper from './helper/SingleFormWrapper.vue'
 import { Input } from 'ant-design-vue'
 export default {
@@ -33,6 +33,8 @@ export default {
     const slots = computed(() => Object.keys(context.slots))
     // 表单wrapper实例
     const form = ref({})
+    // 表单class
+    const wrapperClass = ref(context.attrs.class)
     let resetFields = null
     let validate = null
     let clearValidate = null
@@ -47,7 +49,8 @@ export default {
       resetFields,
       validate,
       clearValidate,
-      slots
+      slots,
+      wrapperClass
     }
   }
 }
