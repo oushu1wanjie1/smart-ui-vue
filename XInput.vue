@@ -1,24 +1,24 @@
 <template>
-  <single-form-wrapper ref="form" :rules="rules" :class="`smartui-input`" :error-tip-position="errorTipPosition">
-    <template #default="slotAttrs">
-      <a-input v-bind="slotAttrs">
-        <template v-for="item in slots" v-slot:[item]>
-          <slot :name="item"></slot>
-        </template>
-      </a-input>
-    </template>
+  <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition">
+    <a-input class="smartui-input" v-bind="props">
+      <template v-for="item in slots" v-slot:[item]>
+        <slot :name="item"></slot>
+      </template>
+    </a-input>
   </single-form-wrapper>
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import SingleFormWrapper from './helper/SingleFormWrapper.vue'
+import { Input } from 'ant-design-vue'
 export default {
   name: 'XInput',
   components: {
     SingleFormWrapper
   },
   props: {
+    ...Input.props,
     rules: {
       type: Array || null,
       default: null
@@ -33,11 +33,16 @@ export default {
     const slots = computed(() => Object.keys(context.slots))
     // 表单wrapper实例
     const form = ref({})
-    const resetFields = computed(() => form.value.resetFields)
-    const validate = computed(() => form.value.validate)
-    const clearValidate = computed(() => form.value.clearValidate)
+    let resetFields = null
+    let validate = null
+    let clearValidate = null
+    onMounted(() => {
+      resetFields = form.value.resetFields
+      validate = form.value.validate
+      clearValidate = form.value.clearValidate
+    })
     return {
-      attrs: context.attrs,
+      props,
       form,
       resetFields,
       validate,

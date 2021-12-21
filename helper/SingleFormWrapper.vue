@@ -1,10 +1,10 @@
 <template>
   <x-form v-if="rules">
     <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value">
-      <slot v-bind="attrs"></slot>
+      <slot></slot>
     </x-form-item>
   </x-form>
-  <slot v-else v-bind="attrs"></slot>
+  <slot v-else></slot>
 </template>
 
 <script>
@@ -32,37 +32,26 @@ export default {
     }
   },
   setup(props, context) {
-    const { rules } = toRefs(props)
+    const { rules, value } = toRefs(props)
     const hiddenForm = computed(() => {
       return {
-        value: context.attrs.value
+        value,
       }
     })
     const hiddenRules = ref({ value: rules })
-    const attrs = ref({})
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
-    const updateAttrs = () => {
-      const triggers = (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
-        const key = `on${upperFirstLetter(item.trigger)}`
+    const events = computed(() => {
+      return (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
+        const key = item.trigger
         return {
           [key]: () => {
             validate('value', { trigger: item.trigger })
           }
         }
       }, {})
-      return {
-        ...triggers,
-        ...context.attrs
-      }
-    }
-
-    onUpdated(() => {
-      attrs.value = updateAttrs()
     })
-    attrs.value = updateAttrs()
 
     return {
-      attrs,
       validateInfos,
       hiddenForm,
       resetFields,

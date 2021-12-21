@@ -32,7 +32,7 @@
     }
     // hover
     &:not(.ant-input[disabled]):hover {
-      @include input-underline($color-primary-black);
+      @include input-underline($color-text-comment);
     }
     // focus
     &:not(.ant-input[disabled]):focus {
@@ -44,6 +44,7 @@
   .ant-input-affix-wrapper, &.ant-input-affix-wrapper {
     &:not(.ant-input-search):not(.ant-input-affix-wrapper-disabled) {
       @include input-underline($color-line-bold);
+      padding: 0;
       overflow: hidden;
       // prefix
       .ant-input-prefix {
@@ -61,7 +62,7 @@
 
       // 输入框hover
       &:hover{
-        @include input-underline($color-primary-black);
+        @include input-underline($color-text-comment);
       }
     }
     &-focused:not(.ant-input-affix-wrapper-disabled), &-focused:not(.ant-input-affix-wrapper-disabled):hover, &:not(.ant-input-affix-wrapper-disabled):focus {
