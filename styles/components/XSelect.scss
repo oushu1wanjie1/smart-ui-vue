@@ -26,6 +26,9 @@
   border-radius: 0 0 4px 4px;
 
   .ant-select-dropdown-content {
+    .rc-virtual-list-scrollbar {
+      width: 4px !important;
+    }
     // 滚动条
     .rc-virtual-list-scrollbar-thumb {
       background-color: $color-primary-blue !important;
