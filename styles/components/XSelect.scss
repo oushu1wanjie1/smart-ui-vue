@@ -17,6 +17,9 @@
 
 // 影响全局样式
 .ant-select-dropdown {
+  // 某些组件会硬写 width，导致宽度不够。
+  // 例如 a-table 的 pagination
+  width: unset !important;
   padding: 40px 20px;
   @include font-normal();
   color: $color-primary-black;
