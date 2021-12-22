@@ -5,9 +5,14 @@
   &.ant-anchor-link {
     padding-top: 20px;
     padding-bottom: 20px;
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
     .ant-anchor-link-title {
       position: relative;
       overflow: visible;
+      color: $color-text-sub;
       &:hover {
         color: $color-primary-blue;
       }
@@ -33,6 +38,15 @@
         transition: opacity 0.3s step-end;
         opacity: 0;
       }
+    }
+  }
+}
+
+// 第一个元素padding-top为0
+.smartui-anchor:not(.raw) {
+  .ant-anchor {
+    .ant-anchor-ink + .ant-anchor-link {
+      padding-top: 0
     }
   }
 }
