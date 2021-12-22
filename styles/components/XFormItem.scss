@@ -16,6 +16,12 @@
     display: none;
   }
   // 错误提示
+  // 通用样式
+  .ant-form-item-explain-error {
+    & > [role="alert"] {
+      color: $color-danger;
+    }
+  }
   &:not(:hover) {
     .ant-form-item-explain-error {
       display: none;
@@ -78,14 +84,19 @@
 
   // 验证失败时的表单（因为有嵌套表单的存在，这里必须一层层下探到指定元素）
   &.ant-form-item-has-error {
-    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input-affix-wrapper {
-      @include input-underline($color-danger);
-      &-focused, &:hover {
+    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input-affix-wrapper:not(.raw) {
+      &.ant-input-affix-wrapper {
+        @include input-underline($color-danger);
+        &-focused, &:hover {
+          @include input-underline($color-danger);
+        }
+      }
+
+    }
+    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input:not(.raw) {
+      &.ant-input {
         @include input-underline($color-danger);
       }
-    }
-    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input {
-      @include input-underline($color-danger);
     }
   }
 }

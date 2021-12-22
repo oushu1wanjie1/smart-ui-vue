@@ -1,10 +1,12 @@
 <template>
-  <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition">
-    <a-input :class="`smartui-input ${wrapperClass}`" v-bind="props" :style="wrapperStyle">
-      <template v-for="item in slots" v-slot:[item]>
-        <slot :name="item"></slot>
-      </template>
-    </a-input>
+  <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition" :value="value">
+    <template #default="formEvents">
+      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props, ...formEvents }" :style="wrapperStyle">
+        <template v-for="item in slots" v-slot:[item]>
+          <slot :name="item"></slot>
+        </template>
+      </a-input>
+    </template>
   </single-form-wrapper>
 </template>
 
@@ -19,6 +21,10 @@ export default {
   },
   props: {
     ...Input.props,
+    value: {
+      type: String,
+      default: ''
+    },
     rules: {
       type: Array || null,
       default: null
@@ -36,14 +42,9 @@ export default {
     // 表单class
     const wrapperClass = ref(context.attrs.class || '')
     const wrapperStyle = ref(context.attrs.style)
-    let resetFields = null
-    let validate = null
-    let clearValidate = null
-    onMounted(() => {
-      resetFields = form.value.resetFields
-      validate = form.value.validate
-      clearValidate = form.value.clearValidate
-    })
+    let resetFields = computed(() => form.value.resetFields)
+    let validate = computed(() => form.value.validate)
+    let clearValidate = computed(() => form.value.clearValidate)
     return {
       props,
       form,

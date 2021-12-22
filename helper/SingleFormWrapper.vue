@@ -1,7 +1,7 @@
 <template>
   <x-form v-if="rules">
     <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value">
-      <slot></slot>
+      <slot v-bind="events"></slot>
     </x-form-item>
   </x-form>
   <slot v-else></slot>
@@ -26,6 +26,10 @@ export default {
       type: Array,
       default: () => []
     },
+    value: {
+      type: [String, Number, Boolean],
+      default: ''
+    },
     errorTipPosition: {
       type: String,
       default: 'top'
@@ -35,14 +39,14 @@ export default {
     const { rules, value } = toRefs(props)
     const hiddenForm = computed(() => {
       return {
-        value,
+        value: value.value,
       }
     })
     const hiddenRules = ref({ value: rules })
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const events = computed(() => {
       return (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
-        const key = item.trigger
+        const key = `on${upperFirstLetter(item.trigger)}`
         return {
           [key]: () => {
             validate('value', { trigger: item.trigger })
@@ -57,6 +61,7 @@ export default {
       resetFields,
       validate,
       clearValidate,
+      events
     }
   },
 }
