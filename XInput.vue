@@ -42,9 +42,9 @@ export default {
     // 表单class
     const wrapperClass = ref(context.attrs.class || '')
     const wrapperStyle = ref(context.attrs.style)
-    let resetFields = computed(() => form.value.resetFields)
-    let validate = computed(() => form.value.validate)
-    let clearValidate = computed(() => form.value.clearValidate)
+    const resetFields = computed(() => form.value.resetFields)
+    const validate = computed(() => form.value.validate)
+    const clearValidate = computed(() => form.value.clearValidate)
     return {
       props,
       form,
