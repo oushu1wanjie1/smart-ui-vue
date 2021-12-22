@@ -12,6 +12,9 @@
       @if $isActive { display: none; }
       @else { display: inline-block; }
     }
+    &.x-ant-input-icon-color-variant {
+      @if $isActive { color: $color-primary-blue }
+    }
   }
 }
 
