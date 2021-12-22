@@ -3,6 +3,8 @@
 
 .smartui-anchor-link:not(.raw) {
   &.ant-anchor-link {
+    padding-top: 20px;
+    padding-bottom: 20px;
     .ant-anchor-link-title {
       position: relative;
       overflow: visible;
