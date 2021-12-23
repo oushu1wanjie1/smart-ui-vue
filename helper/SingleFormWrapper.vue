@@ -4,7 +4,7 @@
       <slot v-bind="events"></slot>
     </x-form-item>
   </x-form>
-  <slot v-else></slot>
+  <slot v-else v-bind="events"></slot>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
         value: value.value,
       }
     })
-    const hiddenRules = ref({ value: rules })
+    const hiddenRules = ref({ value: rules.value || [] })
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const events = computed(() => {
       return (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
