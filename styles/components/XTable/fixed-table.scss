@@ -13,6 +13,13 @@
 }
 
 @mixin fixed-table-row-hover {
+  // 当表格配置中有ellipsis(文本溢出省略)的时候，即使没有固定列，表格也会有class ant-table-layout-fixed，需要兼容该情况
+  .ant-table-tbody > tr:hover > td:not(.ant-table-cell-fix-left):first-of-type:before {
+    @include row-hover-base;
+    border-top: 1px solid $color-text-comment;
+    border-bottom: 1px solid $color-text-comment;
+    border-radius: 4px;
+  }
   // 非fixed部分，只有border-top和border-bottom
   // 取.ant-table-cell-fix-left-last后的第一个元素
   .ant-table-tbody > tr:hover > td.ant-table-cell-fix-left-last + td:before {
