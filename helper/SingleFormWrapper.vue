@@ -10,7 +10,7 @@
 <script>
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import { computed, onUpdated, ref, toRefs } from 'vue'
+import {computed, nextTick, onUpdated, ref, toRefs} from 'vue'
 import { useForm } from 'ant-design-vue/es/form'
 
 export function upperFirstLetter(str = '') {
@@ -45,11 +45,14 @@ export default {
     const hiddenRules = ref({ value: rules.value || [] })
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const events = computed(() => {
-      return (rules.value || []).filter(rule => rule.trigger).reduce((prev, item) => {
-        const key = `on${upperFirstLetter(item.trigger)}`
+      return (rules.value || []).map(item => item.trigger || 'change').flat().reduce((prev, item) => {
+        const key = item
         return {
+          ...prev,
           [key]: () => {
-            validate('value', { trigger: item.trigger })
+            nextTick(() => {
+              validate('value', { trigger: [item, 'change'] })
+            })
           }
         }
       }, {})

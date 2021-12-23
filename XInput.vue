@@ -1,7 +1,7 @@
 <template>
   <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition" :value="value">
     <template #default="formEvents">
-      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props, ...formEvents }" :style="wrapperStyle">
+      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props }" :style="wrapperStyle" v-on="formEvents">
         <template v-for="item in slots" v-slot:[item]>
           <slot :name="item"></slot>
         </template>
