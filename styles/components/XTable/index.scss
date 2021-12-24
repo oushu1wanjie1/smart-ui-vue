@@ -2,6 +2,7 @@
 @import '../../mixins';
 @import './fixed-table.scss';
 @import './table-with-divider.scss';
+@import '../XCheckbox.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -53,13 +54,13 @@
     // 表格tr
     .ant-table-tbody > tr {
       position: relative;
-      height: 40px;
     }
     // 表格td
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
-      padding: 10px 15px;
+      padding: 7px 15px;
+      height: 20px;
 
       // td中的btn-link配置
       .ant-btn-link {
@@ -75,6 +76,10 @@
     // 取消默认的表格hover样式
     .ant-table-tbody > tr:hover > td {
       background-color: white;
+    }
+    // 选择框与x-checkbox样式一致
+    .ant-table-selection, .ant-table-selection-column {
+      @include checkbox-style;
     }
   }
 }
