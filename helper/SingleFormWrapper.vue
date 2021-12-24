@@ -10,7 +10,7 @@
 <script>
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import {computed, nextTick, onUpdated, ref, toRefs} from 'vue'
+import { computed, nextTick, onUpdated, ref, toRefs } from 'vue'
 import { useForm } from 'ant-design-vue/es/form'
 
 export function upperFirstLetter(str = '') {
