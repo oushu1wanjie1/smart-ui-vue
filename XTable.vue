@@ -38,16 +38,14 @@ export default defineComponent({
       let result = [...props.columns]
       result = result.map(item => {
         const it = { ...item }
-        console.log('it', it)
         if (props.divider || item.divider) {
           let render = null
           if ((it.slots && it.slots.customRender) || it.customRender) {
             render = it.slots.customRender || it.customRender
-            if (it.slots.customRender) delete it.slots.customRender
-            else if (it.customRender) delete it.customRender
           }
           return {
             ...it,
+            slots: { ...it.slots, customRender: undefined },
             customRender: (args) => {
               return {
                 children: h('div', { className: 'td-with-divider' }, render ? context.slots[render](args) : args.text),
