@@ -1,0 +1,13 @@
+@import '../variables';
+@import '../mixins';
+
+.smartui-a:not(.raw) {
+  &.smartui-a {
+    font-size: $font-size-normal;
+    color: $color-text;
+
+    &:hover {
+      color: $color-primary-blue;
+    }
+  }
+}
