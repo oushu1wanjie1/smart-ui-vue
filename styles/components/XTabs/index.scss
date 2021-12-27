@@ -13,6 +13,9 @@
       .ant-tabs-tab {
         padding: 0 0 10px 0;
         @include font-normal();
+        .x-ant-tabs-icon-active { display: none; }
+        .x-ant-tabs-icon-inactive { display: inline; }
+
 
         // 覆盖默认间距
         .anticon {
@@ -29,10 +32,14 @@
 
       .ant-tabs-tab-active {
         color: $color-primary-blue;
+        .x-ant-tabs-icon-active { display: inline; }
+        .x-ant-tabs-icon-inactive { display: none; }
       }
 
       .ant-tabs-tab:hover {
         color: $color-primary-blue;
+        .x-ant-tabs-icon-active { display: inline; }
+        .x-ant-tabs-icon-inactive { display: none; }
       }
 
       // tab 间距
