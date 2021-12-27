@@ -1,5 +1,5 @@
 <template>
-  <a-dropdown>
+  <a-dropdown v-bind="{...props}">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -12,6 +12,7 @@ export default {
   name: 'XDropdown',
   setup(props: Prop<any>, context: any ) {
     return {
+      props,
       slots: computed(() => Object.keys(context.slots))
     }
   }
