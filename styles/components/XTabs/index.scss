@@ -31,13 +31,11 @@
       }
 
       .ant-tabs-tab-active {
-        color: $color-primary-blue;
         .x-ant-tabs-icon-active { display: inline; }
         .x-ant-tabs-icon-inactive { display: none; }
       }
 
       .ant-tabs-tab:hover {
-        color: $color-primary-blue;
         .x-ant-tabs-icon-active { display: inline; }
         .x-ant-tabs-icon-inactive { display: none; }
       }
