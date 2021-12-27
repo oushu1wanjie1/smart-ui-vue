@@ -1,8 +1,6 @@
 <template>
-  <a-spin>
-    <template v-for="item in slots" v-slot:[item]>
-      <slot :name="item"></slot>
-    </template>
+  <a-spin class="smartui-spin">
+    <slot></slot>
   </a-spin>
 </template>
 
@@ -19,6 +17,6 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import './styles/components/XSpin.scss';
 </style>
