@@ -51,12 +51,12 @@ $btn-primary-active-bg-color: #4343FF;
 // -----【线性】按钮的配色-----
 // 正常配色
 $btn-default-color: $btn-color-primary-blue;
-$btn-default-bg-color: $white;
+$btn-default-bg-color: transparent;
 $btn-default-border-color: $btn-color-primary-blue;
 
 // 禁用配色
 $btn-default-disabled-color: $btn-disabled-color;
-$btn-default-disabled-bg-color: $white;
+$btn-default-disabled-bg-color: transparent;
 $btn-default-disabled-border-color: $btn-border-color-base;
 
 // 点击配色
