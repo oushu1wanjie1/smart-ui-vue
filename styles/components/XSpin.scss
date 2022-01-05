@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: center;
     .ant-spin-dot {
-      transform: (-50%, -50%);
-      margin: 0;
+      transform: translate(-50%, -50%);
+      margin: 0 !important;
     }
     .ant-spin-text {
       padding-top: 30px;
