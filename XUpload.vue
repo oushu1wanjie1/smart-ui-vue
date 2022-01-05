@@ -1,22 +1,22 @@
 <template>
-  <a-dropdown v-bind="{...props}">
+  <a-upload>
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
-  </a-dropdown>
+  </a-upload>
 </template>
 
 <script lang="ts">
-import { computed, Prop } from 'vue'
-export default {
-  name: 'XDropdown',
-  setup(props: Prop<any>, context: any ) {
+import { computed, defineComponent, Prop } from 'vue'
+
+export default defineComponent({
+  name: 'XUpload',
+  setup(props, context) {
     return {
-      props,
       slots: computed(() => Object.keys(context.slots))
     }
   }
-}
+})
 </script>
 
 <style scoped>

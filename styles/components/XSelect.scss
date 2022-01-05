@@ -20,7 +20,7 @@
   // 某些组件会硬写 width，导致宽度不够。
   // 例如 a-table 的 pagination
   width: unset !important;
-  padding: 40px 20px;
+  padding: 10px;
   @include font-normal();
   color: $color-primary-black;
   border-radius: 0 0 4px 4px;
@@ -43,7 +43,7 @@
     }
 
     .ant-select-item-option-selected {
-      color: #4386FF;
+      color: #336CFF;
       background-color: unset;
     }
 
