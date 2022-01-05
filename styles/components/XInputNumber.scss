@@ -1,7 +1,7 @@
 @import '../variables';
 @import '../mixins';
 
-.smartui-number-input {
+.smartui-number-input:not(.raw) {
   margin-left: 46px;
   margin-right: 46px;
   width: 120px;

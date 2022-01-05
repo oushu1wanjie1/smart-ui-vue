@@ -41,6 +41,9 @@
     &:not(.ant-input[disabled]):focus {
       @include input-underline($color-primary-blue);
     }
+    &.ant-input[disabled] {
+      background: transparent;
+    }
   }
 
 
