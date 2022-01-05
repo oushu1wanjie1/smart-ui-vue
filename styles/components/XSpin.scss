@@ -4,7 +4,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 200px;
+    .ant-spin-dot {
+      transform: (-50%, -50%);
+      margin: 0;
+    }
+    .ant-spin-text {
+      padding-top: 30px;
+    }
   }
 }
