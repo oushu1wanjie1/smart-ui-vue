@@ -1,6 +1,7 @@
 .smartui-spin:not(.raw) {
   &.ant-spin {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }

@@ -76,7 +76,7 @@
   @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
 
   &:not(.ant-btn[disabled]):hover {
-    transform: translateY(-2px);
+    //transform: translateY(-2px);
   }
 }
 
