@@ -41,6 +41,13 @@
       margin-left: $btn-margin-xs;
     }
 
+    // icon 的颜色与字体保持一直
+    // work premise：icon 为单色 svg，且 color 为 currentColor
+    > .icon {
+      color: inherit !important;
+      transition: unset !important;
+    }
+
     svg {
       width: $btn-anticon-svg-width;
       height: $btn-anticon-svg-height;
