@@ -4,6 +4,10 @@
     border-bottom: none;
   }
 
+  .ant-drawer-mask {
+    background-color: rgba(234, 234, 234, 0.8);
+  }
+
   // 默认不遮盖 header
   .ant-drawer-right {
     top: 74px;
