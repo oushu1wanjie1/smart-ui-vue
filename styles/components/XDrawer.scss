@@ -10,7 +10,8 @@
 
   // 默认不遮盖 header
   .ant-drawer-right {
-    top: 74px;
+    top: 60px;
+    height: calc(100% - 60px)
   }
 
   // 例外情况，遮盖 header
