@@ -31,8 +31,22 @@ export function getModelName(formItemType: any) {
   }
 }
 
+export function upperFirstLetter(str = '') {
+  if (!str.length) return ''
+  return str[0].toUpperCase() + str.substring(1)
+}
+
+export function excludeEventsInProps(propsObj: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {}
+  for(let key in propsObj) {
+    if (!/^on[A-Z]\w+$/.test(key)) result[key] = propsObj[key]
+  }
+  return result
+}
+
 export default {
   useModel,
   getModelType,
   getModelName,
+  upperFirstLetter
 }

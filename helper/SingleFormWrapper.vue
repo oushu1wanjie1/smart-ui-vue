@@ -7,17 +7,14 @@
   <slot v-else v-bind="events"></slot>
 </template>
 
-<script>
+<script lang="ts">
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import { computed, nextTick, onUpdated, ref, toRefs } from 'vue'
-import { useForm } from 'ant-design-vue/es/form'
+import {computed, defineComponent, nextTick, ref, toRefs} from 'vue'
+import {useForm} from 'ant-design-vue/es/form'
 
-export function upperFirstLetter(str = '') {
-  if (!str.length) return ''
-  return str[0].toUpperCase() + str.substring(1)
-}
-export default {
+
+export default defineComponent({
   inheritAttrs: false,
   name: 'SingleFormWrapper',
   components: { XFormItem, XForm },
@@ -35,7 +32,7 @@ export default {
       default: 'top'
     }
   },
-  setup(props, context) {
+  setup(props) {
     const { rules, value } = toRefs(props)
     const hiddenForm = computed(() => {
       return {
@@ -45,13 +42,12 @@ export default {
     const hiddenRules = ref({ value: rules.value || [] })
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const events = computed(() => {
-      return (rules.value || []).map(item => item.trigger || 'change').flat().reduce((prev, item) => {
-        const key = item
+      return (rules.value || []).map((item: unknown) => (<Record<string, any>>item).trigger || 'change').flat().reduce((prev, item) => {
         return {
           ...prev,
-          [key]: () => {
+          [item]: () => {
             nextTick(() => {
-              validate('value', { trigger: [item, 'change'] })
+              validate('value', { trigger: [item] })
             })
           }
         }
@@ -67,7 +63,7 @@ export default {
       events
     }
   },
-}
+})
 </script>
 
 <style lang="scss">
