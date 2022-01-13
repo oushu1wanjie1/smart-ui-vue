@@ -45,7 +45,7 @@ $btn-primary-bg-color: $btn-color-primary-blue;
 $btn-primary-disabled-color: $btn-disabled-color;
 $btn-primary-disabled-bg-color: $btn-disabled-bg-color;
 
-// 点击配色（较正常配色，仅变换背景色）
+// active 配色（较正常配色，仅变换背景色）
 $btn-primary-active-bg-color: #4343FF;
 
 // -----【线性】按钮的配色-----
@@ -59,7 +59,12 @@ $btn-default-disabled-color: $btn-disabled-color;
 $btn-default-disabled-bg-color: transparent;
 $btn-default-disabled-border-color: $btn-border-color-base;
 
-// 点击配色
+// hover、focus 配色
+$btn-default-hover-focus-color: $white;
+$btn-default-hover-focus-bg-color: $btn-color-primary-blue;
+$btn-default-hover-focus-border-color: $btn-color-primary-blue;
+
+// active 配色
 $btn-default-active-color: $white;
 $btn-default-active-bg-color: $btn-color-primary-blue;
 $btn-default-active-border-color: $btn-color-primary-blue;
@@ -84,7 +89,7 @@ $btn-big-disabled-color: $btn-disabled-color;
 $btn-big-disabled-bg-color: $white;
 $btn-big-disabled-border-color: $line-deep;
 
-// 点击配色
+// active 配色
 $btn-big-active-color: $btn-text-color;
 $btn-big-active-bg-color: $white;
 $btn-big-active-border-color: $btn-color-primary-blue;

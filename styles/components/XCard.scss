@@ -4,7 +4,7 @@
 .smartui-card:not(.raw) {
   &.ant-card {
     border-radius: 4px;
-    border-color: $color-line-bold;
+    border-color: $color-line-bold 60%;
 
     .ant-card-body {
       padding: 15px 15px 10px 15px;

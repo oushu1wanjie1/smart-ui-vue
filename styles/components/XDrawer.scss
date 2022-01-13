@@ -1,6 +1,23 @@
-.smartui-drawer:not(.raw){
+.smartui-drawer:not(.raw) {
   .ant-drawer-header {
-    background: transparent;
+    // 去掉默认的线
     border-bottom: none;
+  }
+
+  .ant-drawer-mask {
+    background-color: rgba(234, 234, 234, 0.8);
+  }
+
+  // 默认不遮盖 header
+  .ant-drawer-right {
+    top: 60px;
+    height: calc(100% - 60px)
+  }
+
+  // 例外情况，遮盖 header
+  &[fullScreen="true"] {
+    .ant-drawer-content-wrapper {
+      top: 0;
+    }
   }
 }
