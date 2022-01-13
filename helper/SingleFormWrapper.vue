@@ -10,8 +10,8 @@
 <script lang="ts">
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import {computed, defineComponent, nextTick, ref, toRefs} from 'vue'
-import {useForm} from 'ant-design-vue/es/form'
+import { computed, defineComponent, nextTick, ref, toRefs } from 'vue'
+import { useForm } from 'ant-design-vue/es/form'
 
 
 export default defineComponent({

@@ -38,7 +38,7 @@ export function upperFirstLetter(str = '') {
 
 export function excludeEventsInProps(propsObj: Record<string, any>): Record<string, any> {
   const result: Record<string, any> = {}
-  for(let key in propsObj) {
+  for (const key in propsObj) {
     if (!/^on[A-Z]\w+$/.test(key)) result[key] = propsObj[key]
   }
   return result
