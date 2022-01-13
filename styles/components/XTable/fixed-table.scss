@@ -31,6 +31,10 @@
     border-bottom: 1px solid $color-text-comment;
     border-radius: 4px;
   }
+  // 最后一行因为没有border-bottom，所以不用这1px
+  .ant-table-tbody > tr:last-of-type:hover > td.ant-table-cell-fix-left-last + td:before {
+    height: 100%
+  }
   // fixed左边部分，只有border-top和border-bottom
   .ant-table-tbody > tr:hover > td.ant-table-cell-fix-left:before {
     @include row-hover-base;
@@ -56,3 +60,13 @@
     border-radius: 0 4px 4px 0;
   }
 }
+
+// fix table-diveder
+@mixin fixed-table-divider {
+  &.ant-table-ping-left {
+    .ant-table-tbody > tr > td.ant-table-cell-fix-left-last > .td-with-divider:after {
+      display: none;
+    }
+  }
+}
+
