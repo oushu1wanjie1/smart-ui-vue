@@ -15,6 +15,10 @@
   .ant-form-item-explain-success {
     display: none;
   }
+  // validating提示不显示
+  .ant-form-item-explain-validating {
+    display: none;
+  }
   // 错误提示
   // 通用样式
   .ant-form-item-explain-error {
