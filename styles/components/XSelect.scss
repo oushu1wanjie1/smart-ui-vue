@@ -160,8 +160,6 @@
   // 某些组件会硬写 width，导致宽度不够。
   // 例如 a-table 的 pagination
   width: unset !important;
-  // 最小宽度
-  min-width: 120px !important;
   padding: 10px;
   @include font-normal();
   color: $color-primary-black;
