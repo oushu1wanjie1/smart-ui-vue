@@ -10,8 +10,9 @@
 <script lang="ts">
 import XForm from '../XForm.vue'
 import XFormItem from '../XFormItem.vue'
-import { computed, defineComponent, nextTick, ref, toRefs } from 'vue'
+import { computed, defineComponent, nextTick, ref, toRefs, PropType } from 'vue'
 import { useForm } from 'ant-design-vue/es/form'
+import { Props } from 'ant-design-vue/es/form/useForm'
 
 
 export default defineComponent({
@@ -20,7 +21,7 @@ export default defineComponent({
   components: { XFormItem, XForm },
   props: {
     rules: {
-      type: Array,
+      type: Array as PropType<Props[]>,
       default: () => []
     },
     value: {
@@ -42,7 +43,7 @@ export default defineComponent({
     const hiddenRules = ref({ value: rules.value || [] })
     const { clearValidate, resetFields, validate, validateInfos } = useForm(hiddenForm, hiddenRules)
     const events = computed(() => {
-      return (rules.value || []).map((item: unknown) => (<Record<string, any>>item).trigger || 'change').flat().reduce((prev, item) => {
+      return (rules.value || []).map(item => item.trigger || 'change').flat().reduce((prev, item) => {
         return {
           ...prev,
           [item]: () => {

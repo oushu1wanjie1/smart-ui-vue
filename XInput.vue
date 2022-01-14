@@ -13,7 +13,7 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue'
 import SingleFormWrapper from './helper/SingleFormWrapper.vue'
-import { excludeEventsInProps, upperFirstLetter } from './utils'
+import { excludeEventsInProps, isPropsStyleEventName, toNormalEventName, upperFirstLetter } from './utils'
 import { Input } from 'ant-design-vue'
 export default defineComponent({
   name: 'XInput',
@@ -50,22 +50,18 @@ export default defineComponent({
     const mergedEvents = computed(() => {
       const result: Record<string, unknown> = {}
       // 获取用户自定义事件的key
-      const userEvent = Object.keys(context.attrs).filter(key => /^on[A-Z]\w+$/.test(key))
-      for (const key of userEvent) {
-        if (form.value && form.value.events[key.substring(2).toLowerCase()]) {
-          result[key.substring(2).toLowerCase()] = () => {
-            // eslint-disable-next-line @typescript-eslint/ban-types
-            (<Function>context.attrs[key])()
-            if (form.value) form.value.events[key.substring(2).toLowerCase()]()
+      const userEvent = Object.keys(context.attrs).filter(isPropsStyleEventName)
+      userEvent.forEach((key) => {
+        const normalEventName = toNormalEventName(key)
+        if (form.value && form.value.events && form.value.events[normalEventName]) {
+          result[normalEventName] = () => {
+            (<() => unknown>context.attrs[key])()
+            if (form.value) form.value.events[normalEventName]()
           }
         } else {
-          result[key.substring(2).toLowerCase()] = () => {
-
-            // eslint-disable-next-line @typescript-eslint/ban-types
-            (<Function>context.attrs[key])()
-          }
+          result[normalEventName] = context.attrs[key]
         }
-      }
+      })
       return result
     })
     return {
