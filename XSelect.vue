@@ -1,13 +1,56 @@
 <template>
-  <a-select
-    class="smartui-select"
-    v-model:value="valueLocal"
-    v-bind="mergedAttrs"
-  >
-    <template v-for="item in slots" v-slot:[item]>
-      <slot :name="item"></slot>
-    </template>
-  </a-select>
+  <template v-if="slots.includes('prefixIcon')">
+    <!-- 自定义前缀 icon -->
+    <div class="smartui-select-with-prefix-icon" :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '']" :borderedNormal="borderedNormal">
+      <a-select
+        class="smartui-select"
+        v-model:value="valueLocal"
+        v-bind="mergedAttrs"
+        :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
+      >
+        <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]>
+          <slot :name="item"></slot>
+        </template>
+        <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
+        <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
+          <icon name="worksheet/arrow" class="x-select-custom-arrow"/>
+        </template>
+        <!-- 未自定义 notFoundContent 时 -->
+        <template v-if="!slots.includes('notFoundContent')" v-slot:notFoundContent>
+          <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <icon name="ui-select/select_not_found_content" class="x-select-custom-arrow" style="width: 80px;height: 80px;" image/>
+            <p>暂无搜索结果</p>
+          </div>
+        </template>
+      </a-select>
+      <span class="smartui-select-prefix-icon">
+        <slot name="prefixIcon"/>
+      </span>
+    </div>
+  </template>
+  <template v-else>
+    <a-select
+      class="smartui-select"
+      v-model:value="valueLocal"
+      v-bind="mergedAttrs"
+      :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
+    >
+      <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]>
+        <slot :name="item"></slot>
+      </template>
+      <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
+      <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
+        <icon name="worksheet/arrow" class="x-select-custom-arrow"/>
+      </template>
+      <!-- 未自定义 notFoundContent 时 -->
+      <template v-if="!slots.includes('notFoundContent')" v-slot:notFoundContent>
+        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+          <icon name="ui-select/select_not_found_content" class="x-select-custom-arrow" style="width: 80px;height: 80px;" image/>
+          <p>暂无搜索结果</p>
+        </div>
+      </template>
+    </a-select>
+  </template>
 </template>
 
 <script>
@@ -18,6 +61,8 @@
 import { useModel } from './utils'
 import { computed, onBeforeUpdate, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
+import { Select } from 'ant-design-vue'
+import Icon from '@/components/Icon'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
 const AUTO_LOAD_OFFSET = 0.2
@@ -26,8 +71,25 @@ const DEBOUNCE_GAP = 800
 
 export default {
   name: 'XSelect',
+  components: { Icon },
   inheritAttrs: false,
   props: {
+    ...Select.props,
+    /**
+     * 无操作状态、禁用状态时，是否显示边框
+     */
+    borderedNormal: {
+      type: Boolean,
+      default: true,
+    },
+    /**
+     * 是否为只寸下划线、表单内出现用来输入的形式
+     * 名字取的不是很合理
+     */
+    isInForm: {
+      type: Boolean,
+      default: false,
+    },
     value: [String, Number, Array],
     /**
      * 扩展功能 - 滚动到底时是否自动异步加载
@@ -108,6 +170,7 @@ export default {
     const updateAttrs = () => {
       const result = {
         ...context.attrs,
+        ...props,
         onSearch: handleSearch,
         onFocus: handleFocus,
         onDropdownVisibleChange: handleDropdownVisibleChange,

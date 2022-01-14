@@ -1,17 +1,157 @@
-.smartui-select {
-  .ant-select-arrow .icon {
+.width-100 {
+  width: 100%;
+}
+
+.smartui-select.ant-select {
+  @include font-small();
+
+  &:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      padding: 0 9px;
+      background-color: transparent;
+    }
+
+    &.ant-select-disabled {
+      .ant-select-selector {
+        color: $color-text-comment;
+        background-color: transparent;
+      }
+
+      &.ant-select-show-arrow .ant-select-arrow .x-select-custom-arrow {
+        color: $color-line-bold;
+      }
+    }
+  }
+
+  &:not(.ant-select-customize-input).ant-select-show-arrow {
+    .ant-select-selector {
+      padding-right: 27px;
+    }
+
+    .ant-select-arrow {
+      right: 9px;
+      width: 18px;
+      height: 18px;
+      margin-top: -9px;
+
+      .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transition: all .3s;
+        transform: translate(-50%, -50%);
+      }
+
+      // 定制箭头
+      .x-select-custom-arrow {
+        color: $color-text-comment
+      }
+    }
+  }
+
+  // 下拉框展开式定制箭头旋转
+  &:not(.ant-select-customize-input).ant-select-show-arrow.ant-select-open {
+    .x-select-custom-arrow {
+      transform: translate(-50%, -50%) rotate(180deg);
+    }
+  }
+
+  &.ant-select-single {
+    .ant-select-selector .ant-select-selection-search {
+      right: 9px;
+      left: 9px;
+    }
+
+    &.ant-select-show-arrow .ant-select-selection-search {
+      right: 37px
+    }
+  }
+
+
+  &.ant-select-single.ant-select-show-arrow .ant-select-selection-item,
+  &.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
+    padding-right: 10px;
+  }
+
+  // 无操作状态、禁用状态时，无边框
+  &:not(.ant-select-focused):not(:hover).smartui-select-no-bordered-normally,
+  &.ant-select-disabled.smartui-select-no-bordered-normally {
+    width: unset !important;
+
+    .ant-select-selector {
+      border-color: transparent;
+    }
+  }
+
+  // 表单内状态
+  &:not(.ant-select-customize-input).smartui-select-in-form {
+    width: 100%;
+    @include font-normal();
+
+    .ant-select-selector {
+      width: 100%;
+      height: 50px;
+      line-height: 48px;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-left-color: transparent !important;
+      border-radius: 0;
+      box-shadow: none !important;
+
+      &::after {
+        line-height: 48px;
+      }
+
+      .ant-select-selection-search-input {
+        height: 100%;
+        line-height: 48px;
+      }
+    }
+
+    &.ant-select-single .ant-select-selector .ant-select-selection-item,
+    &.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+      line-height: 48px;
+    }
+  }
+}
+
+.smartui-select-with-prefix-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: none;
+
+  &[borderedNormal="false"]:not(:focus):not(:active):not(:hover):not(:focus-within) {
+    width: unset;
+  }
+
+  .smartui-select-prefix-icon {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 9px;
+    z-index: -1;
+    transform: translateY(-50%);
   }
 
-  .ant-select-selector {
-    padding: 0 10px;
-  }
+  .ant-select:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      // 设计稿上的 33 = panding-left + border-left-width
+      padding-left: 32px;
 
-  .ant-select-selection-placeholder {
-    font-size: 12px;
+      .ant-select-selection-search {
+        left: 32px;
+      }
+    }
+  }
+}
+
+.smartui-select-with-prefix-icon-disabled {
+  cursor: not-allowed;
+
+  .smartui-select-prefix-icon {
+    opacity: .3;
   }
 }
 
@@ -20,15 +160,23 @@
   // 某些组件会硬写 width，导致宽度不够。
   // 例如 a-table 的 pagination
   width: unset !important;
+  // 最小宽度
+  min-width: 120px !important;
   padding: 10px;
   @include font-normal();
   color: $color-primary-black;
   border-radius: 0 0 4px 4px;
 
   .ant-select-dropdown-content {
+    .ant-select-item-empty {
+      @include font-small();
+      color: $color-text-comment;
+    }
+
     .rc-virtual-list-scrollbar {
       width: 4px !important;
     }
+
     // 滚动条
     .rc-virtual-list-scrollbar-thumb {
       background-color: $color-primary-blue !important;
