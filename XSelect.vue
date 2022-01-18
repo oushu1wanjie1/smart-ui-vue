@@ -8,8 +8,8 @@
         v-bind="mergedAttrs"
         :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
       >
-        <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]>
-          <slot :name="item"></slot>
+        <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]="scope">
+          <slot :name="item" v-bind="scope"></slot>
         </template>
         <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
         <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
@@ -35,8 +35,8 @@
       v-bind="mergedAttrs"
       :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
     >
-      <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]>
-        <slot :name="item"></slot>
+      <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]="props">
+        <slot :name="item" v-bind="{...props}"></slot>
       </template>
       <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
       <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
@@ -113,7 +113,10 @@ export default {
     // props
     const { isAutoLoadMore } = toRefs(props)
     // 全部slots
-    const slots = computed(() => Object.keys(context.slots))
+    const slots = computed(() => {
+      console.log(context.slots)
+      return Object.keys(context.slots)
+    })
     // 内置翻页页数
     let page = 1
     // 可输入状态下，缓存的输入内容

@@ -16,6 +16,11 @@
       @include btn-primary();
     }
 
+    // text 配色，icon 专用
+    &-text {
+      @include btn-text();
+    }
+
     // 超大按钮配色
     &-lg {
       @include btn-lg();
@@ -44,7 +49,7 @@
     // icon 的颜色与字体保持一直
     // work premise：icon 为单色 svg，且 color 为 currentColor
     > .icon {
-      color: inherit !important;
+      color: inherit;
       transition: unset !important;
     }
 

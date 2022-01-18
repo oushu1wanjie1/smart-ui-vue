@@ -87,6 +87,25 @@
   @include button-variant-primary($btn-primary-color, $btn-primary-bg-color);
 }
 
+@mixin btn-text() {
+  // 目前为 icon 专用，
+  padding: 3px;
+  height: unset;
+
+  @include button-variant-other($btn-text-default-color, $btn-text-bg-color, $btn-text-border-color);
+
+  &:hover,
+  &:focus {
+    @include button-variant-other($btn-text-hover-focus-color, $btn-text-hover-focus-bg-color, $btn-text-hover-focus-border-color)
+  }
+
+  &:active {
+    @include button-variant-other($btn-text-active-color, $btn-text-active-bg-color, $btn-text-active-border-color)
+  }
+
+  @include button-disabled($btn-text-disabled-color, $btn-text-disabled-bg-color, $btn-text-disabled-border-color)
+}
+
 // 线性按钮
 // default（默认） button 配色的配置接口
 @mixin btn-default() {
