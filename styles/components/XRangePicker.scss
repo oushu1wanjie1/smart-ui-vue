@@ -1,8 +1,0 @@
-@import '../mixins';
-@import '../variables';
-
-.smartui-range-picker {
-  .ant-calendar-picker-input {
-    @include input-underline($color-line-bold);
-  }
-}

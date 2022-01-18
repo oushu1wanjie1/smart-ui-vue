@@ -77,3 +77,29 @@ export function excludeEventsInProps(propsObj: Record<string, any>): Record<stri
   return result
 }
 
+
+/**
+ * 删除 undefined 的属性
+ * - 如果传了参数propKeys，则对propKeys的每一项进行检查，如果没有传值，则在propsObj中删除
+ * - 否则，对所有propsObj内的key进行上述检查
+ * @param propsObj
+ * @param propKeys
+ */
+export function excludeNotExistProps(propsObj: Record<string, any>, propKeys?: string[]): Record<string, any> {
+  const result: Record<string, any> = { ...propsObj }
+  if (propKeys) {
+    propKeys.forEach((propKey: string) => {
+      if (result[propKey] === undefined) {
+        delete result[propKey]
+      }
+    })
+  } else {
+    Object.keys(result).forEach((key: string) => {
+      if (result[key] === undefined) {
+        delete result[key]
+      }
+    })
+  }
+  return result
+}
+
