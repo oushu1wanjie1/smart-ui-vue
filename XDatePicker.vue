@@ -17,10 +17,12 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, defineComponent, Ref, ref } from 'vue'
 import { DatePicker } from 'ant-design-vue'
-import { excludeNotExistProps, useModel } from "@/smart-ui-vue/utils";
-import Icon from "./helper/Icon.vue";
+import { excludeNotExistProps, useModel } from '@/smart-ui-vue/utils'
+import Icon from './helper/Icon.vue'
 
 export default defineComponent({
   name: 'XDatePicker',

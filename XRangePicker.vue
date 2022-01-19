@@ -11,21 +11,22 @@
         <slot :name="item"></slot>
       </template>
       <template v-if="!(slots&&slots.includes('suffixIcon'))" #suffixIcon>
-        <icon name="ui-date-pick/calendar" color="#85888C"></icon>
+        <icon color="#85888C" name="ui-date-pick/calendar"></icon>
       </template>
     </a-range-picker>
   </div>
 </template>
 
 <script>
-import {computed} from 'vue'
-import {DatePicker} from "ant-design-vue";
-import {excludeNotExistProps, useModel} from "@/smart-ui-vue/utils";
-import Icon from "@/components/Icon";
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { computed } from 'vue'
+import { DatePicker } from 'ant-design-vue'
+import { excludeNotExistProps, useModel } from '@/smart-ui-vue/utils'
+import Icon from '@/components/Icon'
 
 export default {
   name: 'XRangePicker',
-  components: {Icon},
+  components: { Icon },
   inheritAttrs: false,
   props: {
     ...DatePicker.props,
