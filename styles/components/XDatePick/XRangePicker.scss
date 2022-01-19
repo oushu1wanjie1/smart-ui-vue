@@ -1,0 +1,53 @@
+@import '../../mixins';
+@import '../../variables';
+
+.smartui-range-picker:not(.raw) {
+  border-bottom: 1px solid $color-line-bold;
+
+  &:hover {
+    border-bottom-color: #85888C;
+  }
+
+  .time-split-box {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 151px;
+    top: 0;
+    bottom: 0;
+  }
+
+  .ant-calendar-range-picker-input {
+    text-align: left;
+  }
+
+  .ant-calendar-picker-input {
+    @include input-underline($color-line-bold);
+    border-bottom: none;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .ant-calendar-range-picker-input:last-of-type {
+    margin-left: 10px;
+  }
+
+  span.ant-calendar-picker {
+    padding: 0 0;
+  }
+
+  .ant-calendar-picker:focus .ant-calendar-picker-input {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .ant-calendar-range-picker-separator {
+    opacity: 0;
+  }
+
+  svg.icon.ant-calendar-picker-icon {
+    right: 0;
+  }
+}
