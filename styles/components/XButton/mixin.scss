@@ -153,6 +153,7 @@
 @mixin btn-link {
   @include button-variant-other($btn-default-color, transparent, transparent);
   border: none;
+  font-size: 14px;
 
   &:hover {
     // 去除上浮效果
@@ -166,4 +167,13 @@
   }
 
   @include button-disabled($btn-default-disabled-color, $btn-default-disabled-bg-color, $btn-default-disabled-border-color);
+}
+
+// circle样式
+@mixin btn-circle {
+  @include button-variant-other($btn-default-color, transparent, transparent);
+  border-radius: $btn-height-base;
+  height: $btn-height-base;
+  width: $btn-height-base;
+  padding: 0;
 }

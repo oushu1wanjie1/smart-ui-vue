@@ -30,6 +30,10 @@
       @include btn-link();
     }
 
+    &-circle {
+      @include btn-circle;
+    }
+
     &-block {
       width: 100%;
     }
