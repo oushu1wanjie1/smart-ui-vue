@@ -2,6 +2,22 @@
   .ant-drawer-header {
     // 去掉默认的线
     border-bottom: none;
+    padding: 30px 40px;
+
+    // 标题文字
+    .ant-drawer-title {
+      font-size: 18px;
+      color: $color-primary-black;
+      font-weight: 400;
+    }
+    // 关闭按钮
+    .ant-drawer-close {
+      height: 82px;
+    }
+  }
+
+  .ant-drawer-body {
+    padding: 0 40px;
   }
 
   .ant-drawer-mask {
