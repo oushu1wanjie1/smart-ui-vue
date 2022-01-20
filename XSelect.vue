@@ -9,7 +9,7 @@
         :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
       >
         <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]="scope">
-          <slot :name="item" v-bind="scope"></slot>
+          <slot :name="item" v-bind="{...scope}"></slot>
         </template>
         <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
         <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>

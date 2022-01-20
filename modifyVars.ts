@@ -21,4 +21,6 @@ module.exports = {
   'tooltip-max-width': '200px',
   // 同时适用于 select
   'input-hover-border-color': '#85888C',
+  // 禁用文本配色
+  'disabled-color': '#85888C'
 }
