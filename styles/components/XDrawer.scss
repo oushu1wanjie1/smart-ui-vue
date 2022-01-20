@@ -16,6 +16,27 @@
     }
   }
 
+  // 关闭按钮样式替换遮罩
+  .close-btn-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: white;
+    width: 56px;
+    height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 9999;
+
+    .close-icon {
+      stroke: $color-primary-black;
+      fill: $color-primary-black;
+      color: $color-primary-black;
+    }
+  }
+
   .ant-drawer-body {
     padding: 0 40px;
   }
