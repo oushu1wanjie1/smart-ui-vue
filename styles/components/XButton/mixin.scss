@@ -38,7 +38,7 @@
 
   &:hover,
   &:focus {
-    @include button-color($color, $background-color, $background-color);
+    @include button-color($color, $btn-primary-active-bg-color, $btn-primary-active-bg-color);
   }
 
   &:active {
