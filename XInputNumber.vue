@@ -1,5 +1,5 @@
 <template>
-  <a-input-number v-model:value="value" v-bind="{ ...props }" :class="`smartui-number-input ${wrapperClass}`" :style="{...wrapperStyle}">
+  <a-input-number v-model:value="value" v-bind="{ ...props }" :class="`smartui-number-input`" :style="{...wrapperStyle}">
   </a-input-number>
 </template>
 
@@ -18,7 +18,6 @@ export default {
     ...InputNumber.props
   },
   setup(props, context) {
-    const wrapperClass = ref(context.attrs.class || '')
     const wrapperStyle = ref(context.attrs.style)
     if (wrapperStyle.value && wrapperStyle.value.width === undefined) {
       wrapperStyle.value.width = '120px'
@@ -26,7 +25,6 @@ export default {
 
     return {
       props,
-      wrapperClass,
       wrapperStyle,
       value: useModel('value', props, context),
     }

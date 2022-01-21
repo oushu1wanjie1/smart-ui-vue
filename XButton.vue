@@ -1,5 +1,5 @@
 <template>
-  <a-button :class="`x-btn ${wrapperClass}`" v-bind="{ ...props }" :style="wrapperStyle">
+  <a-button :class="`x-btn`" v-bind="{ ...props }">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -17,14 +17,9 @@ export default defineComponent({
     ...Button.props,
   },
   setup(props, context) {
-    const wrapperClass = ref(context.attrs.class || '')
-    const wrapperStyle = ref(context.attrs.style)
-
     return {
       slots: computed(() => Object.keys(context.slots)),
       props,
-      wrapperClass,
-      wrapperStyle,
     }
   }
 })
