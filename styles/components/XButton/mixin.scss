@@ -24,7 +24,6 @@
   &[disabled] {
     &,
     &:hover,
-    &:focus,
     &:active {
       @include button-color($color, $background-color, $border-color);
     }
@@ -36,8 +35,7 @@
 @mixin button-variant-primary($color, $background-color) {
   @include button-color($color, $background-color, $background-color);
 
-  &:hover,
-  &:focus {
+  &:hover {
     @include button-color($color, $btn-primary-active-bg-color, $btn-primary-active-bg-color);
   }
 
@@ -51,7 +49,6 @@
   &[disabled] {
     &,
     &:hover,
-    &:focus,
     &:active {
       opacity: .3;
     }
@@ -94,8 +91,7 @@
 
   @include button-variant-other($btn-text-default-color, $btn-text-bg-color, $btn-text-border-color);
 
-  &:hover,
-  &:focus {
+  &:hover {
     @include button-variant-other($btn-text-hover-focus-color, $btn-text-hover-focus-bg-color, $btn-text-hover-focus-border-color)
   }
 
@@ -114,8 +110,7 @@
   // 不放到 button-variant-other 中的原因：
   // button-variant-other 考虑后续 button 样式拓展，可能有其他的按钮也会用到，
   // 目前是按照 antd 的格式写的，会有些冗余，后续再进行简化
-  &:hover,
-  &:focus{
+  &:hover, {
     @include button-variant-other($btn-default-hover-focus-color, $btn-default-hover-focus-bg-color, $btn-default-hover-focus-border-color);
   }
 
@@ -142,8 +137,7 @@
     @include button-variant-other($btn-big-color, $btn-big-bg-color, $btn-big-hover-border-color)
   }
 
-  &:active,
-  &:focus {
+  &:active {
     @include button-color($btn-big-active-color, $btn-big-active-bg-color, $btn-big-active-border-color);
   }
 
@@ -161,8 +155,7 @@
   }
 
   &:hover,
-  &:active,
-  &:focus {
+  &:active {
     @include button-variant-other($btn-default-color, transparent, transparent);
   }
 
