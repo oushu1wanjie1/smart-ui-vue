@@ -8,17 +8,38 @@
       }
     }"
   >
-    <template v-for="item in slots" v-slot:[item]="scope">
+    <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
+    </template>
+    <template #filterIcon>
+      <div>
+        <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
+      </div>
+    </template>
+    <template #filterDropdown="scope">
+      <div class="filter-container">
+        <div
+          v-for="item in scope.filters"
+          :key="item.value"
+          :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem.value === item.value) }"
+          @click="handleFilterItemClick(item, scope)">
+          {{ item.text }}
+        </div>
+      </div>
     </template>
   </a-table>
 </template>
 
 <script>
-import { computed, defineComponent, h } from 'vue'
+import Icon from '@/components/Icon.vue'
+import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
+import XSelect from '@/smart-ui-vue/XSelect'
 
 export default defineComponent({
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Icon },
   name: 'XTable',
+  emits: ['filtered'],
   props: {
     columns: {
       type: [Array, null],
@@ -38,6 +59,12 @@ export default defineComponent({
       let result = [...props.columns]
       result = result.map(item => {
         const it = { ...item }
+        // 劫持默认的filter配置
+        if (item.filters) {
+          item.slots.filterIcon = 'filterIcon'
+          item.slots.filterDropdown = 'filterDropdown'
+        }
+        // 处理divider
         if (props.divider || item.divider) {
           let render = null
           if ((it.slots && it.slots.customRender) || it.customRender) {
@@ -55,11 +82,18 @@ export default defineComponent({
           }
         } else return it
       })
+
       return result
     })
+    const handleFilterItemClick = (item, scope) => {
+      scope.setSelectedKeys([item])
+      scope.confirm()
+      context.emit('filtered', { item, scope })
+    }
     return {
       slots: computed(() => Object.keys(context.slots)),
-      formattedColumns
+      formattedColumns,
+      handleFilterItemClick
     }
   }
 })

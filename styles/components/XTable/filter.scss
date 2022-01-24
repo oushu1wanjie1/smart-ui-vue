@@ -1,0 +1,51 @@
+@import '../../variables';
+@import '../../mixins';
+
+@mixin filter-icon {
+  .ant-table-filter-icon {
+    align-items: center;
+    justify-content: center;
+    position: static;
+    display: inline-flex;
+    height: 18px;
+    vertical-align: middle;
+    color: $color-text-comment;
+
+    .btn-filter-icon {
+      position: static;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    &.ant-table-filter-selected {
+      color: $color-primary-blue
+    }
+  }
+}
+
+@mixin filter-dropdown {
+  .ant-table-filter-dropdown {
+    .filter-container {
+      padding: 10px;
+
+      .filter-item {
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 4px !important;
+        margin-bottom: 5px;
+        height: 32px;
+        line-height: 32px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-primary-blue-light;
+        }
+
+        &-selected {
+          background-color: white;
+          color: $color-primary-blue;
+        }
+      }
+    }
+  }
+}
