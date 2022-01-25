@@ -35,7 +35,7 @@ export default {
     const resultProps = excludeNotExistProps(props) // 剔除未传参数
     return {
       slots: computed(() => Object.keys(context.slots)),
-      selected: computed(() => props.value.length > 0),
+      selected: computed(() => props?.value?.length > 0),
       valueLocal: useModel('value', props, context),
       props: resultProps,
       clear() {
