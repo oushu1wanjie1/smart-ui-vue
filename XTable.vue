@@ -21,7 +21,7 @@
         <div
           v-for="item in scope.filters"
           :key="item.value"
-          :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem.value === item.value) }"
+          :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem === item.value) }"
           @click="handleFilterItemClick(item, scope)">
           {{ item.text }}
         </div>
@@ -33,7 +33,7 @@
 <script>
 import Icon from '@/components/Icon.vue'
 import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
-import XSelect from '@/smart-ui-vue/XSelect'
+import { NullFilterKey } from '@/smart-ui-vue/constant'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
@@ -86,14 +86,29 @@ export default defineComponent({
       return result
     })
     const handleFilterItemClick = (item, scope) => {
-      scope.setSelectedKeys([item])
+      if (item.value === NullFilterKey) scope.clearFilters()
+      else scope.setSelectedKeys([item.value])
       scope.confirm()
-      context.emit('filtered', { item, scope })
+
+      // context.emit('filtered', { item, column: scope.column })
     }
+
+    onMounted(() => {
+      document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
+        /* eslint-disable max-len */
+        item.innerHTML = `
+            <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort"></use></svg>
+            <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#ui-table/sort-asc"></use></svg>
+            <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort-desc"></use></svg>
+          `
+      })
+      /* eslint-enable max-len */
+    })
     return {
       slots: computed(() => Object.keys(context.slots)),
       formattedColumns,
-      handleFilterItemClick
+      handleFilterItemClick,
+      console: console
     }
   }
 })

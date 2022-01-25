@@ -4,6 +4,7 @@
 @import './table-with-divider.scss';
 @import '../XCheckbox.scss';
 @import './filter.scss';
+@import './sort.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -49,7 +50,10 @@
       }
 
       // 表头筛选图标
-      @include filter-icon
+      @include filter-icon;
+
+      // 表头排序图标
+      @include sort;
 
     }
     // thead with divider

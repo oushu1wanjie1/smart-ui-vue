@@ -1,6 +1,6 @@
 <template>
   <div class="smartui-input-search">
-    <a-input-search v-model:value="valueLocal" v-bind="props">
+    <a-input-search :value="value" v-bind="props">
       <template v-for="item in slots" v-slot:[item]>
         <slot :name="item"></slot>
       </template>
@@ -27,7 +27,7 @@ export default defineComponent({
   setup(props, context) {
     return {
       props,
-      valueLocal: useModel('value', props, context),
+      // valueLocal: useModel('value', props, context),
       slots: computed(() => Object.keys(context.slots))
     }
   }
