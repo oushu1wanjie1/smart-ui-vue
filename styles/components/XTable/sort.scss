@@ -1,0 +1,57 @@
+@import '../../variables';
+@import '../../mixins';
+
+@mixin sort {
+  &.ant-table-column-has-sorters {
+    .ant-table-column-sorter {
+      .ant-table-column-sorter-inner {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        color: $color-text-comment;
+        .btn-sort-icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: $color-text-comment;
+        }
+        .ant-table-column-sorter-up {
+          position: absolute;
+          top: 1px;
+          left: -6px;
+
+          .btn-sort-icon-asc { display: none; }
+          .btn-sort-icon-desc { display: none; }
+        }
+        .ant-table-column-sorter-down {
+          position: absolute;
+          top: -1px;
+          left: -6px;
+
+          .btn-sort-icon { display: none; }
+          .btn-sort-icon-asc { display: none; }
+          .btn-sort-icon-desc { display: none; }
+        }
+      }
+    }
+  }
+
+  &.ant-table-column-has-sorters.ant-table-column-sort {
+    .ant-table-column-sorter {
+      .ant-table-column-sorter-inner {
+        .ant-table-column-sorter-up {
+          .btn-sort-icon { display: none; }
+          &.on {
+            .btn-sort-icon-asc { display: inline; }
+          }
+        }
+        .ant-table-column-sorter-down {
+          &.on {
+            .btn-sort-icon-desc { display: inline; }
+          }
+        }
+      }
+    }
+  }
+
+}

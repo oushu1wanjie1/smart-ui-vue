@@ -8,17 +8,38 @@
       }
     }"
   >
-    <template v-for="item in slots" v-slot:[item]="scope">
+    <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
+    </template>
+    <template #filterIcon>
+      <div>
+        <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
+      </div>
+    </template>
+    <template #filterDropdown="scope">
+      <div class="filter-container">
+        <div
+          v-for="item in scope.filters"
+          :key="item.value"
+          :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem === item.value) }"
+          @click="handleFilterItemClick(item, scope)">
+          {{ item.text }}
+        </div>
+      </div>
     </template>
   </a-table>
 </template>
 
 <script>
-import { computed, defineComponent, h } from 'vue'
+import Icon from '@/components/Icon.vue'
+import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
+import { NullFilterKey } from '@/smart-ui-vue/constant'
 
 export default defineComponent({
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Icon },
   name: 'XTable',
+  emits: ['filtered'],
   props: {
     columns: {
       type: [Array, null],
@@ -38,6 +59,12 @@ export default defineComponent({
       let result = [...props.columns]
       result = result.map(item => {
         const it = { ...item }
+        // 劫持默认的filter配置
+        if (item.filters) {
+          item.slots.filterIcon = 'filterIcon'
+          item.slots.filterDropdown = 'filterDropdown'
+        }
+        // 处理divider
         if (props.divider || item.divider) {
           let render = null
           if ((it.slots && it.slots.customRender) || it.customRender) {
@@ -55,11 +82,33 @@ export default defineComponent({
           }
         } else return it
       })
+
       return result
+    })
+    const handleFilterItemClick = (item, scope) => {
+      if (item.value === NullFilterKey) scope.clearFilters()
+      else scope.setSelectedKeys([item.value])
+      scope.confirm()
+
+      // context.emit('filtered', { item, column: scope.column })
+    }
+
+    onMounted(() => {
+      document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
+        /* eslint-disable max-len */
+        item.innerHTML = `
+            <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort"></use></svg>
+            <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#ui-table/sort-asc"></use></svg>
+            <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort-desc"></use></svg>
+          `
+      })
+      /* eslint-enable max-len */
     })
     return {
       slots: computed(() => Object.keys(context.slots)),
-      formattedColumns
+      formattedColumns,
+      handleFilterItemClick,
+      console: console
     }
   }
 })

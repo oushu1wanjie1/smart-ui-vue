@@ -13,7 +13,7 @@
         </template>
         <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
         <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
-          <icon name="worksheet/arrow" class="x-select-custom-arrow"/>
+          <icon name="ui-select/select_arrow" class="x-select-custom-arrow"/>
         </template>
         <!-- 未自定义 notFoundContent 时 -->
         <template v-if="!slots.includes('notFoundContent')" v-slot:notFoundContent>
@@ -40,7 +40,7 @@
       </template>
       <!-- 未自定义 suffixIcon & 展示小箭头时：替换小箭头 -->
       <template v-if="!slots.includes('suffixIcon') && showArrow !== false" v-slot:suffixIcon>
-        <icon name="worksheet/arrow" class="x-select-custom-arrow"/>
+        <icon name="ui-select/select_arrow" class="x-select-custom-arrow"/>
       </template>
       <!-- 未自定义 notFoundContent 时 -->
       <template v-if="!slots.includes('notFoundContent')" v-slot:notFoundContent>

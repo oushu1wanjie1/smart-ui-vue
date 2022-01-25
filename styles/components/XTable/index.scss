@@ -3,6 +3,8 @@
 @import './fixed-table.scss';
 @import './table-with-divider.scss';
 @import '../XCheckbox.scss';
+@import './filter.scss';
+@import './sort.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -40,6 +42,19 @@
       padding-bottom: 7px;
       font-weight: normal;
       font-size: 12px;
+      padding-right: 20px !important;
+
+      .ant-table-header-column {
+        height: 18px;
+        line-height: 18px;
+      }
+
+      // 表头筛选图标
+      @include filter-icon;
+
+      // 表头排序图标
+      @include sort;
+
     }
     // thead with divider
     .ant-table-thead > tr.thead-tr-with-divider {
@@ -86,3 +101,6 @@
     }
   }
 }
+
+// 筛选下拉框
+@include filter-dropdown
