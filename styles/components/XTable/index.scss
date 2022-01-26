@@ -75,6 +75,7 @@
       font-size: 14px;
       padding: 7px 15px;
       height: 45px;
+      border-color: $color-line-bold;
 
       // td中的btn-link配置
       .ant-btn-link {
@@ -98,6 +99,14 @@
     // 选择框与x-checkbox样式一致
     .ant-table-selection, .ant-table-selection-column {
       @include checkbox-style;
+    }
+  }
+
+  &.smartui-table-border.ant-table-wrapper {
+    .ant-table {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid rgba($color-line-bold, .5);
     }
   }
 }

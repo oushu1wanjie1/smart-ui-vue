@@ -1,6 +1,7 @@
 <template>
   <a-table
     class="smartui-table"
+    :class="{ 'smartui-table-border': bordered }"
     :columns="formattedColumns"
     :customHeaderRow="record => {
       return {
@@ -51,7 +52,14 @@ export default defineComponent({
     divider: {
       type: Boolean,
       default: false
-    }
+    },
+    // 可选项
+    // 1. table: 10px padding
+    // 2. table: 1px solid border
+    bordered: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, context) {
     const formattedColumns = computed(() => {
