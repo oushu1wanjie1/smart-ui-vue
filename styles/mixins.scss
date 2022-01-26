@@ -4,7 +4,7 @@
 // 注释
 @mixin font-small {
   font-size: $font-size-small;
-  line-height: $font-line-height-normal;
+  line-height: $font-line-height-small;
   font-weight: normal;
 }
 
@@ -18,7 +18,7 @@
 // 大标题
 @mixin font-large {
   font-size: $font-size-large;
-  line-height: $font-line-height-small;
+  line-height: $font-line-height-large;
   font-weight: normal;
 }
 

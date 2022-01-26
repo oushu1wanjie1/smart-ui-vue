@@ -39,10 +39,9 @@ $font-size-normal: 14px;
 $font-size-small: 12px;
 
 // 行高
-// apply to font size: small & normal
-$font-line-height-normal: 1.4;
-// apply to font size: large
-$font-line-height-small: 1.333;
+$font-line-height-small: 16px;
+$font-line-height-normal: 20px;
+$font-line-height-large: 24px;
 
 // ----- svg ------
 $svg-width-normal: 18px;
