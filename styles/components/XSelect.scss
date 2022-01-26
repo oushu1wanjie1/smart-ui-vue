@@ -52,6 +52,10 @@
 
   // 下拉框展开式定制箭头旋转
   &:not(.ant-select-customize-input).ant-select-show-arrow.ant-select-open {
+    .ant-select-selection-item {
+      color: $color-primary-black;
+    }
+
     .x-select-custom-arrow {
       transform: translate(-50%, -50%) rotate(180deg);
     }
@@ -161,6 +165,7 @@
 // 影响全局样式
 .ant-select-dropdown {
   // 某些组件会硬写 width，导致宽度不够。
+  // 原因，是因为，select option 的 padding 导致的。
   // 例如 a-table 的 pagination
   width: unset !important;
   padding: 10px;
