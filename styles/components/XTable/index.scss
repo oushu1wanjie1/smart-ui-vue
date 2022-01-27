@@ -14,13 +14,19 @@
     }
     // 无固定列的表格hover样式
     .ant-table:not(.ant-table-layout-fixed) {
+      .ant-table-tbody > tr:hover > td:first-of-type {
+        border-color: transparent;
+      }
+      .ant-table-tbody > tr:hover + tr > td {
+        border-color: transparent;
+      }
       .ant-table-tbody > tr:hover > td:first-of-type:before {
         position: absolute;
         pointer-events: none;
         content: '';
         width: 100%;
         top: 0;
-        left: 0px;
+        left: 0;
         height: 100%;
         border: 1px solid $color-text-comment;
         border-radius: 4px;
@@ -29,20 +35,21 @@
     .ant-table .ant-table-tbody > tr.unhoverable > td:before {
       border: none !important;
     }
+
     // 表格与外部容器的间距
     .ant-table-content {
       overflow-x: auto;
     }
+
     // 表头thead
     .ant-table-thead > tr > th {
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding-top: 7px;
-      padding-bottom: 7px;
+      padding: 7px;
       font-weight: normal;
       font-size: 12px;
-      padding-right: 20px !important;
+      border-color: transparent;
 
       .ant-table-header-column {
         height: 18px;
@@ -65,6 +72,7 @@
         display: none;
       }
     }
+
     // 表格tr
     .ant-table-tbody > tr {
       position: relative;
@@ -73,8 +81,10 @@
     .ant-table-tbody > tr > td {
       background-color: white;
       font-size: 14px;
-      padding: 7px 15px;
+      padding: 7px;
       height: 45px;
+      border-bottom: none;
+      border-top: 1px solid;
       border-color: $color-line-bold;
 
       // td中的btn-link配置
@@ -87,10 +97,6 @@
     // fixed table divider
     .ant-table.ant-table-layout-fixed {
       @include fixed-table-divider
-    }
-    // 最后一行没有线
-    .ant-table-tbody > tr:last-of-type > td {
-      border-bottom: none;
     }
     // 取消默认的表格hover样式
     .ant-table-tbody > tr:hover > td {
