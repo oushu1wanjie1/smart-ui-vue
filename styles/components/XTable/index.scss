@@ -14,7 +14,7 @@
     }
     // 无固定列的表格hover样式
     .ant-table:not(.ant-table-layout-fixed) {
-      .ant-table-tbody > tr:hover > td:first-of-type {
+      .ant-table-tbody > tr:hover > td {
         border-color: transparent;
       }
       .ant-table-tbody > tr:hover + tr > td {
@@ -47,6 +47,7 @@
       position: relative;
       color: $color-text-comment;
       padding: 7px;
+      padding-top: 17px;
       font-weight: normal;
       font-size: 12px;
       border-color: transparent;
@@ -111,6 +112,7 @@
   &.smartui-table-border.ant-table-wrapper {
     .ant-table {
       padding: 10px;
+      padding-top: 0;
       border-radius: 4px;
       border: 1px solid rgba($color-line-bold, .5);
     }
