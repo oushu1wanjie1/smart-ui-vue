@@ -33,7 +33,7 @@
 
 <script>
 import Icon from '@/components/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
+import { computed, defineComponent, h, onMounted } from 'vue'
 import { NullFilterKey } from '@/smart-ui-vue/constant'
 
 export default defineComponent({
@@ -69,6 +69,7 @@ export default defineComponent({
         const it = { ...item }
         // 劫持默认的filter配置
         if (item.filters) {
+          if (!item.slots) item.slots = {}
           item.slots.filterIcon = 'filterIcon'
           item.slots.filterDropdown = 'filterDropdown'
         }
@@ -97,8 +98,6 @@ export default defineComponent({
       if (item.value === NullFilterKey) scope.clearFilters()
       else scope.setSelectedKeys([item.value])
       scope.confirm()
-
-      // context.emit('filtered', { item, column: scope.column })
     }
 
     onMounted(() => {
