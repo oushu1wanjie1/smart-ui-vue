@@ -13,7 +13,7 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 import { PropType, reactive, toRefs, watch } from 'vue'
-import XTooltip from '@/smart-ui-vue/XTooltip.vue'
+import XTooltip from '../XTooltip.vue'
 
 export type ColorType = 'primary' | 'warn' | 'danger' | string
 const COLOR_TYPE_LIST = ['primary', 'warn', 'danger']
@@ -102,6 +102,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../styles/variables';
+
 .icon {
   width: 18px;
   height: 18px;

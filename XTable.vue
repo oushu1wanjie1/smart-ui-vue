@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import Icon from '@/components/Icon.vue'
+import Icon from './helper/Icon.vue'
 import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
-import { NullFilterKey } from '@/smart-ui-vue/constant'
+import { NullFilterKey } from './constant'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
