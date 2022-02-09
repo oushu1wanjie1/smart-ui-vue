@@ -11,6 +11,11 @@
     // 默认按钮配色
     @include btn-default();
 
+    // 超大按钮配色
+    &-lg {
+      @include btn-lg();
+    }
+
     // primary 配色
     &-primary {
       @include btn-primary();
@@ -19,11 +24,6 @@
     // text 配色，icon 专用
     &-text {
       @include btn-text();
-    }
-
-    // 超大按钮配色
-    &-lg {
-      @include btn-lg();
     }
 
     &-link {
