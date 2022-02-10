@@ -172,6 +172,10 @@ export default {
     const updateAttrs = () => {
       const result = {
         ...context.attrs,
+        style: {
+          ...context.attrs.style,
+          maxWidth: context.attrs.style?.width
+        },
         ...props,
         onSearch: handleSearch,
         onFocus: handleFocus,
