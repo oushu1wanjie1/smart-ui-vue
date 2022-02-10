@@ -14,6 +14,20 @@ import { excludeEventsInProps, excludeNotExistProps, useModel, uuid } from './ut
 const DEFAULT_MOUSE_ENTER_DELAY = 0.1
 const DEFAULT_MOUSE_LEAVE_DELAY = 0.1
 
+interface AlignProps {
+  points?: string[],
+  offset?: number[],
+  targetOffset?: string[],
+  overflow?: {
+    adjustX?: boolean,
+    adjustY?: boolean,
+    alwaysByViewport?: boolean,
+  },
+  useCssRight?: boolean,
+  useCssBottom?: boolean,
+  useCssTransform?: boolean,
+}
+
 export default defineComponent({
   name: 'XTooltip',
   emits: ['visibleChange'],
@@ -22,7 +36,8 @@ export default defineComponent({
      * 该值将合并到 placement 的配置中，设置参考 [dom-align](https://github.com/yiminghe/dom-align)
      */
     align: {
-      type: Object,
+      type: Object as PropType<AlignProps>,
+      default: () => ({})
     },
     // 箭头是否指向目标元素中心
     arrowPointAtCenter: {
@@ -96,7 +111,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const { arrowPointAtCenter, overlayClassName, color } = toRefs(props)
+    const { arrowPointAtCenter, overlayClassName, color, align } = toRefs(props)
     // tooltip唯一id
     const tooltipId = uuid()
     // 是否配置上文本颜色
@@ -106,11 +121,17 @@ export default defineComponent({
       if (!color.value) return '#282B2E'
       else return color.value
     })
+    // align配置
+    const mergedAlign = computed(() => {
+      let result: AlignProps = {
+        offset: [0, 0],
+      }
+      if (align.value) result = { ...result, ...align.value }
+      return result
+    })
     // overlayClass 配置
     const mergedOverlayClassName = computed(() => {
       let result = ['x-tooltip', `x-tooltip-${tooltipId}`]
-      // 箭头指向居中参数配置
-      if (arrowPointAtCenter.value) result.push('x-tooltip-arrow-point-at-center')
       if (overlayClassName.value instanceof Array) result = [...result, ...overlayClassName.value]
       else if (typeof overlayClassName.value === 'string') result = [...result, ...overlayClassName.value.split(' ')]
       return result.join(' ')
@@ -119,6 +140,7 @@ export default defineComponent({
     const mergedProps = computed(() => {
       const result: Omit<typeof props, 'visible' | 'color'> & { visible?: boolean, color?: string } = {
         ...props,
+        align: mergedAlign.value,
         overlayClassName: mergedOverlayClassName.value,
       }
       // 自动显隐fix：当用户未配置visible时删除这个prop
