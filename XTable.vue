@@ -54,6 +54,7 @@ export default defineComponent({
       default: false
     },
     // 可选项
+    // 效果
     // 1. table: 10px padding
     // 2. table: 1px solid border
     bordered: {

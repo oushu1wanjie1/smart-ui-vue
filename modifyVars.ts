@@ -16,7 +16,7 @@ module.exports = {
   // 组件/浮层圆角
   'border-radius-base': '4px',
   // 边框色
-  'border-color-base': '#D5D8DB',
+  'border-color-base': 'rgba(213,216,219,0.5)',
   // Tooltip max width
   'tooltip-max-width': '200px',
   // 同时适用于 select
