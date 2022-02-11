@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    :visible="visibleLocal"
+    v-model:visible="visibleLocal"
     :closable="closable"
     :fullScreen="fullScreen"
     v-bind="{ ...props, title: undefined }"
@@ -47,9 +47,7 @@ export default defineComponent({
     return {
       slots: computed(() => Object.keys(context.slots)),
       // @ts-ignore
-      visibleLocal: typeof props['onUpdate:visible'] === 'function'
-        // @ts-ignore
-        ? useModel('visible', props, context) : props.visible,
+      visibleLocal: useModel('visible', props, context),
       props,
     }
   },
