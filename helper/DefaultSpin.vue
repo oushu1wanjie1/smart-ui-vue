@@ -130,7 +130,7 @@ export default defineComponent({
   height: 60px;
   display: inline-block;
   overflow: hidden;
-  background: #ffffff;
+  background: transparent;
 }
 
 .ldio-4oij86wskfe {
