@@ -88,6 +88,7 @@
 
 }
 @mixin arrow-trans-rule($d1, $d2) {
+  transform: translate#{getTlAxis($d1)}(#{getTlD($d2) * 3.6px}) rotate(getRtD($d1, $d2) * 30.2deg);
   transform: translate#{getTlAxis($d1)}(unquote(#{'(' + getTlD($d2) * 3.6px + ')'})) rotate(getRtD($d1, $d2) * 30.2deg);
 }
 
