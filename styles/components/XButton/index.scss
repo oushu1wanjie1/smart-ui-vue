@@ -38,6 +38,11 @@
       width: 100%;
     }
 
+    &-text.ant-btn-icon-only {
+      @include btn-icon-only();
+      padding: 0;
+    }
+
     // To ensure that a space will be placed between character and 'Icon'
     > .anticon + span,
     span + .anticon, {
