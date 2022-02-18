@@ -1,0 +1,89 @@
+.smartui-textarea-container:not(.raw) {
+  position: relative;
+
+  textarea.ant-input {
+    padding: 14px 9px 14px 9px;
+    @include font-normal();
+    color: $color-primary-black;
+    border: 1px solid transparent;
+    border-bottom-color: $color-line-bold;
+    border-radius: 0;
+    box-shadow: none !important;
+
+    &.smartui-textarea-prefix {
+      // padding-left 32px: 32 + 1(border) = 33 = 10 + 18(icon) + 5
+      padding-left: 32px
+    }
+
+    &.smartui-textarea-max-length {
+      padding-right: 32px;
+    }
+
+    &:hover {
+      border-bottom-color: $color-primary-black;
+    }
+
+    &:focus,
+    &:active {
+      border-bottom-color: $color-primary-blue;
+    }
+
+    &.smartui-textarea-exceed {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        border-bottom-color: $color-danger;
+      }
+    }
+  }
+
+  .smartui-textarea-prefix-icon {
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    // 避免行高撑大高度
+    line-height: 1;
+  }
+
+  .smartui-textarea-count {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    @include font-small();
+    color: $color-primary-orange;
+
+    &.smartui-textarea-count-exceed {
+      color: $color-danger;
+    }
+  }
+
+  &.smartui-textarea-container-disabled {
+    textarea.ant-input {
+      color: $color-text-comment;
+
+      &,
+      &:hover,
+      &:focus,
+      &:active, {
+        $btn-big-color: $color-line-bold;
+      }
+
+      background: white;
+
+      &.smartui-textarea-exceed {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          border-bottom-color: $color-line-bold;
+        }
+      }
+    }
+
+    .smartui-textarea-prefix-icon,
+    .smartui-textarea-count-exceed {
+      opacity: .3;
+    }
+  }
+}

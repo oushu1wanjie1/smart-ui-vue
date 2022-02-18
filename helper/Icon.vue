@@ -102,7 +102,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/variables';
+@import '../styles/variables.scss';
 
 .icon {
   width: 18px;
