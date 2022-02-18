@@ -64,7 +64,7 @@ export default defineComponent({
     value: {
       type: String,
     },
-    autosize: {
+    autoSize: {
       type: [Object, Boolean],
       default: false,
     },
