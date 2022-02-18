@@ -164,10 +164,10 @@
 
 // 影响全局样式
 .ant-select-dropdown {
-  // 某些组件会硬写 width，导致宽度不够。
-  // 原因，是因为，select option 的 padding 导致的。
-  // 例如 a-table 的 pagination
-  width: unset !important;
+  &:not(.dropdownNoMatchSelectWidth) {
+    // dropdown 宽度默认自适应：设计稿的 option padding 过大，与 select 等宽会导致 option 显示不全
+    width: unset !important;
+  }
   padding: 10px;
   @include font-normal();
   color: $color-primary-black;
@@ -189,6 +189,7 @@
     }
 
     .ant-select-item {
+      @include font-normal();
       padding: 8px 20px;
       border-radius: 4px;
     }
