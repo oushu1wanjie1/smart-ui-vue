@@ -4,10 +4,11 @@
 .smartui-card:not(.raw) {
   &.ant-card {
     border-radius: 4px;
-    border-color: $color-line-bold 60%;
+    border: 1px solid rgba($color-line-bold, .5);
+    box-shadow: none;
 
     .ant-card-body {
-      padding: 15px 15px 10px 15px;
+      padding: 15px 15px 15px 15px;
     }
   }
 }

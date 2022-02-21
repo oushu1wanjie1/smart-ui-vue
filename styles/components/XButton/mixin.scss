@@ -171,3 +171,8 @@
   padding: 0;
   min-width: 0;
 }
+
+@mixin btn-icon-only {
+  height: 24px;
+  width: 24px;
+}

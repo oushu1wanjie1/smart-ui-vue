@@ -114,7 +114,6 @@ export default {
     const { isAutoLoadMore } = toRefs(props)
     // 全部slots
     const slots = computed(() => {
-      console.log(context.slots)
       return Object.keys(context.slots)
     })
     // 内置翻页页数
@@ -173,6 +172,10 @@ export default {
     const updateAttrs = () => {
       const result = {
         ...context.attrs,
+        style: {
+          ...context.attrs.style,
+          maxWidth: context.attrs.style?.width
+        },
         ...props,
         onSearch: handleSearch,
         onFocus: handleFocus,

@@ -49,7 +49,7 @@ export function toPropsStyleEventName(name: string): string {
  * @param name
  */
 export function isPropsStyleEventName(name: string): boolean {
-  return /^on[A-Z]\w+$/.test(name)
+  return /^on[A-Z][\w|:]+$/.test(name)
 }
 
 /**
@@ -103,3 +103,16 @@ export function excludeNotExistProps(propsObj: Record<string, any>, propKeys?: s
   return result
 }
 
+/**
+ * 获取一个随机uuid
+ * @param dash
+ */
+export const uuid = ({ dash } = { dash: true }) => {
+  let result = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0,
+      v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+  if (!dash) result = result.replaceAll('-', '')
+  return result
+}

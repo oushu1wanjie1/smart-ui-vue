@@ -14,7 +14,7 @@
     }
     // 无固定列的表格hover样式
     .ant-table:not(.ant-table-layout-fixed) {
-      .ant-table-tbody > tr:hover > td:first-of-type {
+      .ant-table-tbody > tr:hover > td {
         border-color: transparent;
       }
       .ant-table-tbody > tr:hover + tr > td {
@@ -46,15 +46,10 @@
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding: 7px;
+      padding: 10px 15px;
       font-weight: normal;
       font-size: 12px;
       border-color: transparent;
-
-      .ant-table-header-column {
-        height: 18px;
-        line-height: 18px;
-      }
 
       // 表头筛选图标
       @include filter-icon;
@@ -80,8 +75,11 @@
     // 表格td
     .ant-table-tbody > tr > td {
       background-color: white;
-      font-size: 14px;
-      padding: 7px;
+      @include font-normal();
+      // 单行时，vertical-align: middle 会居中
+      // 多行时，行高撑大，padding 为 5
+      padding: 5px 15px;
+      // height can be treat as min-height in table-cell
       height: 45px;
       border-bottom: none;
       border-top: 1px solid;
