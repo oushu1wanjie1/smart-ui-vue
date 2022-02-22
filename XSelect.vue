@@ -145,7 +145,8 @@ export default {
         page = 1
         inputCache = val
       }
-      if (context.attrs.onSearch) context.attrs.onSearch.call(null, val, page)
+      console.log(1121323, context.attrs)
+      if (props.onSearch) props.onSearch.call(null, val, page)
     }
 
     /**
@@ -154,7 +155,7 @@ export default {
      * 适用于非输入式的选择器
      */
     const handleFocus = () => {
-      if (context.attrs.onFocus) context.attrs.onFocus.call(null, page)
+      if (props.onFocus) props.onFocus.call(null, page)
     }
 
     /**
