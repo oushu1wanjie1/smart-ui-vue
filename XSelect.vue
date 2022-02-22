@@ -145,7 +145,6 @@ export default {
         page = 1
         inputCache = val
       }
-      console.log(1121323, context.attrs)
       if (props.onSearch) props.onSearch.call(null, val, page)
     }
 
@@ -164,7 +163,7 @@ export default {
      */
     const handleDropdownVisibleChange = (...args) => {
       page = 1
-      if (context.attrs.onDropdownVisibleChange) context.attrs.onDropdownVisibleChange.apply(null, args)
+      if (props.onDropdownVisibleChange) props.onDropdownVisibleChange.apply(null, args)
     }
 
     /**
