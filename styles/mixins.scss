@@ -32,3 +32,11 @@
   height: 50px;
   border-radius: 0;
 }
+
+// 禁止选中文本
+@mixin select-disabled {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
