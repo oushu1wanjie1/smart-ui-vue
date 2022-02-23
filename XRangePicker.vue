@@ -1,7 +1,7 @@
 <template>
   <div :class="{selected}" class="smartui-range-picker smartui-date-picker-common">
     <div class="time-split-box">
-      <icon color="#B1B2B5" name="ui-date-pick/time-split"></icon>
+      <icon color="#85888C" name="ui-date-pick/time-split"></icon>
     </div>
     <div class="close-container" @click="clear">
       <icon color="#85888C" name="ui-date-pick/close"></icon>
