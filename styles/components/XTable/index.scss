@@ -107,6 +107,10 @@
     .ant-table-selection, .ant-table-selection-column {
       @include checkbox-style;
     }
+    // footer
+    .ant-table-footer {
+      background-color: white;
+    }
   }
 
   &.smartui-table-border.ant-table-wrapper {

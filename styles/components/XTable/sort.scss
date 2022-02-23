@@ -36,7 +36,11 @@
     }
   }
 
+  // 处于排序状态
   &.ant-table-column-has-sorters.ant-table-column-sort {
+    .ant-table-column-title {
+      color: $color-primary-blue;
+    }
     .ant-table-column-sorter {
       .ant-table-column-sorter-inner {
         .ant-table-column-sorter-up {

@@ -4,6 +4,7 @@
     :class="{ 'smartui-table-border': bordered }"
     :style="{ height: emptyHeight || 'auto' }"
     :columns="formattedColumns"
+    :loading="loading"
     :customHeaderRow="column => {
       return {
         class: {
@@ -15,41 +16,59 @@
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
-    <template v-for="columns in columnsHasFilter" :key="columns.key" v-slot:[columns.slots.filterIcon]>
+    <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterIcon]>
       <div>
-        <span v-if="columns.title">{{ columns.title }}</span>
-        <slot v-else :name="columns.slots.title"></slot>
+        <span v-if="column.title">{{ column.title }}</span>
+        <slot v-else :name="column.slots.title"></slot>
         <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
       </div>
     </template>
-    <template v-for="columns in columnsHasFilter" :key="columns.key" v-slot:[columns.slots.filterDropdown]="scope">
+    <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
       <div class="filter-container">
         <div
           v-for="item in scope.filters"
           :key="item.value"
           :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem === item.value) }"
-          @click="handleFilterItemClick(item, scope, columns)">
+          @click="handleFilterItemClick(item, scope, column)">
           {{ item.text }}
         </div>
       </div>
+    </template>
+    <template v-if="!loading" #footer>
+      <x-empty v-if="isEmpty" :image="emptyImage" :description="emptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
+        <template #description>
+          <slot name="emptyDescription"></slot>
+        </template>
+      </x-empty>
+      <x-empty v-if="isConditionalEmpty" :image="conditionalEmptyImage" :description="conditionalEmptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
+        <template #description>
+          <slot name="conditionalEmptyDescription"></slot>
+        </template>
+      </x-empty>
     </template>
   </a-table>
 </template>
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted, ref } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, ref, toRefs } from 'vue'
 import { NullFilterKey } from './constant'
+import XEmpty from '@/smart-ui-vue/XEmpty'
+import { useModel } from '@/smart-ui-vue/utils'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
-  components: { Icon },
+  components: { XEmpty, Icon },
   name: 'XTable',
   emits: ['filtered'],
   props: {
     columns: {
       type: [Array, null],
       default: null
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     // 是否加上尾部的纵向分隔线
     // 支持在columns中配置，单独为某个column后加分隔线，属性也是divider
@@ -74,9 +93,28 @@ export default defineComponent({
     // 空状态时高度，默认为auto
     emptyHeight: {
       type: [String, Number, undefined],
+    },
+    emptyImage: {
+      type: String,
+      default: ''
+    },
+    emptyDescription: {
+      type: String,
+    },
+    conditionalEmptyImage: {
+      type: String,
+      default: ''
+    },
+    conditionalEmptyDescription: {
+      type: String
+    },
+    conditional: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {
+    const { conditional } = toRefs(props)
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -111,16 +149,26 @@ export default defineComponent({
     })
 
     const columnsHasFilter = computed(() => {
-      return formattedColumns.value.filter(item => item.slots && item.slots.filterDropdown)
+      return (formattedColumns.value || []).filter(item => item.slots && item.slots.filterDropdown)
     })
 
-    const handleFilterItemClick = (item, scope) => {
+    const filteredColumnKeys = ref([])
+
+    const isEmpty = computed(() => !(filteredColumnKeys.value.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+
+    const isConditionalEmpty = computed(() => (filteredColumnKeys.value.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+
+    const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
+
+    const handleFilterItemClick = (item, scope, column) => {
       if (item.value === props.nullFilterValue) {
         // 清除筛选
         scope.clearFilters()
+        if (filteredColumnKeys.value.indexOf(column.key) > -1) filteredColumnKeys.value.splice(filteredColumnKeys.value.indexOf(column.key), 1)
       } else {
         // 筛选
         scope.setSelectedKeys([item.value])
+        filteredColumnKeys.value.push(column.key)
       }
       scope.confirm()
     }
@@ -141,6 +189,9 @@ export default defineComponent({
       formattedColumns,
       columnsHasFilter,
       handleFilterItemClick,
+      getEmptyImage,
+      isEmpty,
+      isConditionalEmpty,
       console: console
     }
   }

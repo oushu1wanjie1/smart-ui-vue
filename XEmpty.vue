@@ -1,5 +1,9 @@
 <template>
-  <a-empty :image="imageRender">
+  <a-empty class="smartui-empty" :image="imageRender" >
+    <template #description>
+      <span v-if="description">{{ description }}</span>
+      <slot v-else name="description"></slot>
+    </template>
   </a-empty>
 </template>
 
@@ -9,15 +13,17 @@ import Icon from './helper/Icon.vue'
 
 export default defineComponent({
   name: 'XEmpty',
-  components: { Icon },
   props: {
-    image: String
+    image: String,
+    imageStyle: Object,
+    description: String
   },
   setup(props, context) {
-    const { image } = toRefs(props)
+    const { image, imageStyle } = toRefs(props)
     const imageRender = computed(() => {
-      return h(Icon, { name: image.value }, {})
+      return h(Icon, { name: image.value, style: imageStyle.value, image: true }, {})
     })
+
     return {
       slots: computed(() => Object.keys(context.slots)),
       attrs: context.attrs,
@@ -27,6 +33,6 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import './styles/components/XEmpty.scss';
 </style>

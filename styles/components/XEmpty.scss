@@ -1,0 +1,7 @@
+.smartui-empty:not(.raw) {
+  &.ant-empty {
+    .ant-empty-image {
+      height: auto;
+    }
+  }
+}

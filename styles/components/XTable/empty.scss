@@ -1,22 +1,28 @@
 @mixin empty {
-  .ant-spin-nested-loading {
-    height: 100%;
-    .ant-spin-container {
+  &.x-ant-table-empty {
+    .ant-spin-nested-loading {
       height: 100%;
-      .ant-table-empty {
+      .ant-spin-container {
         height: 100%;
-        .ant-table-content {
+        .ant-table-empty {
           height: 100%;
-          display: flex;
-          flex-direction: column;
-          .ant-table-body {
-            flex-shrink: 0;
-          }
-          .ant-table-placeholder {
-            flex-grow: 1;
+          .ant-table-content {
+            height: 100%;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            .ant-table-body {
+              flex-shrink: 0;
+            }
+            .ant-table-placeholder {
+              display: none;
+            }
+            .ant-table-footer {
+              flex-grow: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-bottom: 1px solid transparent;
+            }
           }
         }
       }
