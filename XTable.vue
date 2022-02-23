@@ -2,28 +2,33 @@
   <a-table
     class="smartui-table"
     :class="{ 'smartui-table-border': bordered }"
+    :style="{ height: emptyHeight || 'auto' }"
     :columns="formattedColumns"
-    :customHeaderRow="record => {
+    :customHeaderRow="column => {
       return {
-        'className': divider && 'thead-tr-with-divider'
+        class: {
+          'thead-tr-with-divider': divider,
+        }
       }
     }"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
-    <template v-for="item in columnsHasFilter" :key="item.key" v-slot:[item.slots.filterIcon]>
+    <template v-for="columns in columnsHasFilter" :key="columns.key" v-slot:[columns.slots.filterIcon]>
       <div>
+        <span v-if="columns.title">{{ columns.title }}</span>
+        <slot v-else :name="columns.slots.title"></slot>
         <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
       </div>
     </template>
-    <template v-for="item in columnsHasFilter" :key="item.key" v-slot:[item.slots.filterDropdown]="scope">
+    <template v-for="columns in columnsHasFilter" :key="columns.key" v-slot:[columns.slots.filterDropdown]="scope">
       <div class="filter-container">
         <div
           v-for="item in scope.filters"
           :key="item.value"
           :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem === item.value) }"
-          @click="handleFilterItemClick(item, scope)">
+          @click="handleFilterItemClick(item, scope, columns)">
           {{ item.text }}
         </div>
       </div>
@@ -33,7 +38,7 @@
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, ref } from 'vue'
 import { NullFilterKey } from './constant'
 
 export default defineComponent({
@@ -65,6 +70,10 @@ export default defineComponent({
     // 默认为''
     nullFilterValue: {
       default: ''
+    },
+    // 空状态时高度，默认为auto
+    emptyHeight: {
+      type: [String, Number, undefined],
     }
   },
   setup(props, context) {
@@ -77,7 +86,7 @@ export default defineComponent({
         if (item.filters) {
           if (!item.slots) it.slots = {}
           it.slots.filterIcon = `filterIcon_${item.key}`
-          it.slots.filterDropdown = `filterDropdown__${item.key}`
+          it.slots.filterDropdown = `filterDropdown_${item.key}`
         }
         // 处理divider
         if (props.divider || item.divider) {
@@ -106,8 +115,13 @@ export default defineComponent({
     })
 
     const handleFilterItemClick = (item, scope) => {
-      if (item.value === props.nullFilterValue) scope.clearFilters()
-      else scope.setSelectedKeys([item.value])
+      if (item.value === props.nullFilterValue) {
+        // 清除筛选
+        scope.clearFilters()
+      } else {
+        // 筛选
+        scope.setSelectedKeys([item.value])
+      }
       scope.confirm()
     }
 

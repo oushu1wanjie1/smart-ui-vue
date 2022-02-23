@@ -2,21 +2,26 @@
 @import '../../mixins';
 
 @mixin filter-icon {
-  .ant-table-filter-icon,  {
+  &.ant-table-column-has-filters {
+    .ant-table-header-column {
+      display: none;
+    }
+  }
+  .ant-table-filter-icon {
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: static;
     display: inline-flex;
-    height: 18px;
-    width: 18px;
-    margin-left: 5px;
-    vertical-align: middle;
+    height: auto;
+    width: 100%;
+    margin-left: 0;
     color: $color-text-comment;
 
     .btn-filter-icon {
       position: static;
       margin-top: 0;
       margin-left: 0;
+      flex-shrink: 0;
     }
 
     &.ant-table-filter-selected {

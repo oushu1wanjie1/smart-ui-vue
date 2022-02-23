@@ -5,9 +5,12 @@
 @import '../XCheckbox.scss';
 @import './filter.scss';
 @import './sort.scss';
+@import './empty.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
+    // 表格空状态
+    @include empty;
     // 有固定列的表格hover样式
     .ant-table.ant-table-layout-fixed {
       @include fixed-table-row-hover
