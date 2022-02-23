@@ -2,7 +2,7 @@
 @import '../../mixins';
 
 @mixin filter-icon {
-  .ant-table-filter-icon {
+  .ant-table-filter-icon,  {
     align-items: center;
     justify-content: center;
     position: static;

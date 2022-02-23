@@ -1,7 +1,7 @@
 <template>
   <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition" :value="value">
     <template #default>
-      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props }" :style="wrapperStyle" v-on="mergedEvents">
+      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props }" :data-comp-id="compId" :style="wrapperStyle" v-on="mergedEvents">
         <template v-for="item in slots" v-slot:[item]>
           <slot :name="item"></slot>
         </template>
@@ -38,6 +38,7 @@ export default defineComponent({
   setup(props, context) {
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
+    const compId = context.attrs['data-comp-id'] || ''
     // 表单wrapper实例
     const form: Ref<InstanceType<typeof SingleFormWrapper> | null> = ref(null)
     // 表单class
@@ -67,6 +68,7 @@ export default defineComponent({
     return {
       props,
       form,
+      compId,
       resetFields,
       validate,
       clearValidate,

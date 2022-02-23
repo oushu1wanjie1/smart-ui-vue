@@ -12,12 +12,12 @@
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
-    <template #filterIcon>
+    <template v-for="item in columnsHasFilter" :key="item.key" v-slot:[item.slots.filterIcon]>
       <div>
         <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
       </div>
     </template>
-    <template #filterDropdown="scope">
+    <template v-for="item in columnsHasFilter" :key="item.key" v-slot:[item.slots.filterDropdown]="scope">
       <div class="filter-container">
         <div
           v-for="item in scope.filters"
@@ -71,8 +71,8 @@ export default defineComponent({
         // 劫持默认的filter配置
         if (item.filters) {
           if (!item.slots) item.slots = {}
-          item.slots.filterIcon = 'filterIcon'
-          item.slots.filterDropdown = 'filterDropdown'
+          item.slots.filterIcon = `filterIcon_${item.key}`
+          item.slots.filterDropdown = `filterDropdown__${item.key}`
         }
         // 处理divider
         if (props.divider || item.divider) {
@@ -95,6 +95,11 @@ export default defineComponent({
 
       return result
     })
+
+    const columnsHasFilter = computed(() => {
+      return formattedColumns.value.filter(item => item.slots.filterDropdown)
+    })
+
     const handleFilterItemClick = (item, scope) => {
       if (item.value === NullFilterKey) scope.clearFilters()
       else scope.setSelectedKeys([item.value])
@@ -115,6 +120,7 @@ export default defineComponent({
     return {
       slots: computed(() => Object.keys(context.slots)),
       formattedColumns,
+      columnsHasFilter,
       handleFilterItemClick,
       console: console
     }
