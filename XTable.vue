@@ -61,6 +61,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    // filter默认空值
+    // 默认为''
+    nullFilterValue: {
+      default: ''
+    }
   },
   setup(props, context) {
     const formattedColumns = computed(() => {
@@ -70,9 +75,9 @@ export default defineComponent({
         const it = { ...item }
         // 劫持默认的filter配置
         if (item.filters) {
-          if (!item.slots) item.slots = {}
-          item.slots.filterIcon = `filterIcon_${item.key}`
-          item.slots.filterDropdown = `filterDropdown__${item.key}`
+          if (!item.slots) it.slots = {}
+          it.slots.filterIcon = `filterIcon_${item.key}`
+          it.slots.filterDropdown = `filterDropdown__${item.key}`
         }
         // 处理divider
         if (props.divider || item.divider) {
@@ -97,11 +102,11 @@ export default defineComponent({
     })
 
     const columnsHasFilter = computed(() => {
-      return formattedColumns.value.filter(item => item.slots.filterDropdown)
+      return formattedColumns.value.filter(item => item.slots && item.slots.filterDropdown)
     })
 
     const handleFilterItemClick = (item, scope) => {
-      if (item.value === NullFilterKey) scope.clearFilters()
+      if (item.value === props.nullFilterValue) scope.clearFilters()
       else scope.setSelectedKeys([item.value])
       scope.confirm()
     }
