@@ -1,7 +1,7 @@
 <template>
   <a-table
     class="smartui-table"
-    :class="{ 'smartui-table-border': bordered }"
+    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty }"
     :style="{ height: emptyHeight || 'auto' }"
     :columns="formattedColumns"
     :loading="loading"
