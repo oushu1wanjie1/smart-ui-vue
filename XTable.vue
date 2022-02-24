@@ -34,7 +34,7 @@
         </div>
       </div>
     </template>
-    <template v-if="!loading" #footer>
+    <template v-if="!loading && (isEmpty || isConditionalEmpty)" #footer>
       <x-empty v-if="isEmpty" :image="emptyImage" :description="emptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
           <slot name="emptyDescription"></slot>
@@ -103,10 +103,11 @@ export default defineComponent({
     },
     conditionalEmptyImage: {
       type: String,
-      default: ''
+      default: 'ui-empty/conditional-empty'
     },
     conditionalEmptyDescription: {
-      type: String
+      type: String,
+      default: '暂无搜索结果'
     },
     conditional: {
       type: Boolean,

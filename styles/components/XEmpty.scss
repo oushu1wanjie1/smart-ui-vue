@@ -1,7 +1,15 @@
+@import '../variables';
+@import '../mixins';
+
 .smartui-empty:not(.raw) {
   &.ant-empty {
     .ant-empty-image {
       height: auto;
+    }
+    .ant-empty-description {
+      color: $color-text-comment;
+      font-size: 18px;
+      font-weight: normal;
     }
   }
 }
