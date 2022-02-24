@@ -61,7 +61,7 @@
 import { useModel } from './utils'
 import { computed, onBeforeUpdate, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
-import { Select } from 'ant-design-vue'
+import { SelectProps } from 'ant-design-vue/es/select'
 import Icon from '@/components/Icon'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
@@ -74,7 +74,7 @@ export default {
   components: { Icon },
   inheritAttrs: false,
   props: {
-    ...Select.props,
+    ...SelectProps(),
     /**
      * 无操作状态、禁用状态时，是否显示边框
      */
