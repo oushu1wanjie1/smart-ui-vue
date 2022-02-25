@@ -155,9 +155,13 @@ export default defineComponent({
 
     const filteredColumnKeys = reactive([])
 
-    const isEmpty = computed(() => !(filteredColumnKeys.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+    const isDataSourceEmpty = () => {
+      return (!context.attrs['data-source'] || !context.attrs['data-source'].length) && (!context.attrs.dataSource || !context.attrs.dataSource.length)
+    }
 
-    const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+    const isEmpty = computed(() => !(filteredColumnKeys.length || conditional.value) && isDataSourceEmpty())
+
+    const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && isDataSourceEmpty())
 
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
