@@ -20,9 +20,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const { image, imageStyle } = toRefs(props)
-    const imageRender = computed(() => {
-      return h(Icon, { name: image.value, style: imageStyle.value, image: true }, {})
-    })
+    const imageRender = h(Icon, { name: image.value, style: imageStyle.value, image: true }, {})
 
     return {
       slots: computed(() => Object.keys(context.slots)),

@@ -1,7 +1,7 @@
 <template>
   <a-table
     class="smartui-table"
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty }"
+    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': true }"
     :style="{ height: emptyHeight || 'auto' }"
     :columns="formattedColumns"
     :loading="loading"
@@ -51,7 +51,7 @@
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted, ref, toRefs } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
 import { useModel } from '@/smart-ui-vue/utils'
@@ -153,11 +153,11 @@ export default defineComponent({
       return (formattedColumns.value || []).filter(item => item.slots && item.slots.filterDropdown)
     })
 
-    const filteredColumnKeys = ref([])
+    const filteredColumnKeys = reactive([])
 
-    const isEmpty = computed(() => !(filteredColumnKeys.value.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+    const isEmpty = computed(() => !(filteredColumnKeys.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
 
-    const isConditionalEmpty = computed(() => (filteredColumnKeys.value.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
+    const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && (!context.attrs.dataSource || !context.attrs.dataSource.length))
 
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
@@ -165,11 +165,13 @@ export default defineComponent({
       if (item.value === props.nullFilterValue) {
         // 清除筛选
         scope.clearFilters()
-        if (filteredColumnKeys.value.indexOf(column.key) > -1) filteredColumnKeys.value.splice(filteredColumnKeys.value.indexOf(column.key), 1)
+        if (filteredColumnKeys.indexOf(column.key) > -1) filteredColumnKeys.splice(filteredColumnKeys.indexOf(column.key), 1)
       } else {
         // 筛选
         scope.setSelectedKeys([item.value])
-        filteredColumnKeys.value.push(column.key)
+        nextTick(() => {
+          if (item.value !== props.nullFilterValue) filteredColumnKeys.push(column.key)
+        })
       }
       scope.confirm()
     }
