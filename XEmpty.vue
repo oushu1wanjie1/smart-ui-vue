@@ -1,5 +1,5 @@
 <template>
-  <a-empty class="smartui-empty" :image="imageRender" >
+  <a-empty class="smartui-empty" :image="imageRender">
     <template #description>
       <span v-if="description">{{ description }}</span>
       <slot v-else name="description"></slot>
