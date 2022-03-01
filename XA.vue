@@ -11,5 +11,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/components/XA.scss'
+@import './styles/components/XA.scss';
 </style>
