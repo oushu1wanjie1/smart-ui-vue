@@ -1,5 +1,5 @@
 <template>
-  <a-divider>
+  <a-divider class="x-divider">
     <slot></slot>
   </a-divider>
 </template>
@@ -13,5 +13,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.x-divider.ant-divider {
+  border-top: 1px solid #D5D8D8;
+}
 </style>
