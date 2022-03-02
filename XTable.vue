@@ -1,8 +1,8 @@
 <template>
   <a-table
     class="smartui-table"
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': true }"
-    :style="{ height: emptyHeight || 'auto' }"
+    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty }"
+    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
     :columns="formattedColumns"
     :loading="loading"
     :customHeaderRow="column => {
