@@ -31,6 +31,14 @@ export default defineComponent({
       default: 'top',
     },
     /**
+     * 原form-item height = min(50px, form-item-content height)
+     * 设为true，取消上述行为
+     */
+    autoHeight: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * 当前 item label 是否禁用（字体颜色变化）
      */
     labelDisabled: {

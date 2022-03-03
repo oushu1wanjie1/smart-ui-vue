@@ -127,6 +127,12 @@
   min-height: 50px;
 }
 
+.ant-form-item[autoheight="true"] {
+  .ant-form-item-control-input {
+    min-height: unset;
+  }
+}
+
 .smartui-form-item-disabled > .ant-form-item-label > label {
   color: $color-text-comment;
 }
