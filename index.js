@@ -18,8 +18,8 @@ import XRadio from './XRadio'
 import XPopover from './XPopover'
 import XPagination from './XPagination'
 import XModal from './XModal'
-import XMenuItem from './XMenuItem'
-import XMenu from './XMenu'
+import XMenuItem from './menu/XMenuItem'
+import XMenu from './menu/XMenu'
 import XInputNumber from './XInputNumber'
 import XDropdown from './XDropdown'
 import XDrawer from './XDrawer'
@@ -31,6 +31,9 @@ import XTable from './XTable'
 import XTabs from './XTabs'
 import XTabPane from './XTabPane'
 import XDivider from './XDivider'
+import XSubMenu from './menu/XSubMenu'
+import XMenuItemGroup from './menu/XMenuItemGroup'
+import XMenuDivider from './menu/XMenuDivider'
 export default {
   utils,
   XAvatar,
@@ -64,5 +67,8 @@ export default {
   XTable,
   XTabs,
   XTabPane,
-  XDivider
+  XDivider,
+  XSubMenu,
+  XMenuItemGroup,
+  XMenuDivider,
 }

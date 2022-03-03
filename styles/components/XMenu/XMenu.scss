@@ -1,0 +1,15 @@
+@import "./mixin";
+
+.smartui-menu:not(.raw) {
+  &.ant-dropdown-menu {
+    @include dropdown-menu()
+  }
+}
+
+.smartui-submenu-popup {
+  >.ant-dropdown-menu {
+    @include dropdown-menu()
+  }
+}
+
+
