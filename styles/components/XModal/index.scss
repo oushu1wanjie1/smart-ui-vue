@@ -2,24 +2,24 @@
 @import "../../mixins";
 
 .x-modal:not(.raw) {
-  .ant-modal {
+  &.ant-modal {
     // antd modal 的 width 是内联样式，只能加 !important 关键字覆盖
     display: flex;
     justify-content: center;
 
     // 内容区域，包含 close、header、body、footer
-    &-content {
+    .ant-modal-content {
       width: $modal-width !important;
       border-radius: $modal-content-radius;
     }
 
     // 右上角 'x' 区域
-    &-close {
+    .ant-modal-close {
       top: $modal-close-top;
       color: white;
 
       // 'x' svg 大小设置
-      &-x {
+      .ant-modal-close-x {
         width: $modal-close-x-width;
         height: $modal-close-x-height;
         line-height: $modal-close-x-line-height;
@@ -32,7 +32,7 @@
       }
     }
 
-    &-header {
+    .ant-modal-header {
       padding: $modal-header-padding-top $modal-header-padding-horizontal $modal-header-padding-bottom;
       background: none;
       border: 0;
@@ -55,14 +55,14 @@
       }
     }
 
-    &-body {
+    .ant-modal-body {
       padding: $modal-body-padding-vertical $modal-body-padding-horizontal;
       font-size: $font-size-normal;
       line-height: $modal-body-line-height;
       text-align: center;
     }
 
-    &-footer {
+    .ant-modal-footer {
       padding: $modal-footer-padding-top $modal-footer-padding-horizontal $modal-footer-padding-bottom;
       border: 0;
 
