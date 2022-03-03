@@ -12,7 +12,6 @@ import { computed, defineComponent, Prop } from 'vue'
 export default defineComponent({
   name: 'XModal',
   setup(props, context) {
-    console.log(props)
     return {
       slots: computed(() => Object.keys(context.slots))
     }
@@ -21,5 +20,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import './styles/components/XModal/index.scss';
+@import '../styles/components/XModal/index';
 </style>
