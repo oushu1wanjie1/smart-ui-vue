@@ -39,7 +39,7 @@ export default defineComponent({
      */
     popupOffset: {
       type: Array as PropType<number[]>,
-      default: () => [36, 0]
+      default: () => [16, 0]
     },
     /**
      * 唯一标识
