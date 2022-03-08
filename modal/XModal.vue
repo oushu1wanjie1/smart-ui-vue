@@ -20,5 +20,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import 'styles/components/XModal/index';
+@import '../styles/components/XModal/index';
 </style>

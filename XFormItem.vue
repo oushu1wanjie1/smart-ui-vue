@@ -1,11 +1,23 @@
 <template>
-  <a-form-item :class="{ 'smartui-form-item': true, 'error-bottom': errorTipPosition === 'bottom' }">
-    <slot></slot>
+  <a-form-item
+    :class="{
+      'smartui-form-item': true,
+      'error-bottom': errorTipPosition === 'bottom',
+      'smartui-form-item-disabled': labelDisabled !== undefined,
+    }"
+    v-bind="$props"
+  >
+    <template v-for="item in slots" v-slot:[item]>
+      <slot :name="item"/>
+    </template>
   </a-form-item>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
+import PropTypes from 'ant-design-vue/es/_util/vue-types'
+import { tuple } from 'ant-design-vue/es/_util/type'
+import { VNodeChild } from '@vue/runtime-core'
 
 export default defineComponent({
   name: 'XFormItem',
@@ -16,9 +28,67 @@ export default defineComponent({
      */
     errorTipPosition: {
       type: String,
-      default: 'top'
+      default: 'top',
+    },
+    /**
+     * 原form-item height = min(50px, form-item-content height)
+     * 设为true，取消上述行为
+     */
+    autoHeight: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * 当前 item label 是否禁用（字体颜色变化）
+     */
+    labelDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    id: String,
+    htmlFor: String,
+    prefixCls: String,
+    label: Object as PropType<string | VNodeChild>,
+    help: Object as PropType<string | VNodeChild>,
+    extra: Object as PropType<string | VNodeChild>,
+    labelCol: Object,
+    wrapperCol: Object,
+    hasFeedback: {
+      type: Boolean,
+      default: false
+    },
+    colon: {
+      type: Boolean,
+      default: false
+    },
+    labelAlign: String as PropType<'left' | 'right'>,
+    prop: {
+      type: [String, Number, Array]
+    },
+    name: {
+      type: [String, Number, Array]
+    },
+    rules: {
+      type: [Array, Object]
+    },
+    autoLink: {
+      type: Boolean,
+      default: true,
+    },
+    required: Boolean,
+    validateFirst: Boolean,
+    validateStatus: String as PropType<'' | 'success' | 'warning' | 'error' | 'validating'>,
+    validateTrigger: {
+      type: [String, Array]
+    },
+    messageVariables: Object,
+    hidden: Boolean,
+  },
+  setup(props, context) {
+    return {
+      slots: computed(() => Object.keys(context.slots)),
     }
-  }
+  },
 })
 </script>
 

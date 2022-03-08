@@ -9,7 +9,8 @@
   // label
   .ant-form-item-label {
     @include font-normal;
-    padding-bottom: 10px;
+    // 目前 label min-height: 50px，不再需要 padding-bottom
+    //padding-bottom: 10px;
   }
   // 成功提示不显示
   .ant-form-item-explain-success {
@@ -103,4 +104,35 @@
       }
     }
   }
+}
+
+// 默认右对齐 -> 左对齐
+// 保持居中
+.ant-form-item-label {
+  display: inline-flex;
+  align-items: center;
+
+  & > label {
+    min-height: 50px;
+  }
+}
+
+// 居中
+.ant-form-item-control {
+  // default flex-direction: column
+  justify-content: center;
+}
+
+.ant-form-item-control-input {
+  min-height: 50px;
+}
+
+.ant-form-item[autoheight="true"] {
+  .ant-form-item-control-input {
+    min-height: unset;
+  }
+}
+
+.smartui-form-item-disabled > .ant-form-item-label > label {
+  color: $color-text-comment;
 }

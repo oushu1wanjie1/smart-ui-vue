@@ -25,8 +25,8 @@
 // -----公共mixin-----
 // 输入框基本样式和下划线
 @mixin input-underline($line-color) {
-  border: none;
-  border-bottom: 1px solid $line-color;
+  border: 1px solid transparent;
+  border-bottom-color: $line-color;
   box-shadow: none;
   // 有 prefix 时不适合
   height: 50px;

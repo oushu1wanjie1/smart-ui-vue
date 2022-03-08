@@ -1,10 +1,10 @@
 <template>
   <x-tooltip v-if="tooltipContent" :title="tooltipContent" :overlayClassName="tooltipClassName">
-    <svg :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle">
+    <svg :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
       <use :xlink:href="`#${namespace}${namespace ? '/': ''}${name}`"></use>
     </svg>
   </x-tooltip>
-  <svg v-else :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle">
+  <svg v-else :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
     <use :xlink:href="`#${namespace}${namespace ? '/': ''}${name}`"></use>
   </svg>
 </template>
@@ -13,10 +13,10 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 import { PropType, reactive, toRefs, watch } from 'vue'
-import XTooltip from '../XTooltip.vue'
+import XTooltip from '@/smart-ui-vue/XTooltip.vue'
 
-export type ColorType = 'primary' | 'warn' | 'danger' | string
-const COLOR_TYPE_LIST = ['primary', 'warn', 'danger']
+export type ColorType = 'primary' | 'warn' | 'danger' | 'black' | 'white' | 'orange' | 'comment' | 'lineBold' | string
+const COLOR_TYPE_LIST = ['primary', 'warn', 'danger', 'black', 'white', 'orange', 'comment', 'lineBold']
 export default {
   name: 'Icon',
   components: { XTooltip },
@@ -46,6 +46,10 @@ export default {
       type: String as PropType<ColorType>,
       default: 'primary',
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     iconStyle: {
       type: Object as PropType<{
         [value: string]: string
@@ -63,7 +67,8 @@ export default {
       },
     },
   },
-  setup(props: any) {
+  emits: ['click'],
+  setup(props: any, context: any) {
     // 设置图标默认颜色 start
     const colorRefs = reactive<{
       iconExtraClass: {
@@ -93,31 +98,43 @@ export default {
       configColor()
     })
     configColor()
+    const handleClick = (event: Event) => {
+      if (props.disabled) {
+        event.preventDefault()
+        return
+      }
+      context.emit('click', event)
+    }
     // 设置图标默认颜色 end
     return {
       ...toRefs(colorRefs),
+      handleClick,
     }
   },
 }
 </script>
 
 <style lang="scss">
-@import '../styles/variables.scss';
-
 .icon {
   width: 18px;
   height: 18px;
   overflow: hidden;
   vertical-align: -4px;
+  outline: none;
   transition: all .35s;
   fill: currentColor;
-  stroke: currentColor;
   // 避免某些情况下浏览器的自动样式
-  outline: none;
+  stroke: currentColor;
 
   &[image="true"] {
     fill: none !important;
     stroke: none !important;
+  }
+
+  &[disabled="true"] {
+    cursor: not-allowed !important;
+    color: $color-text-comment !important;
+    stroke: $color-text-comment !important;
   }
 }
 
@@ -134,5 +151,30 @@ export default {
 .icon.icon-warning-color {
   color: $color-warn;
   stroke: $color-warn;
+}
+
+.icon.icon-black-color {
+  color: $color-primary-black;
+  stroke: $color-primary-black;
+}
+
+.icon.icon-white-color {
+  color: white;
+  stroke: white;
+}
+
+.icon.icon-orange-color {
+  color: $color-primary-orange;
+  stroke: $color-primary-orange;
+}
+
+.icon.icon-comment-color {
+  color: $color-text-comment;
+  stroke: $color-text-comment;
+}
+
+.icon.icon-line-bold {
+  color: $color-line-bold;
+  stroke: $color-line-bold;
 }
 </style>

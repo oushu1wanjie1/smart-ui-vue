@@ -1,4 +1,4 @@
-module.exports = {
+const VARS = {
   // 全局主色
   'primary-color': '#336CFF',
   // 成功色
@@ -24,3 +24,5 @@ module.exports = {
   // 禁用文本配色
   'disabled-color': '#85888C'
 }
+
+module.exports = VARS
