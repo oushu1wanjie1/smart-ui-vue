@@ -59,6 +59,7 @@ export default defineComponent({
     color: $color-text-comment;
 
     .user-name {
+      justify-content: flex-start;
       height: 20px;
       margin-bottom: 2px;
       padding: 0;
