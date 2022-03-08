@@ -4,6 +4,7 @@
     :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty }"
     :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
     :columns="formattedColumns"
+    :dataSource="dataSource"
     :loading="loading"
     :customHeaderRow="column => {
       return {
@@ -66,6 +67,10 @@ export default defineComponent({
       type: [Array, null],
       default: null
     },
+    dataSource: {
+      type: Array,
+      default: () => []
+    },
     loading: {
       type: Boolean,
       default: false
@@ -115,7 +120,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const { conditional } = toRefs(props)
+    const { conditional, dataSource } = toRefs(props)
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -155,13 +160,9 @@ export default defineComponent({
 
     const filteredColumnKeys = reactive([])
 
-    const isDataSourceEmpty = () => {
-      return (!context.attrs['data-source'] || !context.attrs['data-source'].length) && (!context.attrs.dataSource || !context.attrs.dataSource.length)
-    }
+    const isEmpty = computed(() => !(filteredColumnKeys.length || conditional.value) && !dataSource.value.length)
 
-    const isEmpty = computed(() => !(filteredColumnKeys.length || conditional.value) && isDataSourceEmpty())
-
-    const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && isDataSourceEmpty())
+    const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && !dataSource.value.length)
 
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
