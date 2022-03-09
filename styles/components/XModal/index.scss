@@ -3,8 +3,8 @@
 
 .x-modal:not(.raw) {
   &.ant-modal {
-    // antd modal 的 width 是内联样式，只能加 !important 关键字覆盖
-    display: flex;
+    // 用 inline-flex 不用 flex 的原因：有一个 before 行内伪元素
+    display: inline-flex;
     justify-content: center;
 
     // 内容区域，包含 close、header、body、footer
