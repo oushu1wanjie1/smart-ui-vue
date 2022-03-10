@@ -3,13 +3,11 @@
 
 .x-modal:not(.raw) {
   &.ant-modal {
-    // 用 inline-flex 不用 flex 的原因：有一个 before 行内伪元素
-    display: inline-flex;
-    justify-content: center;
+    // 暂时解决方案
+    width: $modal-width !important;
 
     // 内容区域，包含 close、header、body、footer
     .ant-modal-content {
-      width: $modal-width !important;
       border-radius: $modal-content-radius;
     }
 
