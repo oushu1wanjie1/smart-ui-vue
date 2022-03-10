@@ -106,33 +106,35 @@
   }
 }
 
-// 默认右对齐 -> 左对齐
-// 保持居中
-.ant-form-item-label {
-  display: inline-flex;
-  align-items: center;
+.ant-form.ant-form-horizontal {
+  // 默认右对齐 -> 左对齐
+  // 保持居中
+  .ant-form-item-label {
+    display: inline-flex;
+    align-items: center;
 
-  & > label {
+    & > label {
+      min-height: 50px;
+    }
+  }
+
+  // 居中
+  .ant-form-item-control {
+    // default flex-direction: column
+    justify-content: center;
+  }
+
+  .ant-form-item-control-input {
     min-height: 50px;
   }
-}
 
-// 居中
-.ant-form-item-control {
-  // default flex-direction: column
-  justify-content: center;
-}
-
-.ant-form-item-control-input {
-  min-height: 50px;
-}
-
-.ant-form-item[autoheight="true"] {
-  .ant-form-item-control-input {
-    min-height: unset;
+  .ant-form-item[autoheight="true"] {
+    .ant-form-item-control-input {
+      min-height: unset;
+    }
   }
-}
 
-.smartui-form-item-disabled > .ant-form-item-label > label {
-  color: $color-text-comment;
+  .smartui-form-item-disabled > .ant-form-item-label > label {
+    color: $color-text-comment;
+  }
 }
