@@ -2,7 +2,7 @@
   <a-drawer
     v-model:visible="visibleLocal"
     v-bind="{ ...restProps, title: undefined }"
-    wrapper-class-name="smartui-drawer"
+    :wrapper-class-name="`smartui-drawer ${fixed ? 'smartui-drawer-fix-title' : ''}`"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]>
       <slot :name="item"></slot>
@@ -34,6 +34,8 @@ const XDrawer = defineComponent({
     // 默认离top 74px（header的高度）
     // 需要 top 为 0 设置本属性即可
     fullScreen: Boolean,
+    // 是否固定 title，body overflow auto
+    fixed: Boolean,
     closable: {
       type: Boolean,
       default: true,

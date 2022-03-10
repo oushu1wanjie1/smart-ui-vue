@@ -9,6 +9,7 @@
       // 标题文字
       .ant-drawer-title {
         font-size: 18px;
+        line-height: 38px;
         color: $color-primary-black;
         font-weight: 400;
       }
@@ -18,6 +19,25 @@
         height: 38px;
         top: 23px;
         right: 30px;
+      }
+    }
+  }
+
+  // 固定 header，body溢出滚动
+  &.smartui-drawer-fix-title {
+    .ant-drawer-wrapper-body {
+      padding-top: 74px;
+      .ant-drawer-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .ant-drawer-body {
+        height: 100%;
+        overflow: auto;
+        padding-bottom: 20px;
       }
     }
   }
