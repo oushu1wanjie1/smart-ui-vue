@@ -33,22 +33,7 @@
 import { PropType, defineComponent } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XTooltip from '../../XTooltip.vue'
-
-export const SOURCE_SELF = 'self'
-export const SOURCE_INHERIT = 'inherit'
-export const SOURCE_SELF_INHERIT = 'self_inherit'
-
-export interface Role {
-  id: number;
-  name: string;
-}
-
-export interface ActionTag {
-  id: string | number;
-  name: string;
-  type: string;
-  roles: Role[];
-}
+import { ActionTag, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT } from './type'
 
 export default defineComponent({
   name: 'LavaActionTag',
@@ -89,12 +74,9 @@ export default defineComponent({
   border-radius: 4px;
   background-color: rgba(213, 216, 219, 0.5);
 
-  .name {
-    margin-right: 5px;
-  }
-
   .delete {
     cursor: pointer;
+    margin-left: 5px;
   }
 }
 
