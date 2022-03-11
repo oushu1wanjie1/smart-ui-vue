@@ -6,10 +6,10 @@
     </div>
     <div class="right">
       <div class="name">
-        <a @click="handleJump">{{ name || 'name' }}</a>
+        <a @click="handleJump">{{ name }}</a>
         <slot></slot>
       </div>
-      <div class="remark">{{ remark || 'remark' }}</div>
+      <div class="remark">{{ remark }}</div>
     </div>
   </div>
 </template>
