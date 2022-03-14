@@ -1,6 +1,9 @@
 export const USER = 'user'
 export const ROLE = 'role'
 
+export const ADD = 'add'
+export const EDIT = 'edit'
+
 export const SOURCE_SELF = 'self'
 export const SOURCE_INHERIT = 'inherit'
 export const SOURCE_SELF_INHERIT = 'self_inherit'
