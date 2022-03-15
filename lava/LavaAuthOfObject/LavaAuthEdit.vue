@@ -3,6 +3,7 @@
     wrapClassName="lava-auth-of-object-drawer-inside"
     :visible="visible"
     :width="800"
+    @close="handleClose"
   >
     <x-form class="form" layout="vertical">
       <x-form-item label="关联" v-if="action === ADD">
@@ -74,7 +75,8 @@ export default defineComponent({
       default: false
     }
   },
-  setup() {
+  emits: [ 'update:visible', 'close' ],
+  setup(props, context) {
     const type: Ref<string> = ref(USER)
     const id: Ref<string | number> = ref('')
     const actions: Ref<string[]> = ref([])
@@ -97,6 +99,11 @@ export default defineComponent({
       console.log('onSubmit')
     }
 
+    const handleClose = () => {
+      context.emit('update:visible', false)
+      context.emit('close', false)
+    }
+
     return {
       ADD,
       type,
@@ -105,7 +112,8 @@ export default defineComponent({
       disableActionSelector,
       typeSelectorIcon,
       typeSelectorPlaceholder,
-      actionSelectorIcon
+      actionSelectorIcon,
+      handleClose
     }
   }
 })

@@ -122,12 +122,11 @@ export default defineComponent({
     .object-tag {
       display: flex;
       height: 22px;
-      padding: 2px 6px;
+      padding: 2.5px 4px;
       border-radius: 4px;
       margin-left: 10px;
       font-size: $font-size-small;
       color: $color-text-sub;
-      line-height: initial;
       background-color: $color-line-bold;
 
       &.owner {

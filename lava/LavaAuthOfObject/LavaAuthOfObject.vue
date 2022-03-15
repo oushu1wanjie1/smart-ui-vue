@@ -35,7 +35,7 @@
       <!-- 权限列表 -->
       <lava-auth-list></lava-auth-list>
     </div>
-    <lava-auth-edit :visible="insideDrawerVisible"></lava-auth-edit>
+    <lava-auth-edit v-model:visible="insideDrawerVisible"></lava-auth-edit>
   </x-drawer>
 </template>
 
@@ -53,6 +53,21 @@ import LavaActionTag from './LavaActionTag.vue'
 import LavaAuthList from './LavaAuthList.vue'
 import LavaAuthEdit from './LavaAuthEdit.vue'
 import { SOURCE_SELF, SOURCE_INHERIT, ROLE, USER } from './type'
+
+const STRATEGY_DATA = {
+
+}
+
+const STRATEGY_COMMON = {
+
+}
+
+const STRATEGY = {
+  database: STRATEGY_DATA,
+  schema: STRATEGY_DATA,
+  table: STRATEGY_DATA,
+  common: STRATEGY_COMMON
+}
 
 export default defineComponent({
   name: 'LavaAuthOfObject',
@@ -76,6 +91,26 @@ export default defineComponent({
     },
     visible: {
       type: Boolean,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    apiGetAuthList: {
+      type: Function,
+      required: true
+    },
+    apiGetAuthOfUserOrRole: {
+      type: Function,
+      required: true
+    },
+    apiGetInheritRoles: {
+      type: Function,
+      required: true
+    },
+    apiSetAuth: {
+      type: Function,
       required: true
     }
   },
