@@ -52,7 +52,7 @@ import XSelect from '../../XSelect.vue'
 import XSelectOption from '../../XSelectOption.vue'
 import XButton from '../../XButton.vue'
 import XDrawer from '../../XDrawer.vue'
-import { USER, ROLE, ADD } from './type'
+import { USER, ADD } from './type'
 
 export default defineComponent({
   name: 'LavaAuthEdit',
@@ -92,7 +92,7 @@ export default defineComponent({
     const disableActionSelector = computed(() => id.value)
 
     const actionSelectorIcon = computed(() => {
-      return disableActionSelector ? 'auth' : 'auth-active'
+      return disableActionSelector.value ? 'auth' : 'auth-active'
     })
 
     const onSubmit = () => {
@@ -123,10 +123,6 @@ export default defineComponent({
 @import "../../styles/variables.scss";
 
 .lava-auth-of-object-drawer-inside {
-
-  .form {
-    margin-right: 40px;
-  }
 
   .controls {
     display: flex;

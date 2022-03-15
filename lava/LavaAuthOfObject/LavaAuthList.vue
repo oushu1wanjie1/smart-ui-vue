@@ -1,6 +1,6 @@
 <template>
   <div class="lava-auth-list">
-    <div class="lava-auth-list-item" v-for="item in list">
+    <div class="lava-auth-list-item">
       <lava-object-basic-info :type="USER" id="111" name="malin" remark="balabala..." class="object-info">
         <span class="object-tag owner">
           <icon name="lava-auth-of-object/key"></icon>拥有人
@@ -8,7 +8,7 @@
         <span class="object-tag system-role">系统角色</span>
       </lava-object-basic-info>
       <div class="actions">
-        <lava-action-tag class="action-tag" v-for="item in list" :action="{ name: '连接', type: SOURCE_SELF, roles: [
+        <lava-action-tag class="action-tag" :action="{ name: '连接', type: SOURCE_SELF, roles: [
             { name: '系统角色' },
             { name: '权限管理员' },
             { name: '设备维护' },
@@ -28,7 +28,7 @@ import { PropType, defineComponent, ref } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
-import { USER, SOURCE_SELF, SOURCE_INHERIT, AuthListItem } from './type'
+import { USER, SOURCE_SELF, AuthListItem } from './type'
 
 export default defineComponent({
   name: 'LavaAuthList',
@@ -43,7 +43,7 @@ export default defineComponent({
       required: true
     },
     authList: {
-      type: Object as PropType<AuthListItem>,
+      type: Array as PropType<AuthListItem[]>,
       default: () => []
     }
   },
@@ -99,6 +99,7 @@ export default defineComponent({
     }
 
     .actions {
+      flex-grow: 1;
       // 妙哉！！！巧用 margin 折叠，解决最后一行外边距问题
       margin-bottom: -10px;
 
@@ -124,7 +125,7 @@ export default defineComponent({
       height: 22px;
       padding: 2.5px 4px;
       border-radius: 4px;
-      margin-left: 10px;
+      margin-left: 4px;
       font-size: $font-size-small;
       color: $color-text-sub;
       background-color: $color-line-bold;

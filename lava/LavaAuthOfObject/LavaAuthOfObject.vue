@@ -17,7 +17,7 @@
           </x-button>
         </div>
         <div class="right">
-          <x-select class="select" v-model:value="type" @change="handleChangeSelector">
+          <x-select class="select" v-model:value="userOrRole" @change="handleChangeSelector">
             <template #prefixIcon><icon :name="`lava-auth-of-object/${selectorIcon}`"></icon></template>
             <x-select-option value="user">用户</x-select-option>
             <x-select-option value="role">角色</x-select-option>
@@ -48,26 +48,24 @@ import XSelect from '../../XSelect.vue'
 import XSelectOption from '../../XSelectOption.vue'
 import XInputSearch from '../../XInputSearch.vue'
 import XDivider from '../../XDivider.vue'
-import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
-import LavaActionTag from './LavaActionTag.vue'
 import LavaAuthList from './LavaAuthList.vue'
 import LavaAuthEdit from './LavaAuthEdit.vue'
 import { SOURCE_SELF, SOURCE_INHERIT, ROLE, USER } from './type'
 
-const STRATEGY_DATA = {
+// const STRATEGY_DATA = {
+//
+// }
+//
+// const STRATEGY_COMMON = {
+//
+// }
 
-}
-
-const STRATEGY_COMMON = {
-
-}
-
-const STRATEGY = {
-  database: STRATEGY_DATA,
-  schema: STRATEGY_DATA,
-  table: STRATEGY_DATA,
-  common: STRATEGY_COMMON
-}
+// const STRATEGY = {
+//   database: STRATEGY_DATA,
+//   schema: STRATEGY_DATA,
+//   table: STRATEGY_DATA,
+//   common: STRATEGY_COMMON
+// }
 
 export default defineComponent({
   name: 'LavaAuthOfObject',
@@ -79,8 +77,6 @@ export default defineComponent({
     XSelectOption,
     XInputSearch,
     XDivider,
-    LavaObjectBasicInfo,
-    LavaActionTag,
     LavaAuthList,
     LavaAuthEdit
   },
@@ -116,22 +112,22 @@ export default defineComponent({
   },
   emits: [ 'update:visible', 'close' ],
   setup(props, context) {
-    const type: Ref<string> = ref(USER)
+    const userOrRole: Ref<string> = ref(USER)
     const searchVal: Ref<string> = ref('')
     const userAuthList = ref([])
     const roleAuthList = ref([])
-    const insideDrawerVisible: Ref<Boolean> = ref(false)
+    const insideDrawerVisible: Ref<boolean> = ref(false)
 
     const searchPlaceholder: ComputedRef<string> = computed(() => {
-      return type.value === USER ? '请输入需要搜索的用户名' : '请输入需要搜索的角色名'
+      return userOrRole.value === USER ? '请输入需要搜索的用户名' : '请输入需要搜索的角色名'
     })
 
     const selectorIcon: ComputedRef<string> = computed(() => {
-      return type.value === USER ? 'user' : 'role'
+      return userOrRole.value === USER ? 'user' : 'role'
     })
 
     const authList = computed(() => {
-      return type.value === USER ? userAuthList : roleAuthList
+      return userOrRole.value === USER ? userAuthList : roleAuthList
     })
 
     const handleGetAuthList = () => {
@@ -161,7 +157,7 @@ export default defineComponent({
       ROLE,
       SOURCE_SELF,
       SOURCE_INHERIT,
-      type,
+      userOrRole,
       selectorIcon,
       searchVal,
       searchPlaceholder,
@@ -181,7 +177,6 @@ export default defineComponent({
 .lava-auth-of-object-drawer-outside {
   .container {
     margin-top: 10px;
-    margin-right: 40px;
     margin-bottom: 40px;
   }
 
