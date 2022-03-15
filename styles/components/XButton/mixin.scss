@@ -173,6 +173,14 @@
 }
 
 @mixin btn-icon-only {
+  @include button-variant-other($btn-default-color, transparent, #D5D8DB);
+  &:hover,
+  &:active {
+    @include button-variant-other($btn-default-color, transparent, $text-annotation-color);
+  }
+}
+
+@mixin btn-text-icon-only {
   height: 24px;
   width: 24px;
 }
