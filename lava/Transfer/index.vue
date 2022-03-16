@@ -74,19 +74,28 @@
               <a-checkbox v-model:checked="item.checked"/>
               <!-- 第一列 -->
               <div>
-<!--                <p class="custom-transfer-left-table-item-title">{{ item.name }}</p>-->
-<!--                <p class="custom-transfer-left-table-item-description">-->
-<!--                  {{-->
-<!--                    // 用户组和角色是 description 属性-->
-<!--                    // 用户是 name_remark 属性-->
-<!--                    item.description ?? item.name_remark-->
-<!--                  }}</p>-->
-                <lava-user-info
-                  :id="item.id"
-                  :name="item.name"
-                  :remark="item.description ?? item.name_remark"
-                  :show-avatar="false"
-                />
+                <p
+                  class="custom-transfer-left-table-item-title"
+                  :class="{ 'color-comment': !(item.name && item.name.length > 0)}"
+                >
+                  {{ item.name || '无名字' }}
+                </p>
+                <p
+                  class="custom-transfer-left-table-item-description"
+                  :class="{ 'color-comment': !((item.description && item.description.length > 0) || (item.name_remark && item.name_remark.length > 0))}"
+                >
+                  {{
+                    // 用户组和角色是 description 属性，用户是 name_remark 属性
+                    (item.description ?? item.name_remark) || '无备注'
+                  }}
+                </p>
+                <!-- 宽度自适应问题尚不能比较好的解决 -->
+<!--                <lava-user-info-->
+<!--                  :id="item.id"-->
+<!--                  :name="item.name"-->
+<!--                  :remark="item.description ?? item.name_remark"-->
+<!--                  :show-avatar="false"-->
+<!--                />-->
               </div>
               <!-- 第二列，类型 -->
               <div v-if="name === '角色'">
@@ -151,22 +160,26 @@
               <div class="custom-transfer-right-table-item" @click.prevent="handleUnselect(item)">
                 <a-checkbox v-model:checked="item.checked"/>
                 <div>
-<!--                  <p class="custom-transfer-right-table-item-title">-->
-<!--                    {{ item.name }}-->
-<!--                  </p>-->
-<!--                  <p class="custom-transfer-right-table-item-description">-->
-<!--                    {{-->
-<!--                      // 用户组和角色是 description 属性-->
-<!--                      // 用户是 name_remark 属性-->
-<!--                      item.description ?? item.name_remark-->
-<!--                    }}-->
-<!--                  </p>-->
-                  <lava-user-info
-                    :id="item.id"
-                    :name="item.name"
-                    :remark="item.description ?? item.name_remark"
-                    :show-avatar="false"
-                  />
+                  <p class="custom-transfer-right-table-item-title" :class="{ 'color-comment': !(item.name && item.name.length > 0)}">
+                    {{ item.name }}
+                  </p>
+                  <p
+                    class="custom-transfer-right-table-item-description"
+                    :class="{ 'color-comment': !((item.description && item.description.length > 0) || (item.name_remark && item.name_remark.length > 0))}"
+                  >
+                    {{
+                      // 用户组和角色是 description 属性
+                      // 用户是 name_remark 属性
+                      item.description ?? item.name_remark
+                    }}
+                  </p>
+                  <!-- 宽度自适应问题尚不能比较好的解决 -->
+<!--                  <lava-user-info-->
+<!--                    :id="item.id"-->
+<!--                    :name="item.name"-->
+<!--                    :remark="item.description ?? item.name_remark"-->
+<!--                    :show-avatar="false"-->
+<!--                  />-->
                 </div>
               </div>
               <div class="ink-bar ink-bar-gray"/>
@@ -652,7 +665,7 @@ export default defineComponent({
   }
 
   & > div:nth-of-type(2) {
-    flex: 1;
+    flex: 0 0 80px;
     margin-right: 5px;
   }
 }
@@ -746,6 +759,10 @@ span, p {
 
 .filter-icon.active {
   color: $color-primary-blue;
+}
+
+.color-comment {
+  color: $color-text-comment !important;
 }
 </style>
 
