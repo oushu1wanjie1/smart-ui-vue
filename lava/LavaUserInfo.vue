@@ -10,16 +10,17 @@
           class="user-name"
           type="link"
           @click="$router.push(`/main/user_center/user/${id}`)"
+          :title="name"
         >
           {{ name }}
         </x-button>
-        <span v-else-if="id">{{ defaultName }}</span>
-        <span v-else>已注销</span>
+        <span v-else-if="id" :title="defaultName">{{ defaultName }}</span>
+        <span v-else title="已注销">已注销</span>
       </div>
       <!--     remark       -->
-      <span v-if="id && remark" class="name-remark">{{ remark }}</span>
-      <span v-else-if="id" class="logoff-remark">{{ defaultRemark }}</span>
-      <span v-else class="logoff-remark">已注销</span>
+      <span v-if="id && remark" class="name-remark" :title="remark">{{ remark }}</span>
+      <span v-else-if="id" class="logoff-remark" :title="defaultRemark">{{ defaultRemark }}</span>
+      <span v-else class="logoff-remark" title="已注销">已注销</span>
     </div>
   </div>
 </template>
@@ -85,6 +86,12 @@ export default defineComponent({
       height: 20px;
       padding: 0;
       margin-bottom: 2px;
+
+      > span {
+        overflow: hidden; //超出一行文字自动隐藏
+        text-overflow: ellipsis; //文字隐藏后添加省略号
+        white-space: nowrap; //强制不换行
+      }
     }
 
     .name-remark {
@@ -93,7 +100,10 @@ export default defineComponent({
 
     .name-remark,
     .logoff-remark {
-      @include font-small()
+      @include font-small();
+      overflow: hidden; //超出一行文字自动隐藏
+      text-overflow: ellipsis; //文字隐藏后添加省略号
+      white-space: nowrap; //强制不换行
     }
   }
 }
