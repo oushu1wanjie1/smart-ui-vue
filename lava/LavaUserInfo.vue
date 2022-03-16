@@ -81,7 +81,8 @@ export default defineComponent({
     flex-direction: column;
     color: $color-text-comment;
 
-    .user-name {
+    // 加权重
+    .user-name.ant-btn {
       justify-content: flex-start;
       height: 20px;
       padding: 0;
