@@ -1,17 +1,24 @@
 <template>
   <div class="lava-user-info">
-    <lava-avatar class="user-avatar" :user-id="id"/>
+    <lava-avatar v-if="showAvatar" :user-id="id" class="user-avatar"/>
     <div class="user-info">
       <!--      name      -->
-      <x-button
-        class="user-name"
-        v-if="id"
-        type="link"
-        @click="$router.push(`/main/user_center/user/${id}`)"
-      >{{ name || '姓名' }}</x-button>
-      <span v-else>已注销</span>
+      <div>
+        <slot name="extra"/>
+        <x-button
+          v-if="id && name"
+          class="user-name"
+          type="link"
+          @click="$router.push(`/main/user_center/user/${id}`)"
+        >
+          {{ name }}
+        </x-button>
+        <span v-else-if="id">{{ defaultName }}</span>
+        <span v-else>已注销</span>
+      </div>
       <!--     remark       -->
-      <span v-if="id" class="name-remark">{{ remark || '姓名' }}</span>
+      <span v-if="id && remark" class="name-remark">{{ remark }}</span>
+      <span v-else-if="id" class="logoff-remark">{{ defaultRemark }}</span>
       <span v-else class="logoff-remark">已注销</span>
     </div>
   </div>
@@ -35,11 +42,25 @@ export default defineComponent({
     name: {
       type: String,
     },
+    defaultName: {
+      type: String,
+      default: '无姓名'
+    },
     // 用户名备注
     remark: {
       type: String
+    },
+    defaultRemark: {
+      type: String,
+      default: '无备注',
+    },
+    showAvatar: {
+      type: Boolean,
+      default: true
     }
-  }
+  },
+  // 名字前额外的扩展内容
+  slots: ['extra']
 })
 </script>
 
@@ -53,6 +74,7 @@ export default defineComponent({
     height: 24px;
     margin-right: 10px;
   }
+
   .user-info {
     display: flex;
     flex-direction: column;
@@ -61,15 +83,17 @@ export default defineComponent({
     .user-name {
       justify-content: flex-start;
       height: 20px;
-      margin-bottom: 2px;
       padding: 0;
+      margin-bottom: 2px;
     }
+
     .name-remark {
-      font-size: 12px;
       color: $color-primary-black;
     }
+
+    .name-remark,
     .logoff-remark {
-      font-size: 12px;
+      @include font-small()
     }
   }
 }
