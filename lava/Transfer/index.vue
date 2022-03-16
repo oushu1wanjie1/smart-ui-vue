@@ -77,12 +77,14 @@
                 <p
                   class="custom-transfer-left-table-item-title"
                   :class="{ 'color-comment': !(item.name && item.name.length > 0)}"
+                  :title="item.name || '无名字'"
                 >
                   {{ item.name || '无名字' }}
                 </p>
                 <p
                   class="custom-transfer-left-table-item-description"
                   :class="{ 'color-comment': !((item.description && item.description.length > 0) || (item.name_remark && item.name_remark.length > 0))}"
+                  :title="(item.description ?? item.name_remark) || '无备注'"
                 >
                   {{
                     // 用户组和角色是 description 属性，用户是 name_remark 属性
@@ -160,12 +162,17 @@
               <div class="custom-transfer-right-table-item" @click.prevent="handleUnselect(item)">
                 <a-checkbox v-model:checked="item.checked"/>
                 <div>
-                  <p class="custom-transfer-right-table-item-title" :class="{ 'color-comment': !(item.name && item.name.length > 0)}">
-                    {{ item.name }}
+                  <p
+                    class="custom-transfer-right-table-item-title"
+                    :class="{ 'color-comment': !(item.name && item.name.length > 0)}"
+                    :title="item.name || '无名字'"
+                  >
+                    {{ item.name || '无名字' }}
                   </p>
                   <p
                     class="custom-transfer-right-table-item-description"
                     :class="{ 'color-comment': !((item.description && item.description.length > 0) || (item.name_remark && item.name_remark.length > 0))}"
+                    :title="(item.description ?? item.name_remark) || '无备注'"
                   >
                     {{
                       // 用户组和角色是 description 属性
