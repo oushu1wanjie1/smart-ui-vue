@@ -27,20 +27,21 @@
             allowClear
             v-model:value="searchVal"
             :placeholder="searchPlaceholder"
+            @change="handleSearch"
             @search="handleSearch"
           ></x-input-search>
         </div>
       </div>
       <x-divider style="margin: 10px 0;"></x-divider>
       <!-- 权限列表 -->
-      <lava-auth-list></lava-auth-list>
+      <lava-auth-list :type="userOrRole" :loading="loading" :auth-list="authList"></lava-auth-list>
     </div>
     <lava-auth-edit v-model:visible="insideDrawerVisible"></lava-auth-edit>
   </x-drawer>
 </template>
 
 <script lang="ts">
-import { computed, ComputedRef, defineComponent, ref, Ref } from 'vue'
+import { computed, ComputedRef, defineComponent, PropType, ref, Ref, watch } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XDrawer from '../../XDrawer.vue'
 import XButton from '../../XButton.vue'
@@ -50,22 +51,54 @@ import XInputSearch from '../../XInputSearch.vue'
 import XDivider from '../../XDivider.vue'
 import LavaAuthList from './LavaAuthList.vue'
 import LavaAuthEdit from './LavaAuthEdit.vue'
-import { SOURCE_SELF, SOURCE_INHERIT, ROLE, USER } from './type'
+import {
+  SOURCE_SELF,
+  SOURCE_INHERIT,
+  ROLE,
+  USER,
+  ApiGetAuthListReq,
+  ApiGetAuthList,
+  ApiGetAuthOfUserOrRole, ApiGetAuthListRes, AuthListItem, ActionTag, Action, Role,
+} from './type'
+import { message } from 'ant-design-vue'
+import { debounce } from 'lodash'
 
-// const STRATEGY_DATA = {
-//
-// }
-//
-// const STRATEGY_COMMON = {
-//
-// }
+const handleFormatActionTag = (actions: Action[], type: string): ActionTag[] => {
+  return actions.map(act => ({
+    type,
+    id: act.rs_type_action_id,
+    name: act.action_name,
+    roles: []
+  }))
+}
 
-// const STRATEGY = {
-//   database: STRATEGY_DATA,
-//   schema: STRATEGY_DATA,
-//   table: STRATEGY_DATA,
-//   common: STRATEGY_COMMON
-// }
+const handleFormatAuthList = (data: ApiGetAuthListRes, type: string): AuthListItem[] => {
+  const _data = data.user_or_role_privileges
+  return _data.map(item => ({
+    type,
+    id: item.user_or_role_id,
+    name: item.user_or_role_name,
+    remark: item.comment,
+    icon: `/images/avatar/${Math.abs(item.user_or_role_id) % 6}.svg`,
+    actions: handleFormatActionTag(item.actions, type),
+    isOwner: type === USER && item.is_owner
+  }))
+}
+
+const STRATEGY_DATA = {
+
+}
+
+const STRATEGY_COMMON = {
+
+}
+
+const STRATEGY = {
+  database: STRATEGY_DATA,
+  schema: STRATEGY_DATA,
+  table: STRATEGY_DATA,
+  common: STRATEGY_COMMON
+}
 
 export default defineComponent({
   name: 'LavaAuthOfObject',
@@ -94,11 +127,11 @@ export default defineComponent({
       required: true
     },
     apiGetAuthList: {
-      type: Function,
+      type: Function as PropType<ApiGetAuthList>,
       required: true
     },
     apiGetAuthOfUserOrRole: {
-      type: Function,
+      type: Function as PropType<ApiGetAuthOfUserOrRole>,
       required: true
     },
     apiGetInheritRoles: {
@@ -110,12 +143,15 @@ export default defineComponent({
       required: true
     }
   },
-  emits: [ 'update:visible', 'close' ],
+  emits: [ 'close' ],
   setup(props, context) {
+    const delay = 500
+    const loading: Ref<boolean> = ref(false)
     const userOrRole: Ref<string> = ref(USER)
     const searchVal: Ref<string> = ref('')
-    const userAuthList = ref([])
-    const roleAuthList = ref([])
+    const userAuthList: Ref<AuthListItem[]> = ref([])
+    const roleAuthList: Ref<AuthListItem[]> = ref([])
+    const searchAuthList: Ref<AuthListItem[]> = ref([])
     const insideDrawerVisible: Ref<boolean> = ref(false)
 
     const searchPlaceholder: ComputedRef<string> = computed(() => {
@@ -127,12 +163,12 @@ export default defineComponent({
     })
 
     const authList = computed(() => {
-      return userOrRole.value === USER ? userAuthList : roleAuthList
+      if (searchAuthList.value.length > 0) {
+        return searchAuthList.value
+      } else {
+        return userOrRole.value === USER ? userAuthList.value : roleAuthList.value
+      }
     })
-
-    const handleGetAuthList = () => {
-      console.log('handleGetAuthList')
-    }
 
     const handleChangeSelector = (val: string) => {
       if (val === USER && userAuthList.value.length === 0) {
@@ -143,20 +179,98 @@ export default defineComponent({
       }
     }
 
-    const handleSearch = () => {
-      handleGetAuthList()
+    const handleSearch = (val: string) => {
+      console.log('handleSearch: ', val)
+      loading.value = true
+      // 前端搜索
+      const list = userOrRole.value ? userAuthList.value : roleAuthList.value
+      const result: AuthListItem[] = []
+      list.forEach(item => {
+        if (item.name.indexOf(searchVal.value) > -1 || (item.remark && item.remark.indexOf(searchVal.value) > -1)) {
+          result.push(item)
+        }
+      })
+      searchAuthList.value = result
+      console.log('search result: ', result)
+      loading.value = false
+      // 后端搜索
+      // _handleGetAuthList().then(data => {
+      //   if (data && data.user_or_role_privileges.length > 0) {
+      //     const list = handleFormatAuthList(data, userOrRole.value)
+      //     searchAuthList.value = list
+      //   } else {
+      //     searchAuthList.value = []
+      //   }
+      // })
     }
 
     const handleClose = () => {
-      context.emit('update:visible', false)
       context.emit('close', false)
     }
+
+    const handleReset = () => {
+      searchVal.value = ''
+      userAuthList.value = []
+      roleAuthList.value = []
+      insideDrawerVisible.value = false
+    }
+
+    const _handleGetAuthList = () => {
+      const params: ApiGetAuthListReq = {
+        resource_type_id: 0,
+        object_id: 0,
+        user_type: userOrRole.value,
+        user_or_role_name: searchVal.value
+      }
+      return props.apiGetAuthList(params).then(({ meta, data }) => {
+        if (meta.success) {
+          return data
+        } else {
+          throw new Error(meta.message || meta.status_code)
+        }
+      })
+    }
+
+    const handleGetAuthList = () => {
+      if (typeof props.apiGetAuthList !== 'function') return
+      loading.value = true
+      _handleGetAuthList().then(data => {
+        const list = handleFormatAuthList(data, userOrRole.value)
+        console.log('handleGetAuthList: ', list)
+        if (userOrRole.value === USER) {
+          userAuthList.value = list
+        } else {
+          roleAuthList.value = list
+        }
+      }).catch(err => {
+        message.error(`获取权限列表失败: ${err}`)
+      }).finally(() => {
+        loading.value = false
+      })
+    }
+
+    const handleInit = () => {
+      // 1. 重置状态
+      handleReset()
+      // 2. 发送请求
+      handleGetAuthList()
+    }
+
+    watch(() => props.visible, (visible) => {
+      if (visible) {
+        // 打开抽屉
+        handleInit()
+      } else {
+        // 关闭抽屉
+      }
+    })
 
     return {
       USER,
       ROLE,
       SOURCE_SELF,
       SOURCE_INHERIT,
+      loading,
       userOrRole,
       selectorIcon,
       searchVal,
@@ -164,8 +278,9 @@ export default defineComponent({
       authList,
       insideDrawerVisible,
       handleChangeSelector,
-      handleSearch,
-      handleClose
+      handleSearch: debounce(handleSearch, delay),
+      handleClose,
+      handleInit
     }
   }
 })

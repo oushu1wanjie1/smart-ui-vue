@@ -1,3 +1,6 @@
+export const RS_DB = 'rs_db'
+export const RS_COMMON = 'rs_common'
+
 export const USER = 'user'
 export const ROLE = 'role'
 
@@ -7,6 +10,18 @@ export const EDIT = 'edit'
 export const SOURCE_SELF = 'self'
 export const SOURCE_INHERIT = 'inherit'
 export const SOURCE_SELF_INHERIT = 'self_inherit'
+
+export interface Meta {
+  success: boolean;
+  message: string;
+  status_code: string;
+  params: any;
+}
+
+export interface Response<T> {
+  meta: Meta;
+  data: T;
+}
 
 export interface Role {
   id: number;
@@ -26,7 +41,8 @@ export interface AuthListItem {
   type: string;
   remark?: string;
   icon?: string;
-  actions: Action[];
+  actions: ActionTag[];
+  isOwner?: boolean;
 }
 
 // API 规范定义（函数、返回值）
@@ -61,7 +77,7 @@ export interface ApiGetAuthListReq {
 
 export interface ApiGetAuthListRes {
   user_or_role_privileges: {
-    user_or_role_id: string
+    user_or_role_id: number;
     user_or_role_name: string;
     comment: string;
     is_owner: boolean;
@@ -69,6 +85,10 @@ export interface ApiGetAuthListRes {
     actions: Action[];
     inheritActions: Action[];
   }[];
+}
+
+export interface ApiGetAuthList {
+  (params: ApiGetAuthListReq): Promise<Response<ApiGetAuthListRes>>;
 }
 
 export interface ApiGetAuthOfUserOrRoleReq {
@@ -86,6 +106,10 @@ export interface ApiGetAuthOfUserOrRoleRes {
     actions: Action[];
     inheritActions: Action[];
   }[];
+}
+
+export interface ApiGetAuthOfUserOrRole {
+  (params: ApiGetAuthOfUserOrRoleReq): Promise<Response<ApiGetAuthOfUserOrRoleRes>>;
 }
 
 export interface ApiSetAuthReq {

@@ -1,8 +1,9 @@
 <template>
   <div class="lava-object-basic-info">
     <div class="left">
-      <icon v-if="icon" :name="icon"></icon>
-      <span v-else class="default-avatar"></span>
+      <x-avatar class="avatar" v-if="type === USER && icon" :src="icon"/>
+      <icon class="avatar" v-else-if="type === ROLE && icon" :name="icon"></icon>
+      <span class="avatar default" v-else></span>
     </div>
     <div class="right">
       <div class="name">
@@ -18,6 +19,8 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import Icon from '../helper/Icon.vue'
+import XAvatar from '../XAvatar.vue'
+import { USER, ROLE } from '@/smart-ui-vue/lava/LavaAuthOfObject/type'
 
 const JUMP_MAP: { [key: string]: string } = {
   'user': '/main/user_center/user',
@@ -27,7 +30,8 @@ const JUMP_MAP: { [key: string]: string } = {
 export default defineComponent({
   name: 'LavaObjectBasicInfo.vue',
   components: {
-    Icon
+    Icon,
+    XAvatar
   },
   props: {
     type: {
@@ -62,6 +66,8 @@ export default defineComponent({
     }
 
     return {
+      USER,
+      ROLE,
       handleJump
     }
   }
@@ -79,15 +85,23 @@ export default defineComponent({
     width: 24px;
     height: 24px;
     margin-right: 10px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
-  .default-avatar {
+  .avatar {
     display: inline-block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     margin-right: 10px;
-    background-color: $color-line-bold;
+
+    &.default {
+      background-color: $color-line-bold;
+    }
   }
 
   .name {
