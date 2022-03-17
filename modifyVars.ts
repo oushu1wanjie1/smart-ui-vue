@@ -22,7 +22,9 @@ const VARS = {
   // 同时适用于 select
   'input-hover-border-color': '#85888C',
   // 禁用文本配色
-  'disabled-color': '#85888C'
+  'disabled-color': '#85888C',
+  // modal mask 配色
+  'modal-mask-bg': 'rgba(40,43,46,0.8)'
 }
 
 module.exports = VARS
