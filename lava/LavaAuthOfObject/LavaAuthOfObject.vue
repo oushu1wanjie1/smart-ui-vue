@@ -28,7 +28,6 @@
             v-model:value="searchVal"
             :placeholder="searchPlaceholder"
             @change="handleSearch"
-            @search="handleSearch"
           ></x-input-search>
         </div>
       </div>
@@ -56,49 +55,13 @@ import {
   SOURCE_INHERIT,
   ROLE,
   USER,
-  ApiGetAuthListReq,
   ApiGetAuthList,
-  ApiGetAuthOfUserOrRole, ApiGetAuthListRes, AuthListItem, ActionTag, Action, Role,
+  ApiGetAuthOfUserOrRole,
+  AuthListItem
 } from './type'
 import { message } from 'ant-design-vue'
 import { debounce } from 'lodash'
-
-const handleFormatActionTag = (actions: Action[], type: string): ActionTag[] => {
-  return actions.map(act => ({
-    type,
-    id: act.rs_type_action_id,
-    name: act.action_name,
-    roles: []
-  }))
-}
-
-const handleFormatAuthList = (data: ApiGetAuthListRes, type: string): AuthListItem[] => {
-  const _data = data.user_or_role_privileges
-  return _data.map(item => ({
-    type,
-    id: item.user_or_role_id,
-    name: item.user_or_role_name,
-    remark: item.comment,
-    icon: `/images/avatar/${Math.abs(item.user_or_role_id) % 6}.svg`,
-    actions: handleFormatActionTag(item.actions, type),
-    isOwner: type === USER && item.is_owner
-  }))
-}
-
-const STRATEGY_DATA = {
-
-}
-
-const STRATEGY_COMMON = {
-
-}
-
-const STRATEGY = {
-  database: STRATEGY_DATA,
-  schema: STRATEGY_DATA,
-  table: STRATEGY_DATA,
-  common: STRATEGY_COMMON
-}
+import { selectStrategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 
 export default defineComponent({
   name: 'LavaAuthOfObject',
@@ -162,13 +125,16 @@ export default defineComponent({
       return userOrRole.value === USER ? 'user' : 'role'
     })
 
-    const authList = computed(() => {
+    const authList: ComputedRef<AuthListItem[]> = computed(() => {
       if (searchAuthList.value.length > 0) {
         return searchAuthList.value
       } else {
         return userOrRole.value === USER ? userAuthList.value : roleAuthList.value
       }
     })
+
+    // 选择策略
+    const strategy = selectStrategy(props.type, props.apiGetAuthList)
 
     const handleChangeSelector = (val: string) => {
       if (val === USER && userAuthList.value.length === 0) {
@@ -179,14 +145,17 @@ export default defineComponent({
       }
     }
 
-    const handleSearch = (val: string) => {
-      console.log('handleSearch: ', val)
+    const handleSearch = () => {
+      console.log('handleSearch: ', searchVal.value)
       loading.value = true
       // 前端搜索
       const list = userOrRole.value ? userAuthList.value : roleAuthList.value
       const result: AuthListItem[] = []
+      const keyword = searchVal.value.trim().toLowerCase()
       list.forEach(item => {
-        if (item.name.indexOf(searchVal.value) > -1 || (item.remark && item.remark.indexOf(searchVal.value) > -1)) {
+        if (item.name.toLowerCase().indexOf(keyword) > -1) {
+          result.push(item)
+        } else if (item.remark && item.remark.toLowerCase().indexOf(keyword) > -1) {
           result.push(item)
         }
       })
@@ -215,27 +184,11 @@ export default defineComponent({
       insideDrawerVisible.value = false
     }
 
-    const _handleGetAuthList = () => {
-      const params: ApiGetAuthListReq = {
-        resource_type_id: 0,
-        object_id: 0,
-        user_type: userOrRole.value,
-        user_or_role_name: searchVal.value
-      }
-      return props.apiGetAuthList(params).then(({ meta, data }) => {
-        if (meta.success) {
-          return data
-        } else {
-          throw new Error(meta.message || meta.status_code)
-        }
-      })
-    }
-
     const handleGetAuthList = () => {
       if (typeof props.apiGetAuthList !== 'function') return
       loading.value = true
-      _handleGetAuthList().then(data => {
-        const list = handleFormatAuthList(data, userOrRole.value)
+      strategy!.getAuthList(userOrRole.value, searchVal.value).then(data => {
+        const list = strategy!.formatAuthList(data, userOrRole.value)
         console.log('handleGetAuthList: ', list)
         if (userOrRole.value === USER) {
           userAuthList.value = list
