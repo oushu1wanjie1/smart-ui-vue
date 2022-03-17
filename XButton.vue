@@ -1,20 +1,28 @@
 <template>
   <a-button :class="`x-btn`" v-bind="{ ...props }">
+    <template v-if="!slots.includes('icon') && iconName" #icon>
+      <icon :name="iconName"/>
+    </template>
     <template v-for="item in slots" v-slot:[item]>
-      <slot :name="item"></slot>
+      <slot :name="item"/>
     </template>
   </a-button>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
-import { excludeEventsInProps } from '@/smart-ui-vue/utils'
+import { computed, defineComponent } from 'vue'
 import { Button } from 'ant-design-vue'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 
 export default defineComponent({
   name: 'XButton',
+  components: { Icon },
   props: {
     ...Button.props,
+    /**
+     * 作为 icon 组件的 name
+     */
+    iconName: String,
   },
   setup(props, context) {
     return {
