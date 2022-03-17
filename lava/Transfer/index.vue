@@ -580,8 +580,8 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import "../../../../../lava-ui-permissions/src/smart-ui-vue/styles/mixins";
-@import "../../../../../lava-ui-permissions/src/smart-ui-vue/styles/variables";
+@import "../../styles/mixins";
+@import "../../styles/variables";
 
 .custom-transfer {
   display: flex;
