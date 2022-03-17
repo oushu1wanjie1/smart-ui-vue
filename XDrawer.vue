@@ -13,7 +13,7 @@
     <template v-if="!slots.includes('title')" v-slot:title>
       {{ title ?? '' }}
       <div v-if="closable" class="close-btn-wrapper">
-        <icon class="close-icon" name="ui-date-pick/close"/>
+        <icon class="close-icon" name="ui-modal/close"/>
       </div>
     </template>
   </a-drawer>
@@ -24,7 +24,6 @@ import { computed, defineComponent, PropType } from 'vue'
 import { omit } from 'lodash'
 import Icon from '@/components/Icon.vue'
 import { useModel } from '@/smart-ui-vue/utils'
-import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import { VNodeChild } from '@vue/runtime-core'
 
 const XDrawer = defineComponent({
