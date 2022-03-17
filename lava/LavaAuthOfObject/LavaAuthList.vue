@@ -21,7 +21,9 @@
           class="action-tag"
           v-for="action in auth.actions"
           :key="action.id"
-          :action="action">
+          :action="action"
+          @mouseenter="type === USER && onMouseEnter(auth, action.id)"
+        >
         </lava-action-tag>
       </div>
       <div class="edit"><icon name="lava-auth-of-object/edit"></icon></div>
@@ -33,12 +35,15 @@
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue'
+import { PropType, defineComponent, inject } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XSpin from '../../XSpin.vue'
 import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
 import { USER, AuthListItem } from './type'
+import { debounce } from 'lodash'
+import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
+import { message } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'LavaAuthList',
@@ -63,9 +68,28 @@ export default defineComponent({
     }
   },
   setup() {
+    const delay = 500
+    const strategy = inject('strategy') as Strategy
+
+    const handleGetAuthSourceRoles = (auth: AuthListItem, actionFlag: string | number) => {
+      const action = auth.actions.find(act => {
+        if (typeof actionFlag === 'number') {
+          return act.id === actionFlag
+        } else {
+          return act.name === actionFlag
+        }
+      })
+      if (!action || action.roles.length > 0) return
+      strategy.getAuthSourceRoles(auth.id, actionFlag).then(data => {
+        action.roles.push(...data)
+      }).catch(err => {
+        message.error(`获取继承角色失败: ${err}`)
+      })
+    }
 
     return {
       USER,
+      onMouseEnter: debounce(handleGetAuthSourceRoles, delay)
     }
   }
 })

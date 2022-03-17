@@ -1,6 +1,3 @@
-export const RS_DB = 'rs_db'
-export const RS_COMMON = 'rs_common'
-
 export const USER = 'user'
 export const ROLE = 'role'
 
@@ -29,6 +26,8 @@ export interface Role {
 }
 
 export interface ActionTag {
+  // db 相关的资源没有 ID，那就用它们的名称做 ID
+  // 同一父级下应该不会有同名的吧
   id: string | number;
   name: string;
   type: string;
@@ -36,7 +35,7 @@ export interface ActionTag {
 }
 
 export interface AuthListItem {
-  id?: string | number;
+  id: number;
   name: string;
   type: string;
   remark?: string;
@@ -68,6 +67,8 @@ export interface Action {
   checked: boolean;
 }
 
+// common
+
 export interface ApiGetAuthListReq {
   resource_type_id: number;
   object_id: number;
@@ -83,7 +84,7 @@ export interface ApiGetAuthListRes {
     is_owner: boolean;
     role_type: number; // 角色类型, 0:系统角色 1:自定义角色
     actions: Action[];
-    inheritActions: Action[];
+    inherit_actions: Action[];
   }[];
 }
 
@@ -112,6 +113,16 @@ export interface ApiGetAuthOfUserOrRole {
   (params: ApiGetAuthOfUserOrRoleReq): Promise<Response<ApiGetAuthOfUserOrRoleRes>>;
 }
 
+export interface ApiGetAuthSourceRolesReq {
+  user_id: number;
+  object_id: number;
+  rs_type_action_id: number;
+}
+
+export interface ApiGetAuthSourceRoles {
+  (params: ApiGetAuthSourceRolesReq): Promise<Response<{ id: number, name: string }[]>>;
+}
+
 export interface ApiSetAuthReq {
   resource_type_id: number;
   object_id: number;
@@ -122,3 +133,5 @@ export interface ApiSetAuthReq {
     checked: boolean;
   }[];
 }
+
+// database、schema、table

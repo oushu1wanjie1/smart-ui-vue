@@ -33,14 +33,18 @@
       </div>
       <x-divider style="margin: 10px 0;"></x-divider>
       <!-- 权限列表 -->
-      <lava-auth-list :type="userOrRole" :loading="loading" :auth-list="authList"></lava-auth-list>
+      <lava-auth-list
+        :type="userOrRole"
+        :loading="loading"
+        :auth-list="authList"
+      ></lava-auth-list>
     </div>
     <lava-auth-edit v-model:visible="insideDrawerVisible"></lava-auth-edit>
   </x-drawer>
 </template>
 
 <script lang="ts">
-import { computed, ComputedRef, defineComponent, PropType, ref, Ref, watch } from 'vue'
+import { computed, ComputedRef, defineComponent, PropType, provide, ref, Ref, watch } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XDrawer from '../../XDrawer.vue'
 import XButton from '../../XButton.vue'
@@ -57,7 +61,7 @@ import {
   USER,
   ApiGetAuthList,
   ApiGetAuthOfUserOrRole,
-  AuthListItem
+  AuthListItem, ApiGetAuthSourceRoles,
 } from './type'
 import { message } from 'ant-design-vue'
 import { debounce } from 'lodash'
@@ -89,21 +93,24 @@ export default defineComponent({
       type: String,
       required: true
     },
+    rsTypeId: {
+      type: Number,
+      required: true
+    },
+    objectId: {
+      type: Number
+    },
     apiGetAuthList: {
       type: Function as PropType<ApiGetAuthList>,
-      required: true
     },
     apiGetAuthOfUserOrRole: {
       type: Function as PropType<ApiGetAuthOfUserOrRole>,
-      required: true
     },
-    apiGetInheritRoles: {
-      type: Function,
-      required: true
+    apiGetAuthSourceRoles: {
+      type: Function as PropType<ApiGetAuthSourceRoles>,
     },
     apiSetAuth: {
       type: Function,
-      required: true
     }
   },
   emits: [ 'close' ],
@@ -134,7 +141,17 @@ export default defineComponent({
     })
 
     // 选择策略
-    const strategy = selectStrategy(props.type, props.apiGetAuthList)
+    const strategy = selectStrategy({
+      type: props.type,
+      rsTypeId: props.rsTypeId,
+      objectId: props.objectId,
+      apiGetAuthList: props.apiGetAuthList,
+      // apiGetAuthOfUserOrRole: props.apiGetAuthOfUserOrRole,
+      apiGetAuthSourceRoles: props.apiGetAuthSourceRoles,
+      // apiSetAuth: props.apiSetAuth
+    })
+    // 提供给子孙组件
+    provide('strategy', strategy)
 
     const handleChangeSelector = (val: string) => {
       if (val === USER && userAuthList.value.length === 0) {
@@ -185,10 +202,10 @@ export default defineComponent({
     }
 
     const handleGetAuthList = () => {
-      if (typeof props.apiGetAuthList !== 'function') return
+      if (typeof props.apiGetAuthList !== 'function' || !strategy) return
       loading.value = true
-      strategy!.getAuthList(userOrRole.value, searchVal.value).then(data => {
-        const list = strategy!.formatAuthList(data, userOrRole.value)
+      strategy.getAuthList(userOrRole.value, searchVal.value).then(data => {
+        const list = strategy.formatAuthList(data, userOrRole.value)
         console.log('handleGetAuthList: ', list)
         if (userOrRole.value === USER) {
           userAuthList.value = list
