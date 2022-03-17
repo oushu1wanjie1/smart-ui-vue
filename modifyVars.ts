@@ -24,7 +24,8 @@ const VARS = {
   // 禁用文本配色
   'disabled-color': '#85888C',
   // modal mask 配色
-  'modal-mask-bg': 'rgba(40,43,46,0.8)'
+  'modal-mask-bg': 'rgba(40,43,46,0.8)',
+  'tabs-active-color': '#336CFF',
 }
 
 module.exports = VARS
