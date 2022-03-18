@@ -30,6 +30,7 @@ export default {
       default: '',
     },
     // image模式，在这个模式下无法改变图标颜色，用于处理复杂图形的显示bug
+    // 翻译：避免 stroke 带来的影响
     image: {
       type: Boolean,
       default: false,
