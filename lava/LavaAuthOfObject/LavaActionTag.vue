@@ -1,13 +1,13 @@
 <template>
   <div class="lava-action-tag">
     <x-tooltip placement="bottomLeft" overlayClassName="lava-action-tag-tooltip">
-      <template #title>
+      <template #title v-if="type === USER">
         <div class="lava-action-tag-source">
           <span v-if="action.type === SOURCE_SELF">自身权限</span>
           <span v-if="action.type === SOURCE_INHERIT">继承自角色</span>
           <span v-if="action.type === SOURCE_SELF_INHERIT">自身权限且继承自角色</span>
         </div>
-        <div class="lava-action-tag-roles">
+        <div class="lava-action-tag-roles" v-if="action.type !== SOURCE_SELF">
           <div class="role-name" v-for="role in action.roles" :key="role.id">
             <icon name="lava-auth-of-object/role-blue"></icon>
             <a @click="$router.push(`/main/user_center/role/${role.id}`)">{{ role.name }}</a>
@@ -15,7 +15,7 @@
         </div>
       </template>
       <icon
-        v-if="action.type === SOURCE_INHERIT || action.type === SOURCE_SELF_INHERIT"
+        v-if="type === USER && (action.type === SOURCE_INHERIT || action.type === SOURCE_SELF_INHERIT)"
         name="lava-auth-of-object/inherit"
       ></icon>
       <span class="name">{{ action.name }}</span>
@@ -33,7 +33,7 @@
 import { PropType, defineComponent } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XTooltip from '../../XTooltip.vue'
-import { ActionTag, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT } from './type'
+import { USER, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT, ActionTag } from './type'
 
 export default defineComponent({
   name: 'LavaActionTag',
@@ -42,6 +42,10 @@ export default defineComponent({
     XTooltip
   },
   props: {
+    type: {
+      type: String,
+      required: true
+    },
     readonly: {
       type: Boolean,
       default: true
@@ -54,6 +58,7 @@ export default defineComponent({
   emits: [ 'delete' ],
   setup() {
     return {
+      USER,
       SOURCE_SELF,
       SOURCE_INHERIT,
       SOURCE_SELF_INHERIT

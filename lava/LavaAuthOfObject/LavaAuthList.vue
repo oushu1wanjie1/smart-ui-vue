@@ -14,19 +14,22 @@
         <span class="object-tag owner" v-if="type === USER && auth.isOwner">
           <icon name="lava-auth-of-object/key"></icon>拥有人
         </span>
-        <span class="object-tag system-role">系统角色</span>
+        <span class="object-tag system-role" v-if="auth.roleType !== undefined && auth.roleType === 0">系统角色</span>
       </lava-object-basic-info>
       <div class="actions">
         <lava-action-tag
           class="action-tag"
           v-for="action in auth.actions"
           :key="action.id"
+          :type="type"
           :action="action"
-          @mouseenter="type === USER && onMouseEnter(auth, action.id)"
+          @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
         >
         </lava-action-tag>
       </div>
-      <div class="edit"><icon name="lava-auth-of-object/edit"></icon></div>
+      <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
+        <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
+      </div>
     </div>
     <!-- TODO: 加载更多，可能不分页了 -->
     <!--<div class="loadmore"></div>-->
@@ -40,10 +43,10 @@ import Icon from '../../helper/Icon.vue'
 import XSpin from '../../XSpin.vue'
 import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
-import { USER, AuthListItem } from './type'
-import { debounce } from 'lodash'
+import { USER, ROLE, EDIT, SOURCE_SELF, AuthListItem } from './type'
 import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 import { message } from 'ant-design-vue'
+import { debounce } from 'lodash'
 
 export default defineComponent({
   name: 'LavaAuthList',
@@ -67,7 +70,8 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup() {
+  emits: [ 'edit' ],
+  setup(props, context) {
     const delay = 500
     const strategy = inject('strategy') as Strategy
 
@@ -87,9 +91,16 @@ export default defineComponent({
       })
     }
 
+    const handleClickEditBtn = (authItem: AuthListItem) => {
+      context.emit('edit', EDIT, authItem.type, authItem.id)
+    }
+
     return {
       USER,
-      onMouseEnter: debounce(handleGetAuthSourceRoles, delay)
+      ROLE,
+      SOURCE_SELF,
+      onMouseEnter: debounce(handleGetAuthSourceRoles, delay),
+      handleClickEditBtn
     }
   }
 })

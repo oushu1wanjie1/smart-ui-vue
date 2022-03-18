@@ -42,6 +42,7 @@ export interface AuthListItem {
   icon?: string;
   actions: ActionTag[];
   isOwner?: boolean;
+  roleType?: number; // 0: 系统角色，1：自定义角色
 }
 
 // API 规范定义（函数、返回值）
@@ -132,6 +133,10 @@ export interface ApiSetAuthReq {
     rs_type_action_id: number;
     checked: boolean;
   }[];
+}
+
+export interface ApiSetAuth {
+  (params: ApiSetAuthReq): Promise<Response<void>>;
 }
 
 // database、schema、table

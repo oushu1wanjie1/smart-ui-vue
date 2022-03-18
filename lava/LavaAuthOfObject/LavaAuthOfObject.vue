@@ -10,7 +10,7 @@
       <!-- 控制条 -->
       <div class="controls">
         <div class="left">
-          <x-button class="add" @click="insideDrawerVisible = true">
+          <x-button class="add" @click="editVisible = true">
             <icon class="add-inactive" name="lava-auth-of-object/add"></icon>
             <icon class="add-active" name="lava-auth-of-object/add-active"></icon>
             添加权限
@@ -37,9 +37,14 @@
         :type="userOrRole"
         :loading="loading"
         :auth-list="authList"
+        @edit="handleShowEditDrawer"
       ></lava-auth-list>
     </div>
-    <lava-auth-edit v-model:visible="insideDrawerVisible"></lava-auth-edit>
+    <lava-auth-edit
+      v-model:visible="editVisible"
+      :type="userOrRoleSelected"
+      :id="userOrRoleIdSelected"
+    ></lava-auth-edit>
   </x-drawer>
 </template>
 
@@ -61,7 +66,7 @@ import {
   USER,
   ApiGetAuthList,
   ApiGetAuthOfUserOrRole,
-  AuthListItem, ApiGetAuthSourceRoles,
+  AuthListItem, ApiGetAuthSourceRoles, ADD, ApiSetAuth,
 } from './type'
 import { message } from 'ant-design-vue'
 import { debounce } from 'lodash'
@@ -101,16 +106,16 @@ export default defineComponent({
       type: Number
     },
     apiGetAuthList: {
-      type: Function as PropType<ApiGetAuthList>,
+      type: Function as PropType<ApiGetAuthList>
     },
     apiGetAuthOfUserOrRole: {
-      type: Function as PropType<ApiGetAuthOfUserOrRole>,
+      type: Function as PropType<ApiGetAuthOfUserOrRole>
     },
     apiGetAuthSourceRoles: {
-      type: Function as PropType<ApiGetAuthSourceRoles>,
+      type: Function as PropType<ApiGetAuthSourceRoles>
     },
     apiSetAuth: {
-      type: Function,
+      type: Function as PropType<ApiSetAuth>
     }
   },
   emits: [ 'close' ],
@@ -122,7 +127,10 @@ export default defineComponent({
     const userAuthList: Ref<AuthListItem[]> = ref([])
     const roleAuthList: Ref<AuthListItem[]> = ref([])
     const searchAuthList: Ref<AuthListItem[]> = ref([])
-    const insideDrawerVisible: Ref<boolean> = ref(false)
+    const editVisible: Ref<boolean> = ref(false)
+    const userOrRoleSelected: Ref<string> = ref('')
+    const userOrRoleIdSelected: Ref<number> = ref(0)
+    const operation: Ref<string> = ref(ADD)
 
     const searchPlaceholder: ComputedRef<string> = computed(() => {
       return userOrRole.value === USER ? '请输入需要搜索的用户名' : '请输入需要搜索的角色名'
@@ -146,9 +154,9 @@ export default defineComponent({
       rsTypeId: props.rsTypeId,
       objectId: props.objectId,
       apiGetAuthList: props.apiGetAuthList,
-      // apiGetAuthOfUserOrRole: props.apiGetAuthOfUserOrRole,
+      apiGetAuthOfUserOrRole: props.apiGetAuthOfUserOrRole,
       apiGetAuthSourceRoles: props.apiGetAuthSourceRoles,
-      // apiSetAuth: props.apiSetAuth
+      apiSetAuth: props.apiSetAuth
     })
     // 提供给子孙组件
     provide('strategy', strategy)
@@ -163,7 +171,6 @@ export default defineComponent({
     }
 
     const handleSearch = () => {
-      console.log('handleSearch: ', searchVal.value)
       loading.value = true
       // 前端搜索
       const list = userOrRole.value ? userAuthList.value : roleAuthList.value
@@ -177,7 +184,6 @@ export default defineComponent({
         }
       })
       searchAuthList.value = result
-      console.log('search result: ', result)
       loading.value = false
       // 后端搜索
       // _handleGetAuthList().then(data => {
@@ -190,6 +196,13 @@ export default defineComponent({
       // })
     }
 
+    const handleShowEditDrawer = (op: string, type: string, id: number) => {
+      operation.value = op
+      userOrRoleSelected.value = type
+      userOrRoleIdSelected.value = id
+      editVisible.value = true
+    }
+
     const handleClose = () => {
       context.emit('close', false)
     }
@@ -198,7 +211,7 @@ export default defineComponent({
       searchVal.value = ''
       userAuthList.value = []
       roleAuthList.value = []
-      insideDrawerVisible.value = false
+      editVisible.value = false
     }
 
     const handleGetAuthList = () => {
@@ -206,7 +219,6 @@ export default defineComponent({
       loading.value = true
       strategy.getAuthList(userOrRole.value, searchVal.value).then(data => {
         const list = strategy.formatAuthList(data, userOrRole.value)
-        console.log('handleGetAuthList: ', list)
         if (userOrRole.value === USER) {
           userAuthList.value = list
         } else {
@@ -246,9 +258,13 @@ export default defineComponent({
       searchVal,
       searchPlaceholder,
       authList,
-      insideDrawerVisible,
+      editVisible,
+      userOrRoleSelected,
+      userOrRoleIdSelected,
+      operation,
       handleChangeSelector,
       handleSearch: debounce(handleSearch, delay),
+      handleShowEditDrawer,
       handleClose,
       handleInit
     }

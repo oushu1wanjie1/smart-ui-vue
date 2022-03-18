@@ -1,0 +1,62 @@
+@import "../../styles/variables.scss";
+
+.lava-auth-of-object-drawer-inside {
+
+  .controls {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .type-selector {
+    flex-basis: 100px;
+
+    .ant-select-selector {
+      padding-left: 0!important;
+    }
+  }
+
+  .type-list-selector {
+    //
+  }
+
+  .action-selector {
+    // select 前缀图标样式重写
+    // 为什么要用 + 选择器？
+    // 因为 x-select 把前缀图标的类定义到自定义 class 的外部了，
+    // 导致 action-selector 内部控制不到
+    &+.smartui-select-prefix-icon {
+      left: 0;
+    }
+    .ant-select-selector {
+      padding-left: 23px!important;
+    }
+    // 不过最好在里面也写一遍，以防以后 x-select 重构，把 action-selector 移进来
+    .smartui-select-prefix-icon {
+      left: 0;
+    }
+  }
+
+  label {
+    color: $color-text-sub;
+  }
+
+  // select 样式重写
+  .ant-select {
+
+    &.ant-select-disabled .ant-select-selection-placeholder {
+      color: $color-line-bold;
+    }
+
+    &.ant-select-multiple .ant-select-selection-placeholder {
+      left: 25px;
+    }
+  }
+
+  .submit {
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+    //color: #FFF!important;
+    //background-color: $color-primary-blue!important;
+  }
+}
