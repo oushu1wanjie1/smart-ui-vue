@@ -3,7 +3,7 @@
     :class="{
       'smartui-form-item': true,
       'error-bottom': errorTipPosition === 'bottom',
-      'smartui-form-item-disabled': labelDisabled !== undefined,
+      'smartui-form-item-disabled': labelDisabled,
     }"
     v-bind="$props"
   >
