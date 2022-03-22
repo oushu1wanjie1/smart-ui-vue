@@ -218,4 +218,17 @@
     @include button-variant-other($btn-default-color, $color-line-bold, $color-line-bold);
     box-shadow: none;
   }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      @include button-color($color-line-bold, transparent, transparent);
+
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
 }

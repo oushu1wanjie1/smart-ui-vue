@@ -16,6 +16,9 @@ import Icon from '@/smart-ui-vue/helper/Icon.vue'
 
 export default defineComponent({
   name: 'XButton',
+  // 修复 disabled tooltip 未消失的问题
+  // 详见 tooltip.tsx 源代码 getDisabledCompatibleChildren 方法（line 92）
+  __ANT_BUTTON: true,
   components: { Icon },
   props: {
     ...Button.props,
@@ -29,7 +32,7 @@ export default defineComponent({
       slots: computed(() => Object.keys(context.slots)),
       props,
     }
-  }
+  },
 })
 </script>
 
