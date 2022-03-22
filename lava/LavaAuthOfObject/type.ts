@@ -68,7 +68,30 @@ export interface Action {
   checked: boolean;
 }
 
-// common
+export interface UserListItem {
+  id: number;
+  name: string;
+  name_remark: string;
+  user_type: number;
+}
+
+export interface RoleListItem {
+  id: number;
+  name: string;
+  description: string;
+}
+
+// 通用接口定义
+
+export interface ApiGetUserList {
+  (): Promise<Response<UserListItem[]>>
+}
+
+export interface ApiGetRoleList {
+  (): Promise<Response<RoleListItem[]>>
+}
+
+// common 资源专属的接口定义
 
 export interface ApiGetAuthListReq {
   resource_type_id: number;
@@ -106,7 +129,7 @@ export interface ApiGetAuthOfUserOrRoleRes {
     user_or_role_name: string;
     is_owner: boolean;
     actions: Action[];
-    inheritActions: Action[];
+    inherit_actions: Action[];
   }[];
 }
 
@@ -139,4 +162,4 @@ export interface ApiSetAuth {
   (params: ApiSetAuthReq): Promise<Response<void>>;
 }
 
-// database、schema、table
+// database、schema、table 资源专属的接口定义

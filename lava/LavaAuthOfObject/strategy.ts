@@ -5,11 +5,11 @@ import {
   ApiGetAuthListReq,
   ApiGetAuthListRes, ApiGetAuthOfUserOrRole, ApiGetAuthOfUserOrRoleReq, ApiGetAuthOfUserOrRoleRes,
   ApiGetAuthSourceRoles, ApiSetAuth, ApiSetAuthReq,
-  AuthListItem, Role, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT,
+  AuthListItem, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT,
   USER,
 } from './type'
 
-const AVATAR_NUM = 6
+export const AVATAR_NUM = 6
 export const RS_DATABASE = 'database'
 export const RS_SCHEMA = 'schema'
 export const RS_TABLE = 'table'
@@ -51,18 +51,20 @@ const formatActionTag = (actions: Action[], inheritActions: Action[]): ActionTag
       //   }
       // }
       const inheritAction = inheritActions[index]
-      if (action.checked) {
-        if (inheritAction.checked) {
-          _action.type = SOURCE_SELF_INHERIT
+      if (inheritAction) {
+        if (action.checked) {
+          if (inheritAction.checked) {
+            _action.type = SOURCE_SELF_INHERIT
+          } else {
+            _action.type = SOURCE_SELF
+          }
         } else {
-          _action.type = SOURCE_SELF
+          if (inheritAction.checked) {
+            _action.type = SOURCE_INHERIT
+          }
         }
-      } else {
-        if (inheritAction.checked) {
-          _action.type = SOURCE_INHERIT
-        }
+        actionTags.push(_action)
       }
-      actionTags.push(_action)
     })
   } catch (err) {
     console.error('format action tag catch error: ', err)
@@ -210,7 +212,7 @@ export class StrategyCommon {
             label: action.action_name,
             value: action.rs_type_action_id
           })
-          const inheritAction = item.inheritActions[index]
+          const inheritAction = item.inherit_actions[index]
           if (action.checked || (inheritAction && inheritAction.checked)) {
             result.value.push(action.rs_type_action_id)
           }

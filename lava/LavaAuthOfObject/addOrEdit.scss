@@ -15,10 +15,6 @@
     }
   }
 
-  .type-list-selector {
-    //
-  }
-
   .action-selector {
     // select 前缀图标样式重写
     // 为什么要用 + 选择器？
@@ -27,12 +23,26 @@
     &+.smartui-select-prefix-icon {
       left: 0;
     }
+
     .ant-select-selector {
       padding-left: 23px!important;
     }
+
     // 不过最好在里面也写一遍，以防以后 x-select 重构，把 action-selector 移进来
     .smartui-select-prefix-icon {
       left: 0;
+    }
+
+    // 标签样式
+    &.ant-select-multiple {
+
+      .ant-select-selection-item {
+        background-color: rgba(213, 216, 219, 0.5);
+      }
+
+      .ant-select-selection-item-remove svg {
+        color: $color-text-sub;
+      }
     }
   }
 
@@ -56,7 +66,24 @@
     position: absolute;
     left: 40px;
     bottom: 20px;
-    //color: #FFF!important;
-    //background-color: $color-primary-blue!important;
+  }
+}
+
+.lava-auth-of-object-drawer-inside-type-list-selector-dropdown {
+  .avatar {
+    width: 19px;
+    height: 19px;
+    margin-right: 5px;
+  }
+
+  .name {
+    font-size: $font-size-normal;
+    line-height: 20px;
+    vertical-align: middle;
+  }
+
+  .remark {
+    color: rgba(133, 136, 140, 1);
+    font-size: $font-size-normal;
   }
 }

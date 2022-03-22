@@ -1,40 +1,44 @@
 <template>
-  <div class="lava-auth-list">
-    <x-spin v-if="loading"></x-spin>
-    <template v-else>
-    <div class="lava-auth-list-item" v-for="auth in authList" :key="auth.id || auth.name">
-      <lava-object-basic-info
-        class="object-info"
-        :type="type"
-        id="111"
-        :name="auth.name"
-        :remark="auth.remark"
-        :icon="type === USER ? auth.icon : 'lava-auth-of-object/role-blue'"
-      >
-        <span class="object-tag owner" v-if="type === USER && auth.isOwner">
-          <icon name="lava-auth-of-object/key"></icon>拥有人
-        </span>
-        <span class="object-tag system-role" v-if="auth.roleType !== undefined && auth.roleType === 0">系统角色</span>
-      </lava-object-basic-info>
-      <div class="actions">
-        <lava-action-tag
-          class="action-tag"
-          v-for="action in auth.actions"
-          :key="action.id"
-          :type="type"
-          :action="action"
-          @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
-        >
-        </lava-action-tag>
+  <x-spin wrapperClassName="lava-auth-list-spin" :spinning="loading" :delay="loadingDelay">
+    <div class="lava-auth-list">
+      <template v-if="authList.length > 0">
+        <div class="lava-auth-list-item" v-for="auth in authList" :key="auth.id || auth.name">
+          <lava-object-basic-info
+              class="object-info"
+              :type="type"
+              :id="auth.id"
+              :name="auth.name"
+              :remark="auth.remark"
+              :icon="type === USER ? auth.icon : 'lava-auth-of-object/role-blue'"
+          >
+          <span class="object-tag owner" v-if="type === USER && auth.isOwner">
+            <icon name="lava-auth-of-object/key"></icon>拥有人
+          </span>
+            <span class="object-tag system-role" v-if="auth.roleType !== undefined && auth.roleType === 0">系统角色</span>
+          </lava-object-basic-info>
+          <div class="actions">
+            <lava-action-tag
+                class="action-tag"
+                v-for="action in auth.actions"
+                :key="action.id"
+                :type="type"
+                :action="action"
+                @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
+            >
+            </lava-action-tag>
+          </div>
+          <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
+            <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
+          </div>
+        </div>
+      </template>
+      <div class="empty" v-else-if="!loading">
+        <icon image name="lava-auth-of-object/search-empty"></icon>
       </div>
-      <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
-        <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
-      </div>
+      <!-- TODO: 加载更多，可能不分页了 -->
+      <!--<div class="loadmore"></div>-->
     </div>
-    <!-- TODO: 加载更多，可能不分页了 -->
-    <!--<div class="loadmore"></div>-->
-    </template>
-  </div>
+  </x-spin>
 </template>
 
 <script lang="ts">
@@ -43,7 +47,7 @@ import Icon from '../../helper/Icon.vue'
 import XSpin from '../../XSpin.vue'
 import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
-import { USER, ROLE, EDIT, SOURCE_SELF, AuthListItem } from './type'
+import { USER, ROLE, SOURCE_SELF, AuthListItem } from './type'
 import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 import { message } from 'ant-design-vue'
 import { debounce } from 'lodash'
@@ -72,7 +76,9 @@ export default defineComponent({
   },
   emits: [ 'edit' ],
   setup(props, context) {
-    const delay = 500
+    const hoverDelay = 500
+    // 延迟显示 loading 效果。当 spinning 状态在 delay 时间内结束，则不显示 loading 状态
+    const loadingDelay = 500
     const strategy = inject('strategy') as Strategy
 
     const handleGetAuthSourceRoles = (auth: AuthListItem, actionFlag: string | number) => {
@@ -92,14 +98,15 @@ export default defineComponent({
     }
 
     const handleClickEditBtn = (authItem: AuthListItem) => {
-      context.emit('edit', EDIT, authItem.type, authItem.id)
+      context.emit('edit', authItem.type, authItem.id)
     }
 
     return {
       USER,
       ROLE,
       SOURCE_SELF,
-      onMouseEnter: debounce(handleGetAuthSourceRoles, delay),
+      loadingDelay,
+      onMouseEnter: debounce(handleGetAuthSourceRoles, hoverDelay),
       handleClickEditBtn
     }
   }
@@ -109,7 +116,17 @@ export default defineComponent({
 <style lang="scss">
 @import "../../styles/variables.scss";
 
+.lava-auth-list-spin {
+  height: 100%;
+
+  .ant-spin-container {
+    height: 100%;
+  }
+}
+
 .lava-auth-list {
+  position: relative;
+  height: 100%;
 
   .lava-auth-list-item {
     display: flex;
@@ -183,6 +200,20 @@ export default defineComponent({
         color: $color-primary-blue;
         background-color: rgba(51, 108, 255, 0.2);
       }
+    }
+  }
+
+  .empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 }

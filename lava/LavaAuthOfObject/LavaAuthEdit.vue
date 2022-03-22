@@ -3,7 +3,7 @@
     wrapClassName="lava-auth-of-object-drawer-inside"
     :visible="visible"
     :width="800"
-    @close="handleClose"
+    @close="handleClose()"
   >
     <x-form class="form" layout="vertical">
       <x-form-item label="权限">
@@ -15,14 +15,13 @@
           :disabled="actions.length === 0"
           :options="actions"
           v-model:value="actionsSelected"
-          @change="handleChange"
         >
           <template #prefixIcon><icon name="lava-auth-of-object/auth-active"></icon></template>
         </x-select>
       </x-form-item>
     </x-form>
     <div class="footer">
-      <x-button type="primary" class="submit" :disabled="isUnChanged" @click="onSubmit">
+      <x-button type="primary" class="submit" :disabled="isUnChanged" @click="handleSubmit">
         <template #icon><icon name="lava-auth-of-object/submit"></icon></template>
         提交
       </x-button>
@@ -66,7 +65,7 @@ export default defineComponent({
       required: true
     }
   },
-  emits: [ 'update:visible', 'close' ],
+  emits: [ 'close' ],
   setup(props, context) {
     // select options
     const actions: Ref<{ label: string, value: number }[]> = ref([])
@@ -82,13 +81,10 @@ export default defineComponent({
       return allIn && actionsSelectedDefault.value.length === actionsSelected.value.length
     })
 
-    const handleChange = () => {
-      console.log('actionsSelected: ', actionsSelected)
-    }
-
     const handleReset = () => {
       actions.value = []
       actionsSelected.value = []
+      actionsSelectedDefault.value = []
     }
 
     const handleInit = () => {
@@ -103,7 +99,7 @@ export default defineComponent({
       })
     }
 
-    const onSubmit = () => {
+    const handleSubmit = () => {
       // privileges 是完整的 actions 列表
       const privileges = actions.value.map(act => ({
         rs_type_action_id: act.value,
@@ -111,36 +107,27 @@ export default defineComponent({
       }))
       strategy.setAuth(props.type, props.id, privileges).then(() => {
         message.success('编辑成功')
-        handleClose()
+        handleClose(true)
       }).catch(err => {
         message.error(`编辑失败: ${err}`)
       })
     }
 
-    const handleClose = () => {
-      context.emit('update:visible', false)
-      context.emit('close', false)
+    // 注意该方法不能直接赋值给 @close，因为 close 回调函数的参数是 event
+    const handleClose = (success = false) => {
+      context.emit('close', props.type, success)
       handleReset()
     }
 
-    watch(() => props.visible, (visible) => {
-      if (visible) {
-        // 打开抽屉
-        handleInit()
-      } else {
-        // 关闭抽屉
-        handleClose()
-      }
-    })
+    watch(() => props.visible, visible => visible && handleInit())
 
     return {
       ADD,
       actions,
       actionsSelected,
       isUnChanged,
-      handleChange,
       handleClose,
-      onSubmit
+      handleSubmit
     }
   }
 })

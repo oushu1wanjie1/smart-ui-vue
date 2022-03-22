@@ -4,13 +4,14 @@
     :title="title"
     :visible="visible"
     :width="800"
+    :bodyStyle="{ height: 'calc(100% - 100px)' }"
     @close="handleClose"
   >
     <div class="container">
       <!-- 控制条 -->
       <div class="controls">
         <div class="left">
-          <x-button class="add" @click="editVisible = true">
+          <x-button class="add" @click="handleShowAddDrawer">
             <icon class="add-inactive" name="lava-auth-of-object/add"></icon>
             <icon class="add-active" name="lava-auth-of-object/add-active"></icon>
             添加权限
@@ -40,10 +41,17 @@
         @edit="handleShowEditDrawer"
       ></lava-auth-list>
     </div>
+    <lava-auth-add
+      :visible="addVisible"
+      :api-get-user-list="apiGetUserList"
+      :api-get-role-list="apiGetRoleList"
+      @close="handleAddOrEditDrawerClose"
+    ></lava-auth-add>
     <lava-auth-edit
-      v-model:visible="editVisible"
+      :visible="editVisible"
       :type="userOrRoleSelected"
       :id="userOrRoleIdSelected"
+      @close="handleAddOrEditDrawerClose"
     ></lava-auth-edit>
   </x-drawer>
 </template>
@@ -58,6 +66,7 @@ import XSelectOption from '../../XSelectOption.vue'
 import XInputSearch from '../../XInputSearch.vue'
 import XDivider from '../../XDivider.vue'
 import LavaAuthList from './LavaAuthList.vue'
+import LavaAuthAdd from './LavaAuthAdd.vue'
 import LavaAuthEdit from './LavaAuthEdit.vue'
 import {
   SOURCE_SELF,
@@ -66,10 +75,9 @@ import {
   USER,
   ApiGetAuthList,
   ApiGetAuthOfUserOrRole,
-  AuthListItem, ApiGetAuthSourceRoles, ADD, ApiSetAuth,
+  AuthListItem, ApiGetAuthSourceRoles, ApiSetAuth, ApiGetUserList, ApiGetRoleList,
 } from './type'
 import { message } from 'ant-design-vue'
-import { debounce } from 'lodash'
 import { selectStrategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 
 export default defineComponent({
@@ -83,6 +91,7 @@ export default defineComponent({
     XInputSearch,
     XDivider,
     LavaAuthList,
+    LavaAuthAdd,
     LavaAuthEdit
   },
   props: {
@@ -116,21 +125,26 @@ export default defineComponent({
     },
     apiSetAuth: {
       type: Function as PropType<ApiSetAuth>
+    },
+    apiGetUserList: {
+      type: Function as PropType<ApiGetUserList>
+    },
+    apiGetRoleList: {
+      type: Function as PropType<ApiGetRoleList>
     }
   },
   emits: [ 'close' ],
   setup(props, context) {
-    const delay = 500
     const loading: Ref<boolean> = ref(false)
     const userOrRole: Ref<string> = ref(USER)
     const searchVal: Ref<string> = ref('')
     const userAuthList: Ref<AuthListItem[]> = ref([])
     const roleAuthList: Ref<AuthListItem[]> = ref([])
     const searchAuthList: Ref<AuthListItem[]> = ref([])
+    const addVisible: Ref<boolean> = ref(false)
     const editVisible: Ref<boolean> = ref(false)
     const userOrRoleSelected: Ref<string> = ref('')
     const userOrRoleIdSelected: Ref<number> = ref(0)
-    const operation: Ref<string> = ref(ADD)
 
     const searchPlaceholder: ComputedRef<string> = computed(() => {
       return userOrRole.value === USER ? '请输入需要搜索的用户名' : '请输入需要搜索的角色名'
@@ -141,7 +155,7 @@ export default defineComponent({
     })
 
     const authList: ComputedRef<AuthListItem[]> = computed(() => {
-      if (searchAuthList.value.length > 0) {
+      if (searchVal.value) {
         return searchAuthList.value
       } else {
         return userOrRole.value === USER ? userAuthList.value : roleAuthList.value
@@ -163,63 +177,78 @@ export default defineComponent({
 
     const handleChangeSelector = (val: string) => {
       if (val === USER && userAuthList.value.length === 0) {
-        handleGetAuthList()
+        handleGetAuthList(USER)
       }
       if (val === ROLE && roleAuthList.value.length === 0) {
-        handleGetAuthList()
+        handleGetAuthList(ROLE)
       }
     }
 
     const handleSearch = () => {
-      loading.value = true
       // 前端搜索
+      loading.value = true
       const list = userOrRole.value ? userAuthList.value : roleAuthList.value
       const result: AuthListItem[] = []
       const keyword = searchVal.value.trim().toLowerCase()
-      list.forEach(item => {
-        if (item.name.toLowerCase().indexOf(keyword) > -1) {
-          result.push(item)
-        } else if (item.remark && item.remark.toLowerCase().indexOf(keyword) > -1) {
-          result.push(item)
-        }
-      })
+      if (keyword !== '') {
+        list.forEach(item => {
+          if (item.name.toLowerCase().indexOf(keyword) > -1) {
+            result.push(item)
+          } else if (item.remark && item.remark.toLowerCase().indexOf(keyword) > -1) {
+            result.push(item)
+          }
+        })
+      }
+      console.log('result: ', result)
       searchAuthList.value = result
       loading.value = false
-      // 后端搜索
-      // _handleGetAuthList().then(data => {
-      //   if (data && data.user_or_role_privileges.length > 0) {
-      //     const list = handleFormatAuthList(data, userOrRole.value)
-      //     searchAuthList.value = list
-      //   } else {
-      //     searchAuthList.value = []
-      //   }
-      // })
     }
 
-    const handleShowEditDrawer = (op: string, type: string, id: number) => {
-      operation.value = op
+    const handleShowAddDrawer = () => {
+      addVisible.value = true
+    }
+
+    const handleShowEditDrawer = (type: string, id: number) => {
       userOrRoleSelected.value = type
       userOrRoleIdSelected.value = id
       editVisible.value = true
     }
 
+    const handleAddOrEditDrawerClose = (userOrRole: string, success: boolean) => {
+      addVisible.value = false
+      editVisible.value = false
+      // 如果是因 "新建" or "编辑" 成功触发的关闭抽屉，那么应该刷新列表
+      if (success && userOrRole === USER) {
+        handleGetAuthList(USER)
+      }
+      if (success && userOrRole === ROLE) {
+        handleGetAuthList(ROLE)
+      }
+    }
+
     const handleClose = () => {
       context.emit('close', false)
+      handleReset()
     }
 
     const handleReset = () => {
+      userOrRole.value = USER
       searchVal.value = ''
       userAuthList.value = []
       roleAuthList.value = []
+      searchAuthList.value = []
+      addVisible.value = false
       editVisible.value = false
+      userOrRoleSelected.value = ''
+      userOrRoleIdSelected.value = 0
     }
 
-    const handleGetAuthList = () => {
+    const handleGetAuthList = (userOrRole = USER) => {
       if (typeof props.apiGetAuthList !== 'function' || !strategy) return
       loading.value = true
-      strategy.getAuthList(userOrRole.value, searchVal.value).then(data => {
-        const list = strategy.formatAuthList(data, userOrRole.value)
-        if (userOrRole.value === USER) {
+      strategy.getAuthList(userOrRole, searchVal.value).then(data => {
+        const list = strategy.formatAuthList(data, userOrRole)
+        if (userOrRole === USER) {
           userAuthList.value = list
         } else {
           roleAuthList.value = list
@@ -232,20 +261,11 @@ export default defineComponent({
     }
 
     const handleInit = () => {
-      // 1. 重置状态
       handleReset()
-      // 2. 发送请求
-      handleGetAuthList()
+      handleGetAuthList(USER)
     }
 
-    watch(() => props.visible, (visible) => {
-      if (visible) {
-        // 打开抽屉
-        handleInit()
-      } else {
-        // 关闭抽屉
-      }
-    })
+    watch(() => props.visible, visible => visible && handleInit())
 
     return {
       USER,
@@ -258,13 +278,15 @@ export default defineComponent({
       searchVal,
       searchPlaceholder,
       authList,
+      addVisible,
       editVisible,
       userOrRoleSelected,
       userOrRoleIdSelected,
-      operation,
       handleChangeSelector,
-      handleSearch: debounce(handleSearch, delay),
+      handleSearch,
+      handleShowAddDrawer,
       handleShowEditDrawer,
+      handleAddOrEditDrawerClose,
       handleClose,
       handleInit
     }
@@ -277,6 +299,7 @@ export default defineComponent({
 
 .lava-auth-of-object-drawer-outside {
   .container {
+    height: calc(100% - 50px);
     margin-top: 10px;
     margin-bottom: 40px;
   }
