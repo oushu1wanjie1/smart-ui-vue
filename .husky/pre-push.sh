@@ -1,4 +1,4 @@
-message=$(git show -s --format='\n>更新人: %an\n>msg: %s')
+message=$(git show -s --format='\n>更新者: %an\n>msg: %s')
 
 echo "$message"
 
