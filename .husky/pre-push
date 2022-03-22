@@ -6,4 +6,4 @@ curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=e9947802-6ecc-4c40-a9
    & \
 curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=e9947802-6ecc-4c40-a979-85b0ae2d3a35' \
    -H 'Content-Type: application/json' \
-   --data '{ "msgtype": "text","text: {"content": "","mentioned_list":["@all"]} }'
+   --data '{ "msgtype": "text","text: {"content": "smartUI更新","mentioned_list":["@all"]} }'
