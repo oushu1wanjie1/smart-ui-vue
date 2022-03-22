@@ -18,6 +18,7 @@
   "homepage": "https://github.com/oushu1wanjie1/smart-ui-vue#readme",
   "husky": {
     "hooks": {
+      "pre-commit": "sh hooks.sh",
       "pre-push": "sh hooks.sh"
     }
   },
