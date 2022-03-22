@@ -6,6 +6,7 @@
     :columns="formattedColumns"
     :dataSource="dataSource"
     :loading="loading"
+    :pagination="pagination"
     :customHeaderRow="column => {
       return {
         class: {
@@ -117,6 +118,13 @@ export default defineComponent({
     conditional: {
       type: Boolean,
       default: false
+    },
+    // 分页配置
+    pagination: {
+      type: Object,
+      default: () => ({
+        defaultPageSize: 20
+      })
     }
   },
   setup(props, context) {
