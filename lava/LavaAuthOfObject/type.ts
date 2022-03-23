@@ -144,7 +144,7 @@ export interface ApiGetAuthSourceRolesReq {
 }
 
 export interface ApiGetAuthSourceRoles {
-  (params: ApiGetAuthSourceRolesReq): Promise<Response<{ id: number, name: string }[]>>;
+  (params: ApiGetAuthSourceRolesReq): Promise<Response<{ id: number, name: string, description: string }[]>>;
 }
 
 export interface ApiSetAuthReq {

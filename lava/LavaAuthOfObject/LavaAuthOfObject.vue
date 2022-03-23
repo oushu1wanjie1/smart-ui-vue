@@ -187,7 +187,7 @@ export default defineComponent({
     const handleSearch = () => {
       // 前端搜索
       loading.value = true
-      const list = userOrRole.value ? userAuthList.value : roleAuthList.value
+      const list = userOrRole.value === USER ? userAuthList.value : roleAuthList.value
       const result: AuthListItem[] = []
       const keyword = searchVal.value.trim().toLowerCase()
       if (keyword !== '') {
@@ -199,7 +199,6 @@ export default defineComponent({
           }
         })
       }
-      console.log('result: ', result)
       searchAuthList.value = result
       loading.value = false
     }
@@ -299,9 +298,9 @@ export default defineComponent({
 
 .lava-auth-of-object-drawer-outside {
   .container {
-    height: calc(100% - 50px);
+    height: calc(100%);
     margin-top: 10px;
-    margin-bottom: 40px;
+    overflow: hidden;
   }
 
   .controls {

@@ -11,6 +11,7 @@
           class="action-selector"
           mode="multiple"
           placeholder="请选择需要授予的权限"
+          allowClear
           :isInForm="true"
           :disabled="actions.length === 0"
           :options="actions"

@@ -38,6 +38,7 @@
           class="action-selector"
           mode="tags"
           placeholder="请选择需要授予的权限"
+          allowClear
           :isInForm="true"
           :disabled="disableActionSelector"
           :options="actions"

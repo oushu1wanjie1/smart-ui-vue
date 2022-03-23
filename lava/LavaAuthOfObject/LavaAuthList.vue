@@ -1,44 +1,46 @@
 <template>
-  <x-spin wrapperClassName="lava-auth-list-spin" :spinning="loading" :delay="loadingDelay">
-    <div class="lava-auth-list">
-      <template v-if="authList.length > 0">
-        <div class="lava-auth-list-item" v-for="auth in authList" :key="auth.id || auth.name">
-          <lava-object-basic-info
-              class="object-info"
-              :type="type"
-              :id="auth.id"
-              :name="auth.name"
-              :remark="auth.remark"
-              :icon="type === USER ? auth.icon : 'lava-auth-of-object/role-blue'"
-          >
-          <span class="object-tag owner" v-if="type === USER && auth.isOwner">
-            <icon name="lava-auth-of-object/key"></icon>拥有人
-          </span>
-            <span class="object-tag system-role" v-if="auth.roleType !== undefined && auth.roleType === 0">系统角色</span>
-          </lava-object-basic-info>
-          <div class="actions">
-            <lava-action-tag
-                class="action-tag"
-                v-for="action in auth.actions"
-                :key="action.id"
+  <div class="lava-auth-list-container">
+    <x-spin wrapperClassName="lava-auth-list-spin" :spinning="loading" :delay="loadingDelay">
+      <div class="lava-auth-list">
+        <template v-if="authList.length > 0">
+          <div class="lava-auth-list-item" v-for="auth in authList" :key="auth.id || auth.name">
+            <lava-object-basic-info
+                class="object-info"
                 :type="type"
-                :action="action"
-                @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
+                :id="auth.id"
+                :name="auth.name"
+                :remark="auth.remark"
+                :icon="type === USER ? auth.icon : 'lava-auth-of-object/role-blue'"
             >
-            </lava-action-tag>
+            <span class="object-tag owner" v-if="type === USER && auth.isOwner">
+              <icon name="lava-auth-of-object/key"></icon>拥有人
+            </span>
+              <span class="object-tag system-role" v-if="auth.roleType !== undefined && auth.roleType === 0">系统角色</span>
+            </lava-object-basic-info>
+            <div class="actions">
+              <lava-action-tag
+                  class="action-tag"
+                  v-for="action in auth.actions"
+                  :key="action.id"
+                  :type="type"
+                  :action="action"
+                  @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
+              >
+              </lava-action-tag>
+            </div>
+            <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
+              <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
+            </div>
           </div>
-          <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
-            <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
-          </div>
+        </template>
+        <div class="empty" v-else-if="!loading">
+          <icon image name="lava-auth-of-object/search-empty"></icon>
         </div>
-      </template>
-      <div class="empty" v-else-if="!loading">
-        <icon image name="lava-auth-of-object/search-empty"></icon>
+        <!-- TODO: 加载更多，可能不分页了 -->
+        <!--<div class="loadmore"></div>-->
       </div>
-      <!-- TODO: 加载更多，可能不分页了 -->
-      <!--<div class="loadmore"></div>-->
-    </div>
-  </x-spin>
+    </x-spin>
+  </div>
 </template>
 
 <script lang="ts">
@@ -116,17 +118,23 @@ export default defineComponent({
 <style lang="scss">
 @import "../../styles/variables.scss";
 
-.lava-auth-list-spin {
-  height: 100%;
+.lava-auth-list-container {
+  height: calc(100% - 50px);
+  overflow-y: auto;
 
-  .ant-spin-container {
+  .lava-auth-list-spin {
     height: 100%;
+
+    .ant-spin-container {
+      height: 100%;
+    }
   }
 }
 
 .lava-auth-list {
   position: relative;
   height: 100%;
+  padding-top: 1px;
 
   .lava-auth-list-item {
     display: flex;
