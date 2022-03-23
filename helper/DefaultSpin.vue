@@ -38,26 +38,28 @@ export default defineComponent({
 }
 
 .ldio-4oij86wskfe div {
-  box-sizing: border-box !important
+  box-sizing: border-box !important;
+
 }
 
 .ldio-4oij86wskfe > div {
   position: absolute;
-  width: 74px;
-  height: 74px;
-  top: 13px;
-  left: 13px;
+  //width: 744px;
+  width: 7.4em;
+  height: 7.4em;
+  top: 1.3em;
+  left: 1.3em;
   border-radius: 50%;
-  border: 10px solid #000;
+  border: 1em solid #000;
   border-color: #336cff transparent #336cff transparent;
   animation: ldio-4oij86wskfe 1.2s linear infinite;
 }
 
 .ldio-4oij86wskfe > div:nth-child(2), .ldio-4oij86wskfe > div:nth-child(4) {
-  width: 52px;
-  height: 52px;
-  top: 24px;
-  left: 24px;
+  width: 5.2em;
+  height: 5.2em;
+  top: 2.4em;
+  left: 2.4em;
   animation: ldio-4oij86wskfe 1s linear infinite reverse;
 }
 
@@ -80,19 +82,19 @@ export default defineComponent({
   content: "";
   display: block;
   position: absolute;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  left: 22px;
+  width: 1em;
+  height: 1em;
+  top: -1em;
+  left: 2.2em;
   background: #336cff;
   border-radius: 50%;
-  box-shadow: 0 64px 0 0 #336cff;
+  box-shadow: 0 6.4em 0 0 #336cff;
 }
 
 .ldio-4oij86wskfe > div:nth-child(3) div:after {
-  left: -10px;
-  top: 22px;
-  box-shadow: 64px 0 0 0 #336cff;
+  left: -1em;
+  top: 2.2em;
+  box-shadow: 6.4em 0 0 0 #336cff;
 }
 
 .ldio-4oij86wskfe > div:nth-child(4) {
@@ -110,24 +112,25 @@ export default defineComponent({
   content: "";
   display: block;
   position: absolute;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  left: 11px;
+  width: 1em;
+  height: 1em;
+  top: -1em;
+  left: 1.1em;
   background: #f5991b;
   border-radius: 50%;
-  box-shadow: 0 42px 0 0 #f5991b;
+  box-shadow: 0 4.2em 0 0 #f5991b;
 }
 
 .ldio-4oij86wskfe > div:nth-child(4) div:after {
-  left: -10px;
-  top: 11px;
-  box-shadow: 42px 0 0 0 #f5991b;
+  left: -1em;
+  top: 1.1em;
+  box-shadow: 4.2em 0 0 0 #f5991b;
 }
 
 .loadingio-spinner-double-ring-0n4oczukkohd {
-  width: 60px;
-  height: 60px;
+  font-size: 10px;
+  width: 6em;
+  height: 6em;
   display: inline-block;
   overflow: hidden;
   background: transparent;

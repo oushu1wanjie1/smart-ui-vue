@@ -11,6 +11,7 @@ import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'XSwitch',
+  __ANT_SWITCH: true,
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))

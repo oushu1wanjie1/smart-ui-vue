@@ -3,12 +3,13 @@
     .ant-drawer-header {
       // 去掉默认的线
       border-bottom: none;
-      padding: 30px 40px 20px;
+      padding: 23px 40px 13px;
       margin: 0;
 
       // 标题文字
       .ant-drawer-title {
         font-size: 18px;
+        line-height: 38px;
         color: $color-primary-black;
         font-weight: 400;
       }
@@ -16,8 +17,27 @@
       .ant-drawer-close {
         width: 38px;
         height: 38px;
-        top: 24px;
+        top: 23px;
         right: 30px;
+      }
+    }
+  }
+
+  // 固定 header，body溢出滚动
+  &.smartui-drawer-fix-title {
+    .ant-drawer-wrapper-body {
+      padding-top: 74px;
+      .ant-drawer-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .ant-drawer-body {
+        height: 100%;
+        overflow: auto;
+        padding-bottom: 20px;
       }
     }
   }
@@ -25,7 +45,7 @@
   // 关闭按钮样式替换遮罩
   .close-btn-wrapper {
     position: absolute;
-    top: 24px;
+    top: 23px;
     right: 30px;
     background: white;
     width: 38px;

@@ -15,7 +15,12 @@ export default defineComponent({
   name: 'XEmpty',
   props: {
     image: String,
-    imageStyle: Object,
+    imageStyle: {
+      type: Object,
+      default: () => {
+        return { width: '180px', height: '164.55px' }
+      }
+    },
     description: String
   },
   setup(props, context) {

@@ -4,6 +4,7 @@ import XRangePicker from './XRangePicker'
 import XForm from './XForm'
 import XFormItem from './XFormItem'
 import XInput from './XInput'
+import XTextarea from './XTextarea'
 import XAvatar from './XAvatar'
 import XButton from './XButton'
 import XSwitch from './XSwitch'
@@ -29,6 +30,14 @@ import XCard from './XCard'
 import XTable from './XTable'
 import XTabs from './XTabs'
 import XTabPane from './XTabPane'
+import XDivider from './XDivider'
+import XSubMenu from './XSubMenu'
+import XMenuItemGroup from './XMenuItemGroup'
+import XMenuDivider from './XMenuDivider'
+import XUpload from './XUpload'
+import XRow from './XRow'
+import XCol from './XCol'
+import XTooltip from './XTooltip'
 export default {
   utils,
   XAvatar,
@@ -43,6 +52,7 @@ export default {
   XFormItem,
   XInput,
   XInputNumber,
+  XTextarea,
   XMenu,
   XMenuItem,
   XModal,
@@ -60,5 +70,13 @@ export default {
   XSwitch,
   XTable,
   XTabs,
-  XTabPane
+  XTabPane,
+  XDivider,
+  XSubMenu,
+  XMenuItemGroup,
+  XMenuDivider,
+  XUpload,
+  XRow,
+  XCol,
+  XTooltip,
 }

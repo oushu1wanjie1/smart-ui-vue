@@ -1,0 +1,45 @@
+@mixin dropdown-menu {
+  padding: 10px 12px 10px 10px;
+  @include font-normal();
+
+  background-color: #FFF;
+  border-top: 1px solid $color-line-bold;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  .ant-dropdown-menu-submenu > .ant-dropdown-menu-submenu-title,
+  .ant-dropdown-menu-item, {
+    padding: 6px 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px;
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    &:not(.ant-dropdown-menu-item-disabled):hover {
+      background: rgba(67, 134, 255, 0.2);
+    }
+  }
+
+  .ant-dropdown-menu-submenu,
+  .ant-dropdown-menu-item, {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .ant-dropdown-menu-submenu-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

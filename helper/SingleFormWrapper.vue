@@ -1,6 +1,6 @@
 <template>
   <x-form v-if="rules">
-    <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value">
+    <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value" auto-height>
       <slot v-bind="events"></slot>
     </x-form-item>
   </x-form>

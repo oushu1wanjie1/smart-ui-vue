@@ -38,8 +38,12 @@
       width: 100%;
     }
 
-    &-text.ant-btn-icon-only {
+    &-icon-only {
       @include btn-icon-only();
+    }
+
+    &-text.ant-btn-icon-only {
+      @include btn-text-icon-only();
       padding: 0;
     }
 
@@ -60,6 +64,7 @@
     > .icon {
       color: inherit;
       transition: unset !important;
+      flex-shrink: 0;
     }
 
     svg {

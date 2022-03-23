@@ -46,5 +46,9 @@ export default defineComponent({
     height: 20px;
     pointer-events: none;
   }
+
+  input::-webkit-input-placeholder {
+    font-size: 12px;
+  }
 }
 </style>

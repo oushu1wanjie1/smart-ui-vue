@@ -1,4 +1,4 @@
-module.exports = {
+const VARS = {
   // 全局主色
   'primary-color': '#336CFF',
   // 成功色
@@ -22,5 +22,10 @@ module.exports = {
   // 同时适用于 select
   'input-hover-border-color': '#85888C',
   // 禁用文本配色
-  'disabled-color': '#85888C'
+  'disabled-color': '#85888C',
+  // modal mask 配色
+  'modal-mask-bg': 'rgba(40,43,46,0.8)',
+  'tabs-active-color': '#336CFF',
 }
+
+module.exports = VARS
