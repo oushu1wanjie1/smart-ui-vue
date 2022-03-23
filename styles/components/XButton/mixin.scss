@@ -202,6 +202,40 @@
   }
 }
 
+@mixin btn-primary-icon-only {
+  height: 26px;
+  width: 26px;
+  box-shadow: none;
+
+  @include button-variant-other($btn-default-color, $color-primary-blue-light, transparent);
+  &:hover {
+    box-shadow: none;
+    @include button-variant-other($btn-default-active-color, $btn-default-color,  transparent);
+  }
+
+  &:focus {
+    box-shadow: none;
+    @include button-variant-other($btn-default-active-color, rgba($color-primary-blue, .4), transparent);
+  }
+
+  &:active {
+    box-shadow: none;
+    @include button-variant-other($btn-default-active-color, $btn-primary-active-bg-color, transparent);
+  }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      @include button-color($btn-default-color, transparent, $color-line-bold);
+      .icon {
+        opacity: .3;
+      }
+    }
+  }
+}
+
 @mixin btn-text-icon-only {
   @include button-variant-other($btn-default-color, transparent, transparent);
   box-shadow: none;

@@ -7,6 +7,11 @@
       display: none;
     }
   }
+  &.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:hover,
+  &.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:hover {
+    color: $color-primary-blue;
+    background-color: transparent;
+  }
   .ant-table-filter-icon {
     align-items: center;
     justify-content: flex-start;
@@ -27,6 +32,11 @@
     &.ant-table-filter-selected {
       color: $color-primary-blue
     }
+  }
+  &.ant-table-column-has-actions.ant-table-column-has-filters .anticon-filter.ant-table-filter-open,
+  &.ant-table-column-has-actions.ant-table-column-has-filters .ant-table-filter-icon.ant-table-filter-open {
+    color: $color-primary-blue;
+    background-color: transparent;
   }
 }
 
