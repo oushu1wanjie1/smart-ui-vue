@@ -12,7 +12,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { Button } from 'ant-design-vue'
-import Icon from '@/smart-ui-vue/helper/Icon.vue'
+import Icon from './helper/Icon.vue'
 
 export default defineComponent({
   name: 'XButton',
