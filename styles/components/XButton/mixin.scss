@@ -179,10 +179,10 @@
     @include button-variant-other($btn-default-color, transparent, $text-annotation-color);
   }
 
-  &:focus {
-    box-shadow: none;
-    @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), $color-line-bold);
-  }
+  //&:focus {
+  //  box-shadow: none;
+  //  @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), $color-line-bold);
+  //}
 
   &:active {
     box-shadow: none;
@@ -213,10 +213,10 @@
     @include button-variant-other($btn-default-active-color, $btn-default-color,  transparent);
   }
 
-  &:focus {
-    box-shadow: none;
-    @include button-variant-other($btn-default-active-color, rgba($color-primary-blue, .4), transparent);
-  }
+  //&:focus {
+  //  box-shadow: none;
+  //  @include button-variant-other($btn-default-active-color, rgba($color-primary-blue, .4), transparent);
+  //}
 
   &:active {
     box-shadow: none;
@@ -244,10 +244,10 @@
     @include button-variant-other($btn-default-color, rgba($color-line-bold, .5), rgba($color-line-bold, .5));
     box-shadow: none;
   }
-  &:focus {
-    @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), rgba($color-primary-blue, .2));
-    box-shadow: none;
-  }
+  //&:focus {
+  //  @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), rgba($color-primary-blue, .2));
+  //  box-shadow: none;
+  //}
   &:active {
     @include button-variant-other($btn-default-color, $color-line-bold, $color-line-bold);
     box-shadow: none;

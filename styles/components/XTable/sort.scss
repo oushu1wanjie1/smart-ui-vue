@@ -3,6 +3,12 @@
 
 @mixin sort {
   &.ant-table-column-has-sorters {
+    .ant-table-column-sorters:hover {
+      color: $color-primary-blue;
+      &:before {
+        background: transparent;
+      }
+    }
     .ant-table-column-sorter {
       .ant-table-column-sorter-inner {
         position: relative;
