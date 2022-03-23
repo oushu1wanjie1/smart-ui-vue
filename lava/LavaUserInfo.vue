@@ -1,6 +1,6 @@
 <template>
   <div class="lava-user-info">
-    <smart-avatar class="user-avatar" :user-id="id"/>
+    <lava-avatar class="user-avatar" :user-id="id"/>
     <div class="user-info">
       <!--      name      -->
       <x-button
@@ -20,11 +20,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import XButton from '../XButton.vue'
-import SmartAvatar from '@/components/SmartUI/SmartAvatar.vue'
+import LavaAvatar from './LavaAvatar.vue'
 
 export default defineComponent({
   name: 'LavaUserInfo',
-  components: { SmartAvatar, XButton },
+  components: { LavaAvatar, XButton },
   props: {
     // 用户id
     id: {
