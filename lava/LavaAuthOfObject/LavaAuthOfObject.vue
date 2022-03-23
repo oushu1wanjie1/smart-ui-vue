@@ -43,8 +43,10 @@
     </div>
     <lava-auth-add
       :visible="addVisible"
-      :api-get-user-list="apiGetUserList"
-      :api-get-role-list="apiGetRoleList"
+      :user-list="userList"
+      :role-list="roleList"
+      @getUserList="handleGetUserList"
+      @getRoleList="handleGetRoleList"
       @close="handleAddOrEditDrawerClose"
     ></lava-auth-add>
     <lava-auth-edit
@@ -75,7 +77,7 @@ import {
   USER,
   ApiGetAuthList,
   ApiGetAuthOfUserOrRole,
-  AuthListItem, ApiGetAuthSourceRoles, ApiSetAuth, ApiGetUserList, ApiGetRoleList,
+  AuthListItem, ApiGetAuthSourceRoles, ApiSetAuth, ApiGetUserList, ApiGetRoleList, UserOrRoleSelectorOption
 } from './type'
 import { message } from 'ant-design-vue'
 import { selectStrategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
@@ -145,6 +147,8 @@ export default defineComponent({
     const editVisible: Ref<boolean> = ref(false)
     const userOrRoleSelected: Ref<string> = ref('')
     const userOrRoleIdSelected: Ref<number> = ref(0)
+    const userList: Ref<UserOrRoleSelectorOption[]> = ref([])
+    const roleList: Ref<UserOrRoleSelectorOption[]> = ref([])
 
     const searchPlaceholder: ComputedRef<string> = computed(() => {
       return userOrRole.value === USER ? '请输入需要搜索的用户名' : '请输入需要搜索的角色名'
@@ -225,6 +229,42 @@ export default defineComponent({
       }
     }
 
+    const handleGetUserList = () => {
+      if (typeof props.apiGetUserList !== 'function') return
+      props.apiGetUserList().then(({ meta, data }) => {
+        if (meta.success) {
+          userList.value = data ? data.map(item => ({
+            label: item.name,
+            value: item.id,
+            type: USER,
+            remark: item.name_remark
+          })) : []
+        } else {
+          throw new Error(meta.message || meta.status_code)
+        }
+      }).catch(err => {
+        message.error(`获取用户列表失败: ${err}`)
+      })
+    }
+
+    const handleGetRoleList = () => {
+      if (typeof props.apiGetRoleList !== 'function') return
+      props.apiGetRoleList().then(({ meta, data }) => {
+        if (meta.success) {
+          roleList.value = data ? data.map(item => ({
+            label: item.name,
+            value: item.id,
+            type: ROLE,
+            remark: item.description
+          })) : []
+        } else {
+          throw new Error(meta.message || meta.status_code)
+        }
+      }).catch(err => {
+        message.error(`获取角色列表失败: ${err}`)
+      })
+    }
+
     const handleClose = () => {
       context.emit('close', false)
       handleReset()
@@ -240,6 +280,8 @@ export default defineComponent({
       editVisible.value = false
       userOrRoleSelected.value = ''
       userOrRoleIdSelected.value = 0
+      userList.value = []
+      roleList.value = []
     }
 
     const handleGetAuthList = (userOrRole = USER) => {
@@ -281,11 +323,15 @@ export default defineComponent({
       editVisible,
       userOrRoleSelected,
       userOrRoleIdSelected,
+      userList,
+      roleList,
       handleChangeSelector,
       handleSearch,
       handleShowAddDrawer,
       handleShowEditDrawer,
       handleAddOrEditDrawerClose,
+      handleGetUserList,
+      handleGetRoleList,
       handleClose,
       handleInit
     }

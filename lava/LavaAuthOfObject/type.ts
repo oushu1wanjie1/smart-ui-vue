@@ -61,6 +61,13 @@ export interface ApiAuthListItem {
   is_owner?: boolean;
 }
 
+export interface UserOrRoleSelectorOption {
+  label: string;
+  value: number;
+  type: string;
+  remark: string;
+}
+
 // 通用资源
 export interface Action {
   rs_type_action_id: number;

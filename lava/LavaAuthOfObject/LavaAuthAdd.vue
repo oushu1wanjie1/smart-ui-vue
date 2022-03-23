@@ -15,6 +15,7 @@
           <x-select
             dropdownClassName="lava-auth-of-object-drawer-inside-type-list-selector-dropdown"
             show-search
+            allowClear
             option-label-prop="label"
             :isInForm="true"
             :placeholder="userOrRoleSelectorPlaceholder"
@@ -68,16 +69,9 @@ import XSelectOption from '../../XSelectOption.vue'
 import XButton from '../../XButton.vue'
 import XDrawer from '../../XDrawer.vue'
 import XAvatar from '../../XAvatar.vue'
-import { USER, ADD, ApiGetUserList, ApiGetRoleList, ROLE } from './type'
+import { USER, ADD, ROLE, UserOrRoleSelectorOption } from './type'
 import { AVATAR_NUM, Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 import { message } from 'ant-design-vue'
-
-interface UserOrRoleSelectorOption {
-  label: string;
-  value: number;
-  type: string;
-  remark: string;
-}
 
 export default defineComponent({
   name: 'LavaAuthEdit',
@@ -96,19 +90,19 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    apiGetUserList: {
-      type: Function as PropType<ApiGetUserList>
+    userList: {
+      type: Array as PropType<UserOrRoleSelectorOption[]>,
+      default: () => []
     },
-    apiGetRoleList: {
-      type: Function as PropType<ApiGetRoleList>
+    roleList: {
+      type: Array as PropType<UserOrRoleSelectorOption[]>,
+      default: () => []
     }
   },
-  emits: [ 'close' ],
+  emits: [ 'close', 'getUserList', 'getRoleList' ],
   setup(props, context) {
     const type: Ref<string> = ref(USER)
     const id: Ref<string | number | undefined> = ref(undefined)
-    const userList: Ref<UserOrRoleSelectorOption[]> = ref([])
-    const roleList: Ref<UserOrRoleSelectorOption[]> = ref([])
     const actions: Ref<{label: string, value: number}[]> = ref([])
     const actionsSelected: Ref<number[]> = ref([])
     const strategy = inject('strategy') as Strategy
@@ -122,7 +116,7 @@ export default defineComponent({
     })
 
     const userOrRoleList: ComputedRef<UserOrRoleSelectorOption[]> = computed(() => {
-      return type.value === USER ? userList.value : roleList.value
+      return type.value === USER ? props.userList : props.roleList
     })
 
     const disableActionSelector = computed(() => !id.value)
@@ -135,57 +129,20 @@ export default defineComponent({
       return actionsSelected.value.length === 0
     })
 
-    const handleGetUserList = () => {
-      if (typeof props.apiGetUserList !== 'function') return
-      props.apiGetUserList().then(({ meta, data }) => {
-        if (meta.success) {
-          userList.value = data ? data.map(item => ({
-            label: item.name,
-            value: item.id,
-            type: USER,
-            remark: item.name_remark
-          })) : []
-        } else {
-          throw new Error(meta.message || meta.status_code)
-        }
-      }).catch(err => {
-        message.error(`获取用户列表失败: ${err}`)
-      })
-    }
-
-    const handleGetRoleList = () => {
-      if (typeof props.apiGetRoleList !== 'function') return
-      props.apiGetRoleList().then(({ meta, data }) => {
-        if (meta.success) {
-          roleList.value = data ? data.map(item => ({
-            label: item.name,
-            value: item.id,
-            type: ROLE,
-            remark: item.description
-          })) : []
-        } else {
-          throw new Error(meta.message || meta.status_code)
-        }
-      }).catch(err => {
-        message.error(`获取角色列表失败: ${err}`)
-      })
-    }
-
     const handleSelectType = (val: string) => {
       id.value = undefined
       actions.value = []
       actionsSelected.value = []
-      if (val === USER && userList.value.length === 0) {
-        handleGetUserList()
+      if (val === USER && props.userList.length === 0) {
+        context.emit('getUserList')
       }
-      if (val === ROLE && roleList.value.length === 0) {
-        handleGetRoleList()
+      if (val === ROLE && props.roleList.length === 0) {
+        context.emit('getRoleList')
       }
     }
 
     // @change
     const handleSelectUserOrRole = (val: number) => {
-      console.log('handleSelectUserOrRole: ', id.value)
       strategy.getAuthOfUserOrRole(type.value, val).then(data => {
         const { options } = strategy.formatAuthOfUserOrRole(data, '')
         actions.value = options
@@ -200,7 +157,6 @@ export default defineComponent({
     // filterOption
     const handleSearchUserOrRole = (input: string, option: UserOrRoleSelectorOption) => {
       // 前端搜索
-      console.log('handleSearchUserOrRole: ', input)
       const keyword = input.trim().toLowerCase()
       const label = option.label.trim().toLowerCase()
       const remark = option.remark.trim().toLowerCase()
@@ -214,20 +170,18 @@ export default defineComponent({
     const handleReset = () => {
       type.value = USER
       id.value = undefined
-      userList.value = []
-      roleList.value = []
       actions.value = []
       actionsSelected.value = []
     }
 
     const handleInit = () => {
-      console.log('handleInit')
       handleReset()
-      handleGetUserList()
+      if (props.userList?.length === 0) {
+        context.emit('getUserList')
+      }
     }
 
     const handleSubmit = () => {
-      console.log('handleSubmit')
       // privileges 是完整的 actions 列表
       const privileges = actions.value.map(act => ({
         rs_type_action_id: act.value,
@@ -243,7 +197,6 @@ export default defineComponent({
 
     // 注意该方法不能直接赋值给 @close，因为 close 回调函数的参数是 event
     const handleClose = (success = false) => {
-      console.log('handleClose: ', success)
       // 先 emit，再 reset，防止先把 type 的值重置了
       context.emit('close', type.value, success)
       handleReset()
