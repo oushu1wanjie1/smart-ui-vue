@@ -75,7 +75,8 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    required: Boolean,
+    // TODO 有问题暂时禁用，可以先用rules里的required
+    // required: Boolean,
     validateFirst: Boolean,
     validateStatus: String as PropType<'' | 'success' | 'warning' | 'error' | 'validating'>,
     validateTrigger: {
