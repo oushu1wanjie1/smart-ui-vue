@@ -9,9 +9,9 @@
     // 所有pagination按钮
     .ant-pagination-prev, .ant-pagination-next, .ant-pagination-item {
       color: $color-primary-black;
-      min-width: 30px;
+      width: 30px;
       height: 30px;
-      line-height: 30px;
+      line-height: 28px;
 
       // 高亮的pagination按钮
       &.ant-pagination-item-active {
@@ -34,8 +34,15 @@
     .ant-pagination-options-size-changer {
       @extend .smartui-select;
 
-      .ant-select-arrow {
+      .ant-select-selector {
+        background-color: white !important;
+      }
 
+      .ant-select-arrow {
+        background-image: url('/images/icons/select_arrow.svg');
+      }
+      svg {
+        display: none;
       }
     }
 
