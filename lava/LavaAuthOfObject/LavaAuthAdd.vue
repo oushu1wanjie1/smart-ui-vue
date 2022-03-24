@@ -69,8 +69,8 @@ import XSelectOption from '../../XSelectOption.vue'
 import XButton from '../../XButton.vue'
 import XDrawer from '../../XDrawer.vue'
 import XAvatar from '../../XAvatar.vue'
-import { USER, ADD, ROLE, UserOrRoleSelectorOption } from './type'
-import { AVATAR_NUM, Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
+import { USER, ADD, ROLE, AVATAR_NUM, UserOrRoleSelectorOption } from './type'
+import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 import { message } from 'ant-design-vue'
 
 export default defineComponent({
@@ -86,6 +86,10 @@ export default defineComponent({
     XAvatar
   },
   props: {
+    rsType: {
+      type: String,
+      required: true
+    },
     visible: {
       type: Boolean,
       default: false
@@ -144,7 +148,7 @@ export default defineComponent({
     // @change
     const handleSelectUserOrRole = (val: number) => {
       strategy.getAuthOfUserOrRole(type.value, val).then(data => {
-        const { options } = strategy.formatAuthOfUserOrRole(data, '')
+        const { options } = strategy.formatAuthOfUserOrRole(data)
         actions.value = options
       }).catch(err => {
         actions.value = []
@@ -184,7 +188,7 @@ export default defineComponent({
     const handleSubmit = () => {
       // privileges 是完整的 actions 列表
       const privileges = actions.value.map(act => ({
-        rs_type_action_id: act.value,
+        actionFlag: act.value,
         checked: !!actionsSelected.value.find(id => id === act.value)
       }))
       strategy.setAuth(type.value, id.value as number, privileges).then(() => {

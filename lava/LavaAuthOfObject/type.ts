@@ -8,6 +8,12 @@ export const SOURCE_SELF = 'self'
 export const SOURCE_INHERIT = 'inherit'
 export const SOURCE_SELF_INHERIT = 'self_inherit'
 
+export const AVATAR_NUM = 6
+export const RS_COMMON = 'common'
+export const RS_DATABASE = 'database'
+export const RS_SCHEMA = 'schema'
+export const RS_TABLE = 'table'
+
 export interface Meta {
   success: boolean;
   message: string;
@@ -37,7 +43,8 @@ export interface ActionTag {
 export interface AuthListItem {
   id: number;
   name: string;
-  type: string;
+  userOrRole: string;
+  rsType: string;
   remark?: string;
   icon?: string;
   actions: ActionTag[];
@@ -170,3 +177,78 @@ export interface ApiSetAuth {
 }
 
 // database、schema、table 资源专属的接口定义
+
+export interface ApiGetAuthListOfDstReq {
+  cluster_id: number;
+  user_type: string;
+  database_name: string;
+  schema_name?: string;
+  table_name?: string;
+  user_or_role_name?: string;
+}
+
+export interface ApiGetAuthListOfDstResItem {
+  user_or_role_id: number;
+  user_or_role_name: string;
+  comment: string;
+  is_owner: boolean;
+  is_super: boolean;
+  role_type: number;
+  actions: Action[];
+  inherit_actions: Action[];
+}
+
+export interface ApiGetAuthListOfDst {
+  (rsType: string, params: ApiGetAuthListOfDstReq): Promise<Response<ApiGetAuthListOfDstResItem[]>>;
+}
+
+export interface ApiGetAuthOfUserOrRoleOfDstReq {
+  cluster_id: number;
+  user_type: string;
+  user_or_role_id: number;
+  database_name: string;
+  schema_name?: string;
+  table_name?: string;
+}
+
+// 此函数返回的数据结构和 ApiGetAuthListOfDst 是一样的
+export interface ApiGetAuthOfUserOrRoleOfDst {
+  (rsType: string, params: ApiGetAuthOfUserOrRoleOfDstReq): Promise<Response<ApiGetAuthListOfDstResItem[]>>
+}
+
+export interface ApiGetAuthSourceRolesOfDstReq {
+  clusterId: number;
+  resourceType: string;
+  userId: number;
+  databaseName: string;
+  schemaName?: string;
+  tableName?: string;
+  actionName: string;
+}
+
+export interface ApiGetAuthSourceRolesOfDstRes {
+  is_owner: boolean;
+  inherit_roles: {
+    id: number;
+    name: string;
+    description: string;
+  }[];
+}
+
+export interface ApiGetAuthSourceRolesOfDst {
+  (params: ApiGetAuthSourceRolesOfDstReq): Promise<Response<ApiGetAuthSourceRolesOfDstRes>>
+}
+
+export interface ApiSetAuthOfDstReq {
+  cluster_id: number;
+  user_or_role_type: string;
+  user_or_role_id: number;
+  database_name: string;
+  schema_name?: string;
+  table_name?: string;
+  privileges: { action_name: string, checked: boolean }[];
+}
+
+export interface ApiSetAuthOfDst {
+  (type: string, params: ApiSetAuthOfDstReq): Promise<Response<null>>;
+}

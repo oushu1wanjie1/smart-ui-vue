@@ -42,6 +42,7 @@
       ></lava-auth-list>
     </div>
     <lava-auth-add
+      :rs-type="rsType"
       :visible="addVisible"
       :user-list="userList"
       :role-list="roleList"
@@ -77,10 +78,22 @@ import {
   USER,
   ApiGetAuthList,
   ApiGetAuthOfUserOrRole,
-  AuthListItem, ApiGetAuthSourceRoles, ApiSetAuth, ApiGetUserList, ApiGetRoleList, UserOrRoleSelectorOption
+  AuthListItem,
+  ApiGetAuthSourceRoles,
+  ApiSetAuth,
+  ApiGetUserList,
+  ApiGetRoleList,
+  UserOrRoleSelectorOption,
+  ApiGetAuthListOfDst,
+  ApiSetAuthOfDst,
+  ApiGetAuthOfUserOrRoleOfDst,
+  ApiGetAuthSourceRolesOfDst,
+  RS_COMMON,
+  RS_DATABASE,
+  RS_SCHEMA, RS_TABLE,
 } from './type'
 import { message } from 'ant-design-vue'
-import { selectStrategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
+import { StrategyCommon, StrategyDb } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 
 export default defineComponent({
   name: 'LavaAuthOfObject',
@@ -97,6 +110,7 @@ export default defineComponent({
     LavaAuthEdit
   },
   props: {
+    // 通用 props
     title: {
       type: String,
       required: true
@@ -105,13 +119,13 @@ export default defineComponent({
       type: Boolean,
       required: true
     },
-    type: {
+    rsType: {
       type: String,
       required: true
     },
+    // common 专属 props
     rsTypeId: {
       type: Number,
-      required: true
     },
     objectId: {
       type: Number
@@ -133,6 +147,31 @@ export default defineComponent({
     },
     apiGetRoleList: {
       type: Function as PropType<ApiGetRoleList>
+    },
+    // db 专属 props
+    clusterId: {
+      type: Number
+    },
+    databaseName: {
+      type: String
+    },
+    schemaName: {
+      type: String
+    },
+    tableName: {
+      type: String
+    },
+    apiGetAuthListOfDst: {
+      type: Function as PropType<ApiGetAuthListOfDst>
+    },
+    apiGetAuthOfUserOrRoleOfDst: {
+      type: Function as PropType<ApiGetAuthOfUserOrRoleOfDst>
+    },
+    apiGetAuthSourceRolesOfDst: {
+      type: Function as PropType<ApiGetAuthSourceRolesOfDst>
+    },
+    apiSetAuthOfDst: {
+      type: Function as PropType<ApiSetAuthOfDst>
     }
   },
   emits: [ 'close' ],
@@ -167,15 +206,32 @@ export default defineComponent({
     })
 
     // 选择策略
-    const strategy = selectStrategy({
-      type: props.type,
-      rsTypeId: props.rsTypeId,
-      objectId: props.objectId,
-      apiGetAuthList: props.apiGetAuthList,
-      apiGetAuthOfUserOrRole: props.apiGetAuthOfUserOrRole,
-      apiGetAuthSourceRoles: props.apiGetAuthSourceRoles,
-      apiSetAuth: props.apiSetAuth
-    })
+    const strategy = ((rsType: string) => {
+      if (rsType === RS_DATABASE || rsType === RS_SCHEMA || rsType === RS_TABLE) {
+        return new StrategyDb(
+          props.rsType,
+          props.clusterId!,
+          props.databaseName!,
+          props.schemaName!,
+          props.tableName!,
+          props.apiGetAuthListOfDst!,
+          props.apiGetAuthOfUserOrRoleOfDst!,
+          props.apiGetAuthSourceRolesOfDst!,
+          props.apiSetAuthOfDst!,
+        )
+      } else {
+        return new StrategyCommon(
+          props.rsType,
+          props.rsTypeId!,
+          props.objectId!,
+          props.apiGetAuthList!,
+          props.apiGetAuthOfUserOrRole!,
+          props.apiGetAuthSourceRoles!,
+          props.apiSetAuth!
+        )
+      }
+    })(props.rsType)
+
     // 提供给子孙组件
     provide('strategy', strategy)
 
@@ -285,14 +341,22 @@ export default defineComponent({
     }
 
     const handleGetAuthList = (userOrRole = USER) => {
-      if (typeof props.apiGetAuthList !== 'function' || !strategy) return
+      if (props.rsType === RS_COMMON && typeof props.apiGetAuthList !== 'function') {
+        return
+      }
+      if (
+        (props.rsType === RS_DATABASE || props.rsType === RS_SCHEMA || props.rsType === RS_TABLE) &&
+        typeof props.apiGetAuthListOfDst !== 'function'
+      ) {
+        return
+      }
+
       loading.value = true
       strategy.getAuthList(userOrRole, searchVal.value).then(data => {
-        const list = strategy.formatAuthList(data, userOrRole)
         if (userOrRole === USER) {
-          userAuthList.value = list
+          userAuthList.value = data
         } else {
-          roleAuthList.value = list
+          roleAuthList.value = data
         }
       }).catch(err => {
         message.error(`获取权限列表失败: ${err}`)

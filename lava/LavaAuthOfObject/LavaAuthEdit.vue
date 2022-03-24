@@ -91,7 +91,7 @@ export default defineComponent({
     const handleInit = () => {
       handleReset()
       strategy.getAuthOfUserOrRole(props.type, props.id).then(data => {
-        const { options, value } = strategy.formatAuthOfUserOrRole(data, '')
+        const { options, value } = strategy.formatAuthOfUserOrRole(data)
         actions.value = options
         actionsSelected.value = value
         actionsSelectedDefault.value = [ ...value ] // 新建一个数组，避免指向同一个引用
@@ -103,7 +103,7 @@ export default defineComponent({
     const handleSubmit = () => {
       // privileges 是完整的 actions 列表
       const privileges = actions.value.map(act => ({
-        rs_type_action_id: act.value,
+        actionFlag: act.value,
         checked: !!actionsSelected.value.find(id => id === act.value)
       }))
       strategy.setAuth(props.type, props.id, privileges).then(() => {

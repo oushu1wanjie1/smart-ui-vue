@@ -100,7 +100,7 @@ export default defineComponent({
     }
 
     const handleClickEditBtn = (authItem: AuthListItem) => {
-      context.emit('edit', authItem.type, authItem.id)
+      context.emit('edit', authItem.rsType, authItem.id)
     }
 
     return {
