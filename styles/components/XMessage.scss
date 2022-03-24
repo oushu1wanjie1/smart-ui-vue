@@ -1,0 +1,31 @@
+.ant-message-notice-content {
+  padding: 0;
+}
+
+.ant-message-custom-content {
+  border-radius: 4px;
+  padding: 10px 16px;
+}
+
+.ant-message-success {
+  color: $color-success-text;
+  background-color: rgba($color-success, .2);
+}
+
+.ant-message-error {
+  color: $color-danger;
+  background-color: rgba($color-danger, .2);
+}
+
+.ant-message-warning {
+  color: $color-warn-text;
+  background-color: rgba($color-warn, .2);
+}
+
+.ant-message-info {
+  color: $color-primary-blue;
+  background-color: rgba($color-primary-blue, .2);
+}
+
+
+

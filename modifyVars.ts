@@ -1,6 +1,8 @@
 const VARS = {
   // 全局主色
   'primary-color': '#336CFF',
+  // 信息颜色
+  'info-color': '#336CFF',
   // 成功色
   'success-color': 'rgba(75, 202, 173, 1)',
   // 警告色
