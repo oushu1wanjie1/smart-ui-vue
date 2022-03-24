@@ -175,6 +175,7 @@ export default defineComponent({
     const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && !dataSource.value.length)
 
     const mergedPagination = computed(() => {
+      if (!pagination.value) return false
       const result = {
         ...pagination.value,
         itemRender: ({ type, originalElement }) => {
