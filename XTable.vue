@@ -6,7 +6,7 @@
     :columns="formattedColumns"
     :dataSource="dataSource"
     :loading="loading"
-    :pagination="pagination"
+    :pagination="mergedPagination"
     :customHeaderRow="column => {
       return {
         class: {
@@ -123,12 +123,13 @@ export default defineComponent({
     pagination: {
       type: Object,
       default: () => ({
-        defaultPageSize: 20
+        defaultPageSize: 20,
+        pageSize: 20,
       })
     }
   },
   setup(props, context) {
-    const { conditional, dataSource } = toRefs(props)
+    const { conditional, dataSource, pagination } = toRefs(props)
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -172,6 +173,17 @@ export default defineComponent({
 
     const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && !dataSource.value.length)
 
+    const mergedPagination = computed(() => {
+      return {
+        ...pagination.value,
+        itemRender: ({ type, originalElement }) => {
+          if (type === 'prev') return h(originalElement, {}, h(Icon, { name: 'ui-table/prev', color: '' }))
+          else if (type === 'next') return h(originalElement, {}, h(Icon, { name: 'ui-table/next', color: '' }))
+          else return originalElement
+        }
+      }
+    })
+
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
     const handleFilterItemClick = (item, scope, column) => {
@@ -199,6 +211,12 @@ export default defineComponent({
           `
       })
       /* eslint-enable max-len */
+      document.querySelectorAll('.ant-pagination-options-size-changer .ant-select-arrow .anticon').forEach(item => {
+        item.innerHTML = `
+            <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-select/select_arrow"></use></svg>
+        `
+      })
+
     })
     return {
       slots: computed(() => Object.keys(context.slots)),
@@ -208,6 +226,7 @@ export default defineComponent({
       getEmptyImage,
       isEmpty,
       isConditionalEmpty,
+      mergedPagination,
       console: console
     }
   }
