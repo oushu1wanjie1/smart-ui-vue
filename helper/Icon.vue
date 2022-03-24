@@ -116,7 +116,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../styles/variables";
+// 因为 icon 是初始倒入的，所以其他需要全局引入的也放在这
+@import "../styles/components/XMessage";
+
 .icon {
   width: 18px;
   height: 18px;
