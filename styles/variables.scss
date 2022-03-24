@@ -25,12 +25,14 @@ $color-line-bold: #D5D8DB; // 分割线-深
 $color-line-black: $color-primary-black; // 分割线-黑
 
 // 提示色
-$color-success: rgba(75, 202, 173, 1); // 成功
-$color-success-light: rgba(68, 215, 182, 0.3); // 成功-浅
+$color-success: rgba(68, 215, 182, 1); // 成功
+$color-success-text: rgba(65, 181, 155, 1); // 字体颜色
+$color-success-light: rgba(68, 215, 182, .2); // 成功-浅
 $color-danger: rgba(215, 68, 114, 1); // 危险
-$color-danger-light: rgba(215, 68, 114, 0.3);
+$color-danger-light: rgba(215, 68, 114, 0.2);
 $color-warn: rgba(215, 201, 68, 1); // 警告
-$color-warn-light: rgba(215, 201, 68, 0.3); //警告-浅
+$color-warn-text: rgba(204, 162, 54, 1); // 警告
+$color-warn-light: rgba(215, 201, 68, 0.2); //警告-浅
 
 //  -----字体-----
 // 字号
