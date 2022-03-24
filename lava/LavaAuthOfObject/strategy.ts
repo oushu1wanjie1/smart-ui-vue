@@ -70,7 +70,7 @@ export interface Strategy {
   rsType: string;
   getAuthList(userOrRole: string, name: string): Promise<AuthListItem[]>;
   getAuthOfUserOrRole(userOrRole: string, id: number): Promise<any>;
-  getAuthSourceRoles(userId: number, actionFlag: string | number): Promise<any>;
+  getAuthSourceRoles(userId: number, actionFlag: string | number): Promise< {id: number, name: string, description: string}[]>;
   setAuth(userOrRole: string, id: number, privileges: { actionFlag: string | number, checked: boolean }[]): Promise<any>;
   formatAuthOfUserOrRole(data: ApiGetAuthOfUserOrRoleRes | ApiGetAuthListOfDstResItem[]): {
     options: { label: string, value: number }[],

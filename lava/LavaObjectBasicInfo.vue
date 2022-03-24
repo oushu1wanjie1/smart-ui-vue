@@ -7,10 +7,10 @@
     </div>
     <div class="right">
       <div class="name">
-        <a @click="handleJump">{{ name }}</a>
+        <a @click="handleJump" :title="name">{{ name }}</a>
         <slot></slot>
       </div>
-      <div class="remark">{{ remark }}</div>
+      <div class="remark" :title="remark">{{ remark }}</div>
     </div>
   </div>
 </template>
@@ -108,12 +108,20 @@ export default defineComponent({
     display: flex;
 
     a {
+      width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: $color-primary-blue;
       font-size: $font-size-normal;
     }
   }
 
   .remark {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: $color-primary-black;
     font-size: $font-size-small;
   }
