@@ -1,30 +1,19 @@
 <template>
   <div class="lava-action-tag">
     <x-tooltip placement="bottomLeft" overlayClassName="lava-action-tag-tooltip">
-      <template #title>
-        <div class="lava-action-tag-source">
-          <span v-if="action.type === SOURCE_SELF">自身权限</span>
-          <span v-if="action.type === SOURCE_INHERIT">继承自角色</span>
-          <span v-if="action.type === SOURCE_SELF_INHERIT">自身权限且继承自角色</span>
-        </div>
-        <div class="lava-action-tag-roles">
-          <div class="role-name" v-for="role in action.roles" :key="role.id">
-            <icon name="lava-auth-of-object/role-blue"></icon>
-            <a @click="$router.push(`/main/user_center/role/${role.id}`)">{{ role.name }}</a>
-          </div>
-        </div>
+      <template #title v-if="type === USER && action.type">
+        <lava-role-panel :type="action.type" :roles="action.roles"></lava-role-panel>
       </template>
-      <icon
-        v-if="action.type === SOURCE_INHERIT || action.type === SOURCE_SELF_INHERIT"
-        name="lava-auth-of-object/inherit"
-      ></icon>
-      <span class="name">{{ action.name }}</span>
-      <icon
-        v-if="!readonly"
-        class="delete"
-        name="lava-auth-of-object/x"
-        @click="$emit('delete', action)"
-      ></icon>
+      <span>
+        <icon v-if="isShowRolePanel(type, action.type)" name="lava-auth-of-object/inherit"></icon>
+        <span class="name">{{ action.name }}</span>
+        <icon
+          v-if="!readonly"
+          class="delete"
+          name="lava-auth-of-object/x"
+          @click="$emit('delete', action)"
+        ></icon>
+      </span>
     </x-tooltip>
   </div>
 </template>
@@ -33,15 +22,22 @@
 import { PropType, defineComponent } from 'vue'
 import Icon from '../../helper/Icon.vue'
 import XTooltip from '../../XTooltip.vue'
-import { ActionTag, SOURCE_INHERIT, SOURCE_SELF, SOURCE_SELF_INHERIT } from './type'
+import LavaRolePanel from './LavaRolePanel.vue'
+import { USER, SOURCE_INHERIT, SOURCE_SELF_INHERIT, ActionTag } from './type'
+import { isShowRolePanel } from './strategy'
 
 export default defineComponent({
   name: 'LavaActionTag',
   components: {
     Icon,
-    XTooltip
+    XTooltip,
+    LavaRolePanel
   },
   props: {
+    type: {
+      type: String,
+      required: true
+    },
     readonly: {
       type: Boolean,
       default: true
@@ -54,9 +50,10 @@ export default defineComponent({
   emits: [ 'delete' ],
   setup() {
     return {
-      SOURCE_SELF,
+      USER,
       SOURCE_INHERIT,
-      SOURCE_SELF_INHERIT
+      SOURCE_SELF_INHERIT,
+      isShowRolePanel
     }
   }
 })
@@ -81,27 +78,6 @@ export default defineComponent({
 }
 
 .lava-action-tag-tooltip {
-  max-width: 300px;
-}
-
-.lava-action-tag-source {
-  color: $color-text-sub;
-  font-size: $font-size-small;
-}
-
-.lava-action-tag-roles {
-
-  .role-name {
-    display: inline-block;
-    font-size: $font-size-normal;
-    margin-top: 10px;
-    margin-right: 10px;
-    white-space: nowrap;
-
-    a {
-      color: $color-primary-blue;
-      margin-left: 2px;
-    }
-  }
+  max-width: 400px;
 }
 </style>
