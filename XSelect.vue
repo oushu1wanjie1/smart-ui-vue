@@ -22,6 +22,9 @@
             <p>暂无搜索结果</p>
           </div>
         </template>
+        <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
+          <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+        </template>
       </a-select>
       <span class="smartui-select-prefix-icon">
         <slot name="prefixIcon"/>
@@ -49,7 +52,7 @@
           <p>暂无搜索结果</p>
         </div>
       </template>
-      <template v-slot:clearIcon>
+      <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
         <icon name="ui-select/close" class="x-select-clear" color="comment"/>
       </template>
     </a-select>
@@ -79,11 +82,11 @@ export default {
   props: {
     ...SelectProps(),
     /**
-     * 默认开启清除功能
+     * 默认关闭清除功能
      */
     allowClear: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     /**
      * 无操作状态、禁用状态时，是否显示边框
