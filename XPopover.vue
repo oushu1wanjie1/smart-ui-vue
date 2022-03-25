@@ -1,5 +1,8 @@
 <template>
-  <a-popover v-bind="props">
+  <a-popover
+    v-bind="props"
+    @visibleChange="handleVisibleChange"
+  >
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
@@ -7,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Prop, PropType, toRefs } from 'vue'
+import { computed, defineComponent, nextTick, Prop, PropType, toRefs } from 'vue'
 import { useModel } from '@/smart-ui-vue/utils'
 
 interface AlignProps {
@@ -135,9 +138,13 @@ export default defineComponent({
       if (result.visible === undefined) delete result.visible
       return result
     })
+    function handleVisibleChange(visible: boolean) {
+      context.emit('visibleChange', visible)
+    }
     return {
       slots: computed(() => Object.keys(context.slots)),
       props: mergedProps,
+      handleVisibleChange,
       visibleLocal: useModel('visible', props, context),
     }
   }

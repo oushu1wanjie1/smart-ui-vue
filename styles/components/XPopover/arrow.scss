@@ -102,7 +102,13 @@
     @include position($d1, $d2);
     @include size($d1);
     @include outer-shadow($d1, $d2);
+    // popover和tooltip的arrow长得完全一样，居然css不一样。。。
+    border-style: none;
+    border-width: 0;
+    transform: none;
+    overflow: hidden;
     .ant-popover-arrow-content {
+      display: block;
       @include size($d1);
       @include arrow-trans-origin($d1, $d2);
       @include arrow-trans-rule($d1, $d2);
