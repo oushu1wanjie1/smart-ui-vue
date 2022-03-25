@@ -14,10 +14,25 @@
           allowClear
           :isInForm="true"
           :disabled="actions.length === 0"
-          :options="actions"
           v-model:value="actionsSelected"
         >
           <template #prefixIcon><icon name="lava-auth-of-object/auth-active"></icon></template>
+          <x-select-option
+            v-for="action in actions"
+            :key="action.value"
+            :label="action.label"
+            :value="action.value"
+          >
+            <x-tooltip placement="bottomLeft" overlayClassName="lava-action-tag-tooltip">
+              <template #title v-if="type === USER && action.type">
+                <lava-role-panel :type="action.type" :roles="action.roles"></lava-role-panel>
+              </template>
+              <span @mouseenter="isShowRolePanel(type, action.type) && onMouseEnter(action.value)">
+                <icon v-if="isShowRolePanel(type, action.type)" name="lava-auth-of-object/inherit"></icon>
+                <span>{{ action.label }}</span>
+              </span>
+            </x-tooltip>
+          </x-select-option>
         </x-select>
       </x-form-item>
     </x-form>
@@ -36,11 +51,15 @@ import Icon from '../../helper/Icon.vue'
 import XForm from '../../XForm.vue'
 import XFormItem from '../../XFormItem.vue'
 import XSelect from '../../XSelect.vue'
+import XSelectOption from '../../XSelectOption.vue'
 import XButton from '../../XButton.vue'
+import XTooltip from '../../XTooltip.vue'
 import XDrawer from '../../XDrawer.vue'
-import { ADD } from './type'
-import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
+import LavaRolePanel from './LavaRolePanel.vue'
+import { ADD, USER, SOURCE_SELF, ActionSelectOption } from './type'
+import { Strategy, isShowRolePanel } from './strategy'
 import { message } from 'ant-design-vue'
+import { debounce } from 'lodash'
 
 export default defineComponent({
   name: 'LavaAuthEdit',
@@ -49,8 +68,11 @@ export default defineComponent({
     XForm,
     XFormItem,
     XSelect,
+    XSelectOption,
     XButton,
-    XDrawer
+    XTooltip,
+    XDrawer,
+    LavaRolePanel
   },
   props: {
     visible: {
@@ -68,8 +90,9 @@ export default defineComponent({
   },
   emits: [ 'close' ],
   setup(props, context) {
+    const hoverDelay = 500
     // select options
-    const actions: Ref<{ label: string, value: number }[]> = ref([])
+    const actions: Ref<ActionSelectOption[]> = ref([])
     // 存储修改后的 rs_type_action_id 数组
     const actionsSelected: Ref<number[]> = ref([])
     // 存储修改之前的 rs_type_action_id 数组，用于判断是否修改
@@ -92,11 +115,21 @@ export default defineComponent({
       handleReset()
       strategy.getAuthOfUserOrRole(props.type, props.id).then(data => {
         const { options, value } = strategy.formatAuthOfUserOrRole(data)
-        actions.value = options
+        actions.value = options.map(opt => ({ label: opt.label, value: opt.value, type: opt.type, roles: [] }))
         actionsSelected.value = value
         actionsSelectedDefault.value = [ ...value ] // 新建一个数组，避免指向同一个引用
       }).catch(err => {
         message.error(`获取权限列表失败: ${err}`)
+      })
+    }
+
+    const handleGetAuthSourceRoles = (actionFlag: string | number) => {
+      const action = actions.value.find(act => act.value === actionFlag)
+      if (!action || action.roles.length > 0) return
+      strategy.getAuthSourceRoles(props.id, actionFlag).then(data => {
+        action.roles.push(...data)
+      }).catch(err => {
+        message.error(`获取继承角色失败: ${err}`)
       })
     }
 
@@ -124,11 +157,15 @@ export default defineComponent({
 
     return {
       ADD,
+      USER,
+      SOURCE_SELF,
       actions,
       actionsSelected,
       isUnChanged,
+      onMouseEnter: debounce(handleGetAuthSourceRoles, hoverDelay),
       handleClose,
-      handleSubmit
+      handleSubmit,
+      isShowRolePanel
     }
   }
 })

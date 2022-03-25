@@ -66,6 +66,39 @@ const formatActionTag = (actions: Action[], inheritActions: Action[]): ActionTag
   return actionTags
 }
 
+const formatActionOption = (actions: Action[], inheritActions: Action[]) => {
+  const result = {
+    options: [] as { label: string, value: number, type: string }[],
+    value: [] as number[]
+  }
+  try {
+    actions.forEach((action, index) => {
+      const inheritAction = inheritActions[index]
+      const option = { label: action.action_name, value: action.rs_type_action_id, type: '' }
+      if (action.checked && (!inheritAction || !inheritAction.checked)) {
+        option.type = SOURCE_SELF
+      }
+      if (!action.checked && inheritAction && inheritAction.checked) {
+        option.type = SOURCE_INHERIT
+      }
+      if (action.checked && inheritAction && inheritAction.checked) {
+        option.type = SOURCE_SELF_INHERIT
+      }
+      result.options.push(option)
+      if (action.checked || (inheritAction && inheritAction.checked)) {
+        result.value.push(action.rs_type_action_id)
+      }
+    })
+  } catch (err) {
+    console.error('format action option catch error: ', err)
+  }
+  return result
+}
+
+export const isShowRolePanel = (userOrRole: string, actionType: string) => {
+  return userOrRole === USER && (actionType === SOURCE_INHERIT || actionType === SOURCE_SELF_INHERIT)
+}
+
 export interface Strategy {
   rsType: string;
   getAuthList(userOrRole: string, name: string): Promise<AuthListItem[]>;
@@ -73,7 +106,7 @@ export interface Strategy {
   getAuthSourceRoles(userId: number, actionFlag: string | number): Promise< {id: number, name: string, description: string}[]>;
   setAuth(userOrRole: string, id: number, privileges: { actionFlag: string | number, checked: boolean }[]): Promise<any>;
   formatAuthOfUserOrRole(data: ApiGetAuthOfUserOrRoleRes | ApiGetAuthListOfDstResItem[]): {
-    options: { label: string, value: number }[],
+    options: { label: string, value: number, type: string }[],
     value: number[]
   };
 }
@@ -180,26 +213,13 @@ export class StrategyCommon implements Strategy {
   // eslint-disable-next-line class-methods-use-this
   public formatAuthOfUserOrRole(data: ApiGetAuthOfUserOrRoleRes) {
     const _data = data.user_or_role_privileges
-    const result = {
-      options: [] as { label: string, value: number }[],
+    let result = {
+      options: [] as { label: string, value: number, type: string }[],
       value: [] as number[]
     }
-    try {
-      if (_data.length > 0) {
-        const item = _data[0]
-        item.actions.forEach((action, index) => {
-          result.options.push({
-            label: action.action_name,
-            value: action.rs_type_action_id
-          })
-          const inheritAction = item.inherit_actions[index]
-          if (action.checked || (inheritAction && inheritAction.checked)) {
-            result.value.push(action.rs_type_action_id)
-          }
-        })
-      }
-    } catch (err) {
-      console.error('format auth of user or role catch error: ', err)
+    const item = _data[0]
+    if (item) {
+      result = formatActionOption(item.actions, item.inherit_actions)
     }
     return result
   }
@@ -341,24 +361,13 @@ export class StrategyDb implements Strategy {
 
   // eslint-disable-next-line class-methods-use-this
   public formatAuthOfUserOrRole(data: ApiGetAuthListOfDstResItem[]) {
-    const result = {
-      options: [] as { label: string, value: number }[],
+    let result = {
+      options: [] as { label: string, value: number, type: string }[],
       value: [] as number[]
     }
-    try {
-      const item = data[0]
-      item.actions.forEach((action, index) => {
-        result.options.push({
-          label: action.action_name,
-          value: action.rs_type_action_id
-        })
-        const inheritAction = item.inherit_actions[index]
-        if (action.checked || (inheritAction && inheritAction.checked)) {
-          result.value.push(action.rs_type_action_id)
-        }
-      })
-    } catch (err) {
-      console.error('format auth of user or role catch error: ', err)
+    const item = data[0]
+    if (item) {
+      result = formatActionOption(item.actions, item.inherit_actions)
     }
     return result
   }

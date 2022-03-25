@@ -24,11 +24,11 @@
                   :key="action.id"
                   :type="type"
                   :action="action"
-                  @mouseenter="type === USER && action.type !== SOURCE_SELF && onMouseEnter(auth, action.id)"
+                  @mouseenter="isShowRolePanel(type, action.type) && onMouseEnter(auth, action.id)"
               >
               </lava-action-tag>
             </div>
-            <div class="edit" v-if="!(auth.type === ROLE && auth.roleType === 0)">
+            <div class="edit" v-if="!(auth.userOrRole === ROLE && auth.roleType === 0)">
               <icon name="lava-auth-of-object/edit" @click="handleClickEditBtn(auth)"></icon>
             </div>
           </div>
@@ -50,7 +50,7 @@ import XSpin from '../../XSpin.vue'
 import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
 import { USER, ROLE, SOURCE_SELF, AuthListItem } from './type'
-import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
+import { Strategy, isShowRolePanel } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 import { message } from 'ant-design-vue'
 import { debounce } from 'lodash'
 
@@ -100,7 +100,7 @@ export default defineComponent({
     }
 
     const handleClickEditBtn = (authItem: AuthListItem) => {
-      context.emit('edit', authItem.rsType, authItem.id)
+      context.emit('edit', authItem.userOrRole, authItem.id)
     }
 
     return {
@@ -109,7 +109,8 @@ export default defineComponent({
       SOURCE_SELF,
       loadingDelay,
       onMouseEnter: debounce(handleGetAuthSourceRoles, hoverDelay),
-      handleClickEditBtn
+      handleClickEditBtn,
+      isShowRolePanel
     }
   }
 })

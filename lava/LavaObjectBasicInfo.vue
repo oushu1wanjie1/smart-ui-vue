@@ -39,7 +39,7 @@ export default defineComponent({
       required: true
     },
     id: {
-      type: String,
+      type: [ String, Number ],
       required: true
     },
     name: {
@@ -108,7 +108,7 @@ export default defineComponent({
     display: flex;
 
     a {
-      width: 100px;
+      max-width: 100px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

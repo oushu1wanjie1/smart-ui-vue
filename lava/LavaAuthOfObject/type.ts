@@ -14,6 +14,7 @@ export const RS_DATABASE = 'database'
 export const RS_SCHEMA = 'schema'
 export const RS_TABLE = 'table'
 
+// 公共类型
 export interface Meta {
   success: boolean;
   message: string;
@@ -41,6 +42,13 @@ export interface ActionTag {
   roles: Role[];
 }
 
+export interface ActionSelectOption {
+  label: string;
+  value: string | number;
+  type: string;
+  roles: Role[];
+}
+
 export interface AuthListItem {
   id: number;
   name: string;
@@ -53,22 +61,6 @@ export interface AuthListItem {
   roleType?: number; // 0: 系统角色，1：自定义角色
 }
 
-// API 规范定义（函数、返回值）
-export interface ApiAuthAction {
-  rs_type_action_id: number;
-  action_name: string;
-  checked: boolean;
-}
-
-export interface ApiAuthListItem {
-  user_or_role_id?: number;
-  name: string;
-  remark?: string;
-  actions: ApiAuthAction[];
-  inherit_actions: ApiAuthAction[];
-  is_owner?: boolean;
-}
-
 export interface UserOrRoleSelectorOption {
   label: string;
   value: number;
@@ -76,7 +68,6 @@ export interface UserOrRoleSelectorOption {
   remark: string;
 }
 
-// 通用资源
 export interface Action {
   rs_type_action_id: number;
   action_name: string;

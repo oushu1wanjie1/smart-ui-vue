@@ -5,7 +5,7 @@
       <span v-if="type === SOURCE_INHERIT">继承自角色</span>
       <span v-if="type === SOURCE_SELF_INHERIT">自身权限且继承自角色</span>
     </div>
-    <div class="lava-action-tag-roles" v-if="type !== SOURCE_SELF">
+    <div class="lava-action-tag-roles" v-if="type === SOURCE_INHERIT || type === SOURCE_SELF_INHERIT">
       <div class="row header">
         <div class="name">角色名</div>
         <div class="desc">备注</div>
