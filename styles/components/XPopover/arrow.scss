@@ -1,0 +1,113 @@
+// 方向取值为 top bottom left right
+
+// 获取当前方向的相反值
+@function rev($d) {
+  @if ($d == 'left') { @return 'right'; }
+  @if ($d == 'right') { @return 'left'; }
+  @if ($d == 'top') { @return 'bottom'; }
+  @if ($d == 'bottom') { @return 'top'; }
+}
+
+// 移除对应arrow位置的圆角
+@mixin border-radius-remove($d1, $d2) {
+  @if ($d1 == 'top' or $d1 == 'bottom') {
+    border-#{rev($d1)}-#{$d2}-radius: 0;
+  }
+  @if ($d1 == 'left' or $d1 == 'right') {
+    border-#{$d2}-#{rev($d1)}-radius: 0;
+  }
+}
+
+// arrow定位
+@mixin position($d1, $d2) {
+  #{rev($d1)}: 0;
+  #{$d2}: 0
+}
+
+// arrow尺寸
+@mixin size($d1) {
+  @if ($d1 == 'left' or $d1 == 'right') {
+    width: 7px;
+    height: 11.662px;
+  }
+  @else {
+    width: 11.662px;
+    height: 7px;
+  }
+}
+
+// arrow container阴影
+@function getOuterShadowNum($d) {
+  @if ($d == 'left') { @return 0; }
+  @if ($d == 'right') { @return 0; }
+  @if ($d == 'top') { @return -5px; }
+  @if ($d == 'bottom') { @return 5px; }
+}
+@mixin outer-shadow($d1, $d2) {
+  box-shadow: getOuterShadowNum($d1) getOuterShadowNum($d2) 3px -3px rgba(0, 0, 0, 0.1);
+}
+
+// arrow 旋转轴
+@function getTransOriginNum($ds...) {
+  $num1: 0;
+  $num2: 0;
+  @each $d in $ds {
+    @if ($d == 'left') { $num1: 0 }
+    @if ($d == 'right') { $num1: 100% }
+    @if ($d == 'top') { $num2: 0 }
+    @if ($d == 'bottom') { $num2: 100% }
+  }
+  @return $num1 $num2;
+}
+@mixin arrow-trans-origin($d1, $d2) {
+  transform-origin: getTransOriginNum($d1, $d2);
+}
+
+// arrow transform 设置
+// getTranslateAxis 获取平移坐标轴
+@function getTlAxis($d) {
+  @if ($d == 'left') { @return 'Y' }
+  @if ($d == 'right') { @return 'Y' }
+  @if ($d == 'top') { @return 'X' }
+  @if ($d == 'bottom') { @return 'X' }
+}
+// getTranslateDirection 获取平移方向
+@function getTlD($d) {
+  @if ($d == 'left') { @return -1 }
+  @if ($d == 'right') { @return 1 }
+  @if ($d == 'top') { @return -1 }
+  @if ($d == 'bottom') { @return 1 }
+}
+// getRotateDirection 获取旋转方向（顺时针1，逆时针-1）
+@function getRtD($d1, $d2) {
+  $list: 'top', 'right', 'bottom', 'left';
+  @if (index($list, $d1) - index($list, $d2) == 3) { @return 1 }
+  @if (index($list, $d1) - index($list, $d2) == -3) { @return -1 }
+  @if (index($list, $d1) < index($list, $d2)) { @return 1 }
+  @if (index($list, $d1) > index($list, $d2)) { @return -1 }
+
+}
+@mixin arrow-trans-rule($d1, $d2) {
+  transform: translate#{getTlAxis($d1)}(#{getTlD($d2) * 3.6px}) rotate(getRtD($d1, $d2) * 30.2deg);
+  transform: translate#{getTlAxis($d1)}(unquote(#{'(' + getTlD($d2) * 3.6px + ')'})) rotate(getRtD($d1, $d2) * 30.2deg);
+}
+
+// main
+@mixin arrow($d1, $d2) {
+  padding-#{rev($d1)}: 7px;
+  .ant-popover-inner {
+    @include border-radius-remove($d1, $d2);
+  }
+  .ant-popover-arrow {
+    @include position($d1, $d2);
+    @include size($d1);
+    @include outer-shadow($d1, $d2);
+    .ant-popover-arrow-content {
+      @include size($d1);
+      @include arrow-trans-origin($d1, $d2);
+      @include arrow-trans-rule($d1, $d2);
+      margin: 0;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
