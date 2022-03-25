@@ -6,7 +6,7 @@
       </template>
     </a-input-search>
     <div class="btn-search-wrapper" v-if="!loading">
-      <icon name="ui-input/search" image />
+      <icon name="ui-input/search" image color="black"/>
     </div>
   </div>
 </template>
