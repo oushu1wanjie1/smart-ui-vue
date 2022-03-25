@@ -35,6 +35,9 @@ import XSubMenu from './XSubMenu'
 import XMenuItemGroup from './XMenuItemGroup'
 import XMenuDivider from './XMenuDivider'
 import XUpload from './XUpload'
+import XRow from './XRow'
+import XCol from './XCol'
+import XTooltip from './XTooltip'
 export default {
   utils,
   XAvatar,
@@ -73,4 +76,7 @@ export default {
   XMenuItemGroup,
   XMenuDivider,
   XUpload,
+  XRow,
+  XCol,
+  XTooltip,
 }

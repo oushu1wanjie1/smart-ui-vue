@@ -6,6 +6,7 @@
     :columns="formattedColumns"
     :dataSource="dataSource"
     :loading="loading"
+    :pagination="mergedPagination"
     :customHeaderRow="column => {
       return {
         class: {
@@ -117,10 +118,19 @@ export default defineComponent({
     conditional: {
       type: Boolean,
       default: false
+    },
+    // 分页配置
+    pagination: {
+      type: Object,
+      default: () => ({})
+    },
+    customPageSize: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {
-    const { conditional, dataSource } = toRefs(props)
+    const { conditional, dataSource, pagination, customPageSize } = toRefs(props)
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -164,6 +174,23 @@ export default defineComponent({
 
     const isConditionalEmpty = computed(() => (filteredColumnKeys.length || conditional.value) && !dataSource.value.length)
 
+    const mergedPagination = computed(() => {
+      if (!pagination.value) return false
+      const result = {
+        ...pagination.value,
+        itemRender: ({ type, originalElement }) => {
+          if (type === 'prev') return h(originalElement, {}, h(Icon, { name: 'ui-table/prev', color: '' }))
+          else if (type === 'next') return h(originalElement, {}, h(Icon, { name: 'ui-table/next', color: '' }))
+          else return originalElement
+        },
+        onShowSizeChange: (current, size) => {
+          if (!customPageSize.value) window.localStorage.setItem('PAGE_SIZE', size)
+        }
+      }
+      if (!customPageSize.value) result.pageSize = Number(window.localStorage.getItem('PAGE_SIZE')) || 20
+      return result
+    })
+
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
     const handleFilterItemClick = (item, scope, column) => {
@@ -182,15 +209,17 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
-        /* eslint-disable max-len */
-        item.innerHTML = `
-            <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort"></use></svg>
-            <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#ui-table/sort-asc"></use></svg>
-            <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort-desc"></use></svg>
-          `
+      nextTick(() => {
+        document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
+          /* eslint-disable max-len */
+          item.innerHTML = `
+              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#ui-table/sort-asc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort-desc"></use></svg>
+            `
+        })
+        /* eslint-enable max-len */
       })
-      /* eslint-enable max-len */
     })
     return {
       slots: computed(() => Object.keys(context.slots)),
@@ -200,6 +229,7 @@ export default defineComponent({
       getEmptyImage,
       isEmpty,
       isConditionalEmpty,
+      mergedPagination,
       console: console
     }
   }

@@ -2,7 +2,7 @@
   <a-drawer
     v-model:visible="visibleLocal"
     v-bind="{ ...restProps, title: undefined }"
-    wrapper-class-name="smartui-drawer"
+    :wrapper-class-name="`smartui-drawer ${fixed ? 'smartui-drawer-fix-title' : ''}`"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]>
       <slot :name="item"></slot>
@@ -13,7 +13,7 @@
     <template v-if="!slots.includes('title')" v-slot:title>
       {{ title ?? '' }}
       <div v-if="closable" class="close-btn-wrapper">
-        <icon class="close-icon" name="ui-date-pick/close"/>
+        <icon class="close-icon" name="ui-modal/close"/>
       </div>
     </template>
   </a-drawer>
@@ -24,7 +24,6 @@ import { computed, defineComponent, PropType } from 'vue'
 import { omit } from 'lodash'
 import Icon from '@/components/Icon.vue'
 import { useModel } from '@/smart-ui-vue/utils'
-import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import { VNodeChild } from '@vue/runtime-core'
 
 const XDrawer = defineComponent({
@@ -34,6 +33,8 @@ const XDrawer = defineComponent({
     // 默认离top 74px（header的高度）
     // 需要 top 为 0 设置本属性即可
     fullScreen: Boolean,
+    // 是否固定 title，body overflow auto
+    fixed: Boolean,
     closable: {
       type: Boolean,
       default: true,

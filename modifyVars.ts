@@ -1,6 +1,8 @@
 const VARS = {
   // 全局主色
   'primary-color': '#336CFF',
+  // 信息颜色
+  'info-color': '#336CFF',
   // 成功色
   'success-color': 'rgba(75, 202, 173, 1)',
   // 警告色
@@ -22,7 +24,10 @@ const VARS = {
   // 同时适用于 select
   'input-hover-border-color': '#85888C',
   // 禁用文本配色
-  'disabled-color': '#85888C'
+  'disabled-color': '#85888C',
+  // modal mask 配色
+  'modal-mask-bg': 'rgba(40,43,46,0.8)',
+  'tabs-active-color': '#336CFF',
 }
 
 module.exports = VARS

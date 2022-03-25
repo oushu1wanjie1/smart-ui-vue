@@ -1,18 +1,26 @@
 <template>
   <div class="lava-user-info">
-    <lava-avatar class="user-avatar" :user-id="id"/>
+    <lava-avatar v-if="showAvatar" :user-id="id" class="user-avatar"/>
     <div class="user-info">
       <!--      name      -->
-      <x-button
-        class="user-name"
-        v-if="id"
-        type="link"
-        @click="$router.push(`/main/user_center/user/${id}`)"
-      >{{ name || '姓名' }}</x-button>
-      <span v-else>已注销</span>
+      <div>
+        <slot name="extra"/>
+        <x-button
+          v-if="id && name"
+          class="user-name"
+          type="link"
+          @click="$router.push(`/main/user_center/user/${id}`)"
+          :title="name"
+        >
+          {{ name }}
+        </x-button>
+        <span v-else-if="id" :title="defaultName">{{ defaultName }}</span>
+        <span v-else title="已注销">已注销</span>
+      </div>
       <!--     remark       -->
-      <span v-if="id" class="name-remark">{{ remark || '姓名' }}</span>
-      <span v-else class="logoff-remark">已注销</span>
+      <span v-if="id && remark" class="name-remark" :title="remark">{{ remark }}</span>
+      <span v-else-if="id" class="logoff-remark" :title="defaultRemark">{{ defaultRemark }}</span>
+      <span v-else class="logoff-remark" title="已注销">已注销</span>
     </div>
   </div>
 </template>
@@ -35,11 +43,25 @@ export default defineComponent({
     name: {
       type: String,
     },
+    defaultName: {
+      type: String,
+      default: '无姓名'
+    },
     // 用户名备注
     remark: {
       type: String
+    },
+    defaultRemark: {
+      type: String,
+      default: '无备注',
+    },
+    showAvatar: {
+      type: Boolean,
+      default: true
     }
-  }
+  },
+  // 名字前额外的扩展内容
+  slots: ['extra']
 })
 </script>
 
@@ -53,23 +75,36 @@ export default defineComponent({
     height: 24px;
     margin-right: 10px;
   }
+
   .user-info {
     display: flex;
     flex-direction: column;
     color: $color-text-comment;
 
-    .user-name {
+    // 加权重
+    .user-name.ant-btn {
       justify-content: flex-start;
       height: 20px;
-      margin-bottom: 2px;
       padding: 0;
+      margin-bottom: 2px;
+
+      > span {
+        overflow: hidden; //超出一行文字自动隐藏
+        text-overflow: ellipsis; //文字隐藏后添加省略号
+        white-space: nowrap; //强制不换行
+      }
     }
+
     .name-remark {
-      font-size: 12px;
       color: $color-primary-black;
     }
+
+    .name-remark,
     .logoff-remark {
-      font-size: 12px;
+      @include font-small();
+      overflow: hidden; //超出一行文字自动隐藏
+      text-overflow: ellipsis; //文字隐藏后添加省略号
+      white-space: nowrap; //强制不换行
     }
   }
 }

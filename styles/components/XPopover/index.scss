@@ -1,0 +1,53 @@
+@import '../../variables';
+@import '../../mixins';
+@import './arrow';
+
+.x-popover:not(.raw) {
+  // 通用配置
+  &.ant-popover {
+    // 内容
+    .ant-popover-inner {
+      background-color: white;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .ant-popover-arrow {
+      .ant-popover-arrow-content {
+        background-color: white;
+      }
+    }
+  }
+  // 不同方向的特殊配置
+  &.ant-popover-placement-topLeft {
+    @include arrow('top', 'left');
+  }
+
+  &.ant-popover-placement-topRight {
+    @include arrow('top', 'right');
+  }
+
+  &.ant-popover-placement-bottomLeft {
+    @include arrow('bottom', 'left');
+  }
+
+  &.ant-popover-placement-bottomRight {
+    @include arrow('bottom', 'right');
+  }
+
+  &.ant-popover-placement-leftTop {
+    @include arrow('left', 'top');
+  }
+
+  &.ant-popover-placement-leftBottom {
+    @include arrow('left', 'bottom');
+  }
+
+  &.ant-popover-placement-rightTop {
+    @include arrow('right', 'top');
+  }
+
+  &.ant-popover-placement-rightBottom {
+    @include arrow('right', 'bottom');
+  }
+}

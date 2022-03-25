@@ -1,0 +1,56 @@
+@import '../../variables';
+@import '../../mixins';
+@import '../XSelect';
+
+@mixin pagination {
+  .ant-table-pagination {
+    margin-top: 10px;
+
+    // 所有pagination按钮
+    .ant-pagination-prev, .ant-pagination-next, .ant-pagination-item {
+      color: $color-primary-black;
+      width: 30px;
+      height: 30px;
+      line-height: 28px;
+
+      // 高亮的pagination按钮
+      &.ant-pagination-item-active {
+        background-color: $color-primary-blue;
+        color: white;
+        & > a {
+          color: white;
+        }
+      }
+
+      // pagination按钮中的a标签
+      .ant-pagination-item-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    // 页码选择器
+    .ant-pagination-options-size-changer {
+      @extend .smartui-select;
+
+      .ant-select-selector {
+        background-color: white !important;
+      }
+
+      .ant-select-arrow {
+        background-image: url('/images/icons/select_arrow.svg');
+      }
+      svg {
+        display: none;
+      }
+    }
+
+    // 跳转器
+    .ant-pagination-options-quick-jumper {
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+
+}

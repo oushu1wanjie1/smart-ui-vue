@@ -11,6 +11,7 @@ import { computed, defineComponent, Prop } from 'vue'
 
 export default defineComponent({
   name: 'XCheckbox',
+  __ANT_CHECKBOX: true,
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots)),

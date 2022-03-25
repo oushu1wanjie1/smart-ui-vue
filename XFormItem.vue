@@ -3,7 +3,7 @@
     :class="{
       'smartui-form-item': true,
       'error-bottom': errorTipPosition === 'bottom',
-      'smartui-form-item-disabled': labelDisabled !== undefined,
+      'smartui-form-item-disabled': labelDisabled,
     }"
     v-bind="$props"
   >
@@ -75,7 +75,8 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    required: Boolean,
+    // TODO 有问题暂时禁用，可以先用rules里的required
+    // required: Boolean,
     validateFirst: Boolean,
     validateStatus: String as PropType<'' | 'success' | 'warning' | 'error' | 'validating'>,
     validateTrigger: {

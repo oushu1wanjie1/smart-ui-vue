@@ -13,7 +13,7 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 import { PropType, reactive, toRefs, watch } from 'vue'
-import XTooltip from '@/smart-ui-vue/XTooltip.vue'
+import XTooltip from '../XTooltip.vue'
 
 export type ColorType = 'primary' | 'warn' | 'danger' | 'black' | 'white' | 'orange' | 'comment' | 'lineBold' | string
 const COLOR_TYPE_LIST = ['primary', 'warn', 'danger', 'black', 'white', 'orange', 'comment', 'lineBold']
@@ -30,6 +30,7 @@ export default {
       default: '',
     },
     // image模式，在这个模式下无法改变图标颜色，用于处理复杂图形的显示bug
+    // 翻译：避免 stroke 带来的影响
     image: {
       type: Boolean,
       default: false,
@@ -115,6 +116,9 @@ export default {
 </script>
 
 <style lang="scss">
+// 因为 icon 是初始倒入的，所以其他需要全局引入的也放在这
+@import "../styles/components/XMessage";
+
 .icon {
   width: 18px;
   height: 18px;

@@ -85,10 +85,6 @@
 }
 
 @mixin btn-text() {
-  // 目前为 icon 专用，
-  padding: 3px;
-  height: unset;
-
   @include button-variant-other($btn-text-default-color, $btn-text-bg-color, $btn-text-border-color);
 
   &:hover {
@@ -173,14 +169,100 @@
 }
 
 @mixin btn-icon-only {
-  @include button-variant-other($btn-default-color, transparent, #D5D8DB);
-  &:hover,
-  &:active {
+  height: 26px;
+  width: 26px;
+  box-shadow: none;
+
+  @include button-variant-other($btn-default-color, transparent, $color-line-bold);
+  &:hover {
+    box-shadow: none;
     @include button-variant-other($btn-default-color, transparent, $text-annotation-color);
+  }
+
+  //&:focus {
+  //  box-shadow: none;
+  //  @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), $color-line-bold);
+  //}
+
+  &:active {
+    box-shadow: none;
+    @include button-variant-other($btn-default-color, $color-line-bold, $color-line-bold);
+  }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      @include button-color($btn-default-color, transparent, $color-line-bold);
+      .icon {
+        opacity: .3;
+      }
+    }
+  }
+}
+
+@mixin btn-primary-icon-only {
+  height: 26px;
+  width: 26px;
+  box-shadow: none;
+
+  @include button-variant-other($btn-default-color, $color-primary-blue-light, transparent);
+  &:hover {
+    box-shadow: none;
+    @include button-variant-other($btn-default-active-color, $btn-default-color,  transparent);
+  }
+
+  //&:focus {
+  //  box-shadow: none;
+  //  @include button-variant-other($btn-default-active-color, rgba($color-primary-blue, .4), transparent);
+  //}
+
+  &:active {
+    box-shadow: none;
+    @include button-variant-other($btn-default-active-color, $btn-primary-active-bg-color, transparent);
+  }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      @include button-color($btn-default-color, transparent, $color-line-bold);
+      .icon {
+        opacity: .3;
+      }
+    }
   }
 }
 
 @mixin btn-text-icon-only {
-  height: 24px;
-  width: 24px;
+  @include button-variant-other($btn-default-color, transparent, transparent);
+  box-shadow: none;
+
+  &:hover {
+    @include button-variant-other($btn-default-color, rgba($color-line-bold, .5), rgba($color-line-bold, .5));
+    box-shadow: none;
+  }
+  //&:focus {
+  //  @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), rgba($color-primary-blue, .2));
+  //  box-shadow: none;
+  //}
+  &:active {
+    @include button-variant-other($btn-default-color, $color-line-bold, $color-line-bold);
+    box-shadow: none;
+  }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      @include button-color($color-line-bold, transparent, transparent);
+
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
 }

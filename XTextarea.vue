@@ -66,14 +66,14 @@ export default defineComponent({
         ...context.attrs,
         ...props,
         style: undefined,
-      }, ['value', 'update:value']
+      }, ['value', 'update:value', 'onUpdate:value']
     )
 
     const isRawRef = computed(() => {
       return typeof context.attrs.class === 'string' && context.attrs.class.split(' ').includes('raw')
     })
 
-    const localValue = (typeof props.value === 'string' && typeof context.attrs['update:value'] === 'function')
+    const localValue = (typeof props.value === 'string' && typeof props['onUpdate:value'] === 'function')
       ? useModel('value', props, context)
       : ref(props.value ?? '')
 

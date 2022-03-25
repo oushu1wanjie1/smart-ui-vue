@@ -6,6 +6,7 @@
 @import './filter.scss';
 @import './sort.scss';
 @import './empty.scss';
+@import './pagination.scss';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -111,8 +112,11 @@
     .ant-table-footer {
       background-color: white;
     }
+    // 分页
+    @include pagination;
   }
 
+  // 当作为页面级元素时的border配置（border: true）
   &.smartui-table-border.ant-table-wrapper {
     .ant-table {
       padding: 10px;

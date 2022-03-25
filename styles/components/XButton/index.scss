@@ -16,9 +16,18 @@
       @include btn-lg();
     }
 
+    // icon only
+    &-icon-only {
+      @include btn-icon-only();
+    }
+
     // primary 配色
     &-primary {
       @include btn-primary();
+    }
+    // icon only primary配色
+    &-primary.ant-btn-icon-only {
+      @include btn-primary-icon-only();
     }
 
     // text 配色，icon 专用
@@ -36,10 +45,6 @@
 
     &-block {
       width: 100%;
-    }
-
-    &-icon-only {
-      @include btn-icon-only();
     }
 
     &-text.ant-btn-icon-only {
