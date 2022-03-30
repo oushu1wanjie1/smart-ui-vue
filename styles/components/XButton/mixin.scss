@@ -172,6 +172,7 @@
   height: 26px;
   width: 26px;
   box-shadow: none;
+  background-clip: content-box;
 
   @include button-variant-other($btn-default-color, transparent, $color-line-bold);
   &:hover {
