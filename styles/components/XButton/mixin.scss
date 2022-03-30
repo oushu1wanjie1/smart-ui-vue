@@ -70,6 +70,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  background-clip: padding-box;
 
   @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
 
@@ -172,7 +173,6 @@
   height: 26px;
   width: 26px;
   box-shadow: none;
-  background-clip: content-box;
 
   @include button-variant-other($btn-default-color, transparent, $color-line-bold);
   &:hover {
