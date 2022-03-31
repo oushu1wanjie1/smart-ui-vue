@@ -38,6 +38,7 @@ import XUpload from './XUpload'
 import XRow from './XRow'
 import XCol from './XCol'
 import XTooltip from './XTooltip'
+import XInputSearch from './XInputSearch'
 export default {
   utils,
   XAvatar,
@@ -51,6 +52,7 @@ export default {
   XForm,
   XFormItem,
   XInput,
+  XInputSearch,
   XInputNumber,
   XTextarea,
   XMenu,
