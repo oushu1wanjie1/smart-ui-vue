@@ -22,6 +22,9 @@
             <p>暂无搜索结果</p>
           </div>
         </template>
+        <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
+          <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+        </template>
       </a-select>
       <span class="smartui-select-prefix-icon">
         <slot name="prefixIcon"/>
@@ -49,6 +52,9 @@
           <p>暂无搜索结果</p>
         </div>
       </template>
+      <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
+        <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+      </template>
     </a-select>
   </template>
 </template>
@@ -62,7 +68,7 @@ import { useModel } from './utils'
 import { computed, onBeforeUpdate, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
 import { SelectProps } from 'ant-design-vue/es/select'
-import Icon from '@/components/Icon'
+import Icon from './helper/Icon'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
 const AUTO_LOAD_OFFSET = 0.2
@@ -75,6 +81,13 @@ export default {
   inheritAttrs: false,
   props: {
     ...SelectProps(),
+    /**
+     * 默认关闭清除功能
+     */
+    allowClear: {
+      type: Boolean,
+      default: false,
+    },
     /**
      * 无操作状态、禁用状态时，是否显示边框
      */

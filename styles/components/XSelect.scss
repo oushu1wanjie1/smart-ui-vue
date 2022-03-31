@@ -61,6 +61,21 @@
     }
   }
 
+  // clear icon
+  .ant-select-clear {
+    right: 9px;
+    width: 18px;
+    height: 18px;
+    margin-top: -9px;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   &.ant-select-single {
     .ant-select-selector .ant-select-selection-search {
       right: 9px;
