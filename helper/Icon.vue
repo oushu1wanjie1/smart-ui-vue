@@ -1,18 +1,18 @@
 <template>
   <x-tooltip v-if="tooltipContent" :title="tooltipContent" :overlayClassName="tooltipClassName">
     <svg :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
-      <use :xlink:href="`#${namespace}${namespace ? '/': ''}${name}`"></use>
+      <use :xlink:href="`#${MODULE_NAME}/${namespace}${namespace ? '/': ''}${name}`"></use>
     </svg>
   </x-tooltip>
   <svg v-else :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
-    <use :xlink:href="`#${namespace}${namespace ? '/': ''}${name}`"></use>
+    <use :xlink:href="`#${MODULE_NAME}/${namespace}${namespace ? '/': ''}${name}`"></use>
   </svg>
 </template>
 
 <script lang="ts">
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-import { PropType, reactive, toRefs, watch } from 'vue'
+import { inject, PropType, reactive, toRefs, watch } from 'vue'
 import XTooltip from '../XTooltip.vue'
 
 export type ColorType = 'primary' | 'warn' | 'danger' | 'black' | 'white' | 'orange' | 'comment' | 'lineBold' | string
@@ -70,6 +70,7 @@ export default {
   },
   emits: ['click'],
   setup(props: any, context: any) {
+    const MODULE_NAME = inject('$moduleName')
     // 设置图标默认颜色 start
     const colorRefs = reactive<{
       iconExtraClass: {
@@ -110,6 +111,7 @@ export default {
     return {
       ...toRefs(colorRefs),
       handleClick,
+      MODULE_NAME
     }
   },
 }
