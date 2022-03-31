@@ -70,6 +70,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  background-clip: padding-box;
 
   @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
 
