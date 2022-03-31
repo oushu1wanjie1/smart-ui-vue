@@ -183,6 +183,7 @@ export default defineComponent({
           else if (type === 'next') return h(originalElement, {}, h(Icon, { name: 'ui-table/next', color: '' }))
           else return originalElement
         },
+        showSizeChanger: true,
         onShowSizeChange: (current, size) => {
           if (!customPageSize.value) window.localStorage.setItem('PAGE_SIZE', size)
         }
