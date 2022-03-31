@@ -1,7 +1,14 @@
 <template>
-  <single-form-wrapper ref="form" :rules="rules" :error-tip-position="errorTipPosition" :value="value">
+  <single-form-wrapper ref="form" :error-tip-position="errorTipPosition" :rules="rules" :value="value">
     <template #default>
-      <a-input :class="`smartui-input ${wrapperClass}`" v-bind="{ ...props }" :data-comp-id="compId" :style="wrapperStyle" v-on="mergedEvents">
+      <a-input
+        ref="raw"
+        :class="`smartui-input ${wrapperClass}`"
+        :data-comp-id="compId"
+        :style="wrapperStyle"
+        v-bind="{ ...props }"
+        v-on="mergedEvents"
+      >
         <template v-for="item in slots" v-slot:[item]>
           <slot :name="item"></slot>
         </template>
@@ -13,31 +20,33 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue'
 import SingleFormWrapper from './helper/SingleFormWrapper.vue'
-import { excludeEventsInProps, isPropsStyleEventName, toNormalEventName, upperFirstLetter } from './utils'
+import { excludeEventsInProps, isPropsStyleEventName, toNormalEventName } from './utils'
 import { Input } from 'ant-design-vue'
+
 export default defineComponent({
   name: 'XInput',
   components: {
-    SingleFormWrapper
+    SingleFormWrapper,
   },
   props: {
     ...excludeEventsInProps(Input.props),
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     rules: {
       type: Array || null,
-      default: null
+      default: null,
     },
     errorTipPosition: {
       type: String,
-      default: 'top'
-    }
+      default: 'top',
+    },
   },
   setup(props, context) {
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
+    const raw: Ref<InstanceType<typeof Input> | null> = ref(null)
     const compId = context.attrs['data-comp-id'] || ''
     // 表单wrapper实例
     const form: Ref<InstanceType<typeof SingleFormWrapper> | null> = ref(null)
@@ -65,6 +74,7 @@ export default defineComponent({
       })
       return result
     })
+
     return {
       props,
       form,
@@ -75,9 +85,10 @@ export default defineComponent({
       slots,
       wrapperClass,
       wrapperStyle,
-      mergedEvents
+      mergedEvents,
+      raw,
     }
-  }
+  },
 })
 </script>
 
