@@ -1,0 +1,59 @@
+@import '../../variables';
+@import '../../mixins';
+
+@mixin expand {
+  .ant-table-tbody > tr.x-ant-table-row-expanded > td:first-of-type:before,
+  .ant-table-tbody > tr.x-ant-table-row-expanded:hover > td:first-of-type:before {
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border: 1px solid $color-text-comment;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0 !important;
+  }
+
+  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:first-of-type:before,
+  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row:hover > td:first-of-type:before {
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border: 1px solid $color-text-comment;
+    border-top: 1px solid $color-line-bold;
+    border-radius: 0 0 4px 4px !important;
+  }
+
+  .ant-table-tbody > tr.x-ant-table-row-expanded > td,
+  .ant-table-tbody > tr.x-ant-table-row-expanded + tr > td,
+  .ant-table-tbody > tr.x-ant-table-row-expanded + tr + tr > td {
+    border-color: transparent;
+  }
+
+  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:first-of-type:after {
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    width: 10px;
+    height: 4px;
+    top: -2px;
+    left: 2px;
+    background-color: white;
+  }
+  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:last-of-type:after {
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    width: 10px;
+    height: 4px;
+    top: -2px;
+    right: 2px;
+    background-color: white;
+  }
+}

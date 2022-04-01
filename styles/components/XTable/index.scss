@@ -7,6 +7,7 @@
 @import './sort.scss';
 @import './empty.scss';
 @import './pagination.scss';
+@import './expand';
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
@@ -38,6 +39,10 @@
     }
     .ant-table .ant-table-tbody > tr.unhoverable > td:before {
       border: none !important;
+    }
+
+    .ant-table {
+      @include expand;
     }
 
     // 表格与外部容器的间距
