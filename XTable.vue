@@ -1,12 +1,14 @@
 <template>
   <a-table
     class="smartui-table"
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty }"
+    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
     :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
     :columns="formattedColumns"
     :dataSource="dataSource"
     :loading="loading"
+    :expanded-row-keys="expandedRowKeys"
     :pagination="mergedPagination"
+    @expandedRowsChange="handleExpand"
     :customHeaderRow="column => {
       return {
         class: {
@@ -53,16 +55,16 @@
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
-import { useModel } from '@/smart-ui-vue/utils'
+import { useModel, uuid } from '@/smart-ui-vue/utils'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
   components: { XEmpty, Icon },
   name: 'XTable',
-  emits: ['filtered'],
+  emits: ['filtered', 'expand'],
   props: {
     columns: {
       type: [Array, null],
@@ -127,10 +129,15 @@ export default defineComponent({
     customPageSize: {
       type: Boolean,
       default: false
+    },
+    expandedRowKeys: {
+      type: Array,
+      default: () => []
     }
   },
   setup(props, context) {
-    const { conditional, dataSource, pagination, customPageSize } = toRefs(props)
+    const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
+    const id = uuid()
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -209,6 +216,40 @@ export default defineComponent({
       scope.confirm()
     }
 
+    watch(() => [...expandedRowKeys.value], () => {
+      console.log(11111, expandedRowKeys)
+      const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.ant-table-row`)
+      rowList.forEach(row => {
+        if (expandedRowKeys.value.includes(row.getAttribute('data-row-key'))) {
+          row.classList.add('x-ant-table-row-expanded')
+        } else {
+          row.classList.remove('x-ant-table-row-expanded')
+        }
+      })
+
+    })
+
+    const handleExpand = (expanded) => {
+      // setTimeout(() => {
+      //   const rowList = document.querySelectorAll(`.x-table-${id} tbody tr`)
+      //   console.log(1, rowList)
+      //   rowList.forEach((row, index) => {
+      //     // console.log(2, row, rowList[index + 1])
+      //     if (
+      //       row
+      //       && row.classList.contains('ant-table-row')
+      //       && rowList[index + 1]
+      //       && rowList[index + 1].classList.contains('ant-table-expanded-row')
+      //       && rowList[index + 1].style.display !== 'none'
+      //     ) {
+      //       row.classList.add('x-ant-table-row-expanded')
+      //       console.log(3, row, rowList[index + 1].style.display)
+      //     }
+      //     else row.classList.remove('x-ant-table-row-expanded')
+      //   })
+      // }, 0)
+    }
+
     onMounted(() => {
       nextTick(() => {
         document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
@@ -231,7 +272,9 @@ export default defineComponent({
       isEmpty,
       isConditionalEmpty,
       mergedPagination,
-      console: console
+      console: console,
+      id,
+      handleExpand
     }
   }
 })
