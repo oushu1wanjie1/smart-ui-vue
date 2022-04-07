@@ -15,8 +15,8 @@
 import { inject, PropType, reactive, toRefs, watch } from 'vue'
 import XTooltip from '../XTooltip.vue'
 
-export type ColorType = 'primary' | 'warn' | 'danger' | 'black' | 'white' | 'orange' | 'comment' | 'lineBold' | string
-const COLOR_TYPE_LIST = ['primary', 'warn', 'danger', 'black', 'white', 'orange', 'comment', 'lineBold']
+export type ColorType = 'primary' | 'warn' | 'danger' | 'black' | 'white' | 'orange' | 'comment' | 'lineBold' | 'comment-blue' | string
+const COLOR_TYPE_LIST = ['primary', 'warn', 'danger', 'black', 'white', 'orange', 'comment', 'lineBold', 'comment-blue']
 export default {
   name: 'Icon',
   components: { XTooltip },
@@ -177,6 +177,15 @@ export default {
 .icon.icon-comment-color {
   color: $color-text-comment;
   stroke: $color-text-comment;
+}
+.icon.icon-comment-blue-color {
+  color: $color-text-comment;
+  stroke: $color-text-comment;
+
+  &:hover {
+    color: $color-primary-blue;
+    stroke: $color-primary-blue;
+  }
 }
 
 .icon.icon-line-bold {
