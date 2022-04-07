@@ -23,7 +23,10 @@
           </div>
         </template>
         <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
-          <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+          <icon name="ui-select/close" class="x-select-clear" color="comment-blue"/>
+        </template>
+        <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
+          <icon name="ui-select/close" class="x-select-clear" color="comment-blue"/>
         </template>
       </a-select>
       <span class="smartui-select-prefix-icon">
@@ -53,6 +56,9 @@
         </div>
       </template>
       <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
+        <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+      </template>
+      <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
         <icon name="ui-select/close" class="x-select-clear" color="comment"/>
       </template>
     </a-select>
