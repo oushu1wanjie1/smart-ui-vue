@@ -233,9 +233,9 @@ export default defineComponent({
         document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
           /* eslint-disable max-len */
           item.innerHTML = `
-              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="${MODULE_NAME}/#ui-table/sort"></use></svg>
-              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="${MODULE_NAME}/#ui-table/sort-asc"></use></svg>
-              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="${MODULE_NAME}/#ui-table/sort-desc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#${MODULE_NAME}/ui-table/sort-asc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort-desc"></use></svg>
             `
         })
         /* eslint-enable max-len */
