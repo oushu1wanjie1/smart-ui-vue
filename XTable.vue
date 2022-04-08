@@ -55,7 +55,7 @@
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, h, inject, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
 import { useModel, uuid } from '@/smart-ui-vue/utils'
@@ -137,6 +137,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
+    const MODULE_NAME = inject('$moduleName')
     const id = uuid()
     const formattedColumns = computed(() => {
       if (!props.columns) return null
@@ -217,7 +218,6 @@ export default defineComponent({
     }
 
     watch(() => [...expandedRowKeys.value], () => {
-      console.log(11111, expandedRowKeys)
       const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.ant-table-row`)
       rowList.forEach(row => {
         if (expandedRowKeys.value.includes(row.getAttribute('data-row-key'))) {
@@ -226,38 +226,16 @@ export default defineComponent({
           row.classList.remove('x-ant-table-row-expanded')
         }
       })
-
     })
-
-    const handleExpand = (expanded) => {
-      // setTimeout(() => {
-      //   const rowList = document.querySelectorAll(`.x-table-${id} tbody tr`)
-      //   console.log(1, rowList)
-      //   rowList.forEach((row, index) => {
-      //     // console.log(2, row, rowList[index + 1])
-      //     if (
-      //       row
-      //       && row.classList.contains('ant-table-row')
-      //       && rowList[index + 1]
-      //       && rowList[index + 1].classList.contains('ant-table-expanded-row')
-      //       && rowList[index + 1].style.display !== 'none'
-      //     ) {
-      //       row.classList.add('x-ant-table-row-expanded')
-      //       console.log(3, row, rowList[index + 1].style.display)
-      //     }
-      //     else row.classList.remove('x-ant-table-row-expanded')
-      //   })
-      // }, 0)
-    }
 
     onMounted(() => {
       nextTick(() => {
         document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
           /* eslint-disable max-len */
           item.innerHTML = `
-              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort"></use></svg>
-              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#ui-table/sort-asc"></use></svg>
-              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#ui-table/sort-desc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="${MODULE_NAME}/#ui-table/sort"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="${MODULE_NAME}/#ui-table/sort-asc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="${MODULE_NAME}/#ui-table/sort-desc"></use></svg>
             `
         })
         /* eslint-enable max-len */
@@ -274,7 +252,6 @@ export default defineComponent({
       mergedPagination,
       console: console,
       id,
-      handleExpand
     }
   }
 })
