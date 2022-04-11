@@ -42,6 +42,8 @@
 
 @mixin filter-dropdown {
   .ant-table-filter-dropdown {
+    max-height: 300px;
+    overflow: auto;
     .filter-container {
       padding: 10px;
 
