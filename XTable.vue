@@ -153,7 +153,7 @@ export default defineComponent({
     const MODULE_NAME = inject('$moduleName')
     const id = uuid()
     // 动态filters列表
-    const dynamicFilters = ref(props.columns.reduce((prev, item) => {
+    const dynamicFilters = ref((props.columns || []).reduce((prev, item) => {
       return {
         ...prev,
         [item.key]: { item: [], pageNum: 1 }
@@ -253,7 +253,7 @@ export default defineComponent({
 
     onBeforeMount(() => {
       // 动态筛选结果的初始化
-      props.columns.forEach(item => {
+      (props.columns || []).forEach(item => {
         if (item.filters instanceof Function) {
           item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
             console.log(1111, dynamicFilters.value[item.key].item, res)
