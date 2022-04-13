@@ -8,7 +8,6 @@
     :loading="loading"
     :expanded-row-keys="expandedRowKeys"
     :pagination="mergedPagination"
-    @expandedRowsChange="handleExpand"
     :customHeaderRow="column => {
       return {
         class: {
@@ -28,7 +27,7 @@
       </div>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
-      <div class="filter-container">
+      <div class="filter-container" :id="`filter-${id}-${column.key}`">
         <div
           v-for="item in scope.filters"
           :key="item.value"
@@ -55,10 +54,24 @@
 
 <script>
 import Icon from './helper/Icon.vue'
-import { computed, defineComponent, h, inject, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  h,
+  inject,
+  nextTick,
+  onBeforeMount,
+  onMounted,
+  reactive,
+  ref,
+  toRefs,
+  watch
+} from 'vue'
 import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
 import { useModel, uuid } from '@/smart-ui-vue/utils'
+import { debounce } from 'lodash-es'
+const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
@@ -139,6 +152,13 @@ export default defineComponent({
     const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
     const MODULE_NAME = inject('$moduleName')
     const id = uuid()
+    // 动态filters列表
+    const dynamicFilters = ref((props.columns || []).reduce((prev, item) => {
+      return {
+        ...prev,
+        [item.key]: { item: [], pageNum: 1 }
+      }
+    }, {}))
     const formattedColumns = computed(() => {
       if (!props.columns) return null
       let result = [...props.columns]
@@ -146,6 +166,9 @@ export default defineComponent({
         const it = { ...item }
         // 劫持默认的filter配置
         if (item.filters) {
+          if (item.filters instanceof Function) {
+            it.filters = dynamicFilters.value[item.key].item
+          }
           if (!item.slots) it.slots = {}
           it.slots.filterIcon = `filterIcon_${item.key}`
           it.slots.filterDropdown = `filterDropdown_${item.key}`
@@ -211,7 +234,7 @@ export default defineComponent({
         // 筛选
         scope.setSelectedKeys([item.value])
         nextTick(() => {
-          if (item.value !== props.nullFilterValue) filteredColumnKeys.push(column.key)
+          filteredColumnKeys.push(column.key)
         })
       }
       scope.confirm()
@@ -228,8 +251,23 @@ export default defineComponent({
       })
     })
 
+    onBeforeMount(() => {
+      // 动态筛选结果的初始化
+      (props.columns || []).forEach(item => {
+        if (item.filters instanceof Function) {
+          item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
+            console.log(1111, dynamicFilters.value[item.key].item, res)
+            dynamicFilters.value[item.key] = { item: res, pageNum: dynamicFilters.value[item.key].pageNum + 1 }
+
+            console.log(2222, dynamicFilters.value[item.key].item, res)
+          })
+        }
+      })
+    })
+
     onMounted(() => {
       nextTick(() => {
+        // 排序图标替换
         document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
           /* eslint-disable max-len */
           item.innerHTML = `
@@ -239,6 +277,23 @@ export default defineComponent({
             `
         })
         /* eslint-enable max-len */
+        // 动态筛选结果的无限滚动
+        props.columns.forEach(item => {
+          if (item.filters instanceof Function) {
+            const handleMoreData = debounce((ev) => {
+              console.log(ev.target.scrollTop, ev.target.scrollHeight)
+              if (ev.target.scrollTop / (ev.target.scrollHeight - 300) > AUTO_LOAD_OFFSET) {
+                item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
+                  dynamicFilters.value[item.key] = {
+                    item: [ ...dynamicFilters.value[item.key].item, ...res],
+                    pageNum: dynamicFilters.value[item.key].pageNum + 1
+                  }
+                })
+              }
+            }, 1000)
+            document.getElementById(`filter-${id}-${item.key}`).parentElement.addEventListener('scroll', handleMoreData)
+          }
+        })
       })
     })
     return {
@@ -252,6 +307,7 @@ export default defineComponent({
       mergedPagination,
       console: console,
       id,
+      dynamicFilters
     }
   }
 })
