@@ -1,6 +1,6 @@
 <template>
-  <div :class="{open}" class="x-vertical-step">
-    <div class="x-vertical-step-status">
+  <div :class="{open,'hidden-status':!parent.props.showStatus}" class="x-vertical-step">
+    <div v-if="parent.props.showStatus" class="x-vertical-step-status">
       <template v-if="isFinish">
         <div v-if="open" class="x-vertical-step-status-icon">
           <icon image name="ui-vertical-step/finish-active"></icon>
@@ -25,7 +25,7 @@
         </div>
         <div class="x-vertical-step-title-options">
           <icon class="collapse-icon" color="#85888C" name="ui-vertical-step/collapse-close" @click="toggleOpen"></icon>
-          <icon color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
+          <icon v-if="showOption" color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
         </div>
       </div>
       <x-collapse-transition :visible="slots.includes('content') || !open">
@@ -67,6 +67,10 @@ export default defineComponent({
   components: { XCollapseTransition, Icon },
   props: {
     isFinish: {
+      type: Boolean,
+      default: false,
+    },
+    showOption: {
       type: Boolean,
       default: false,
     },
@@ -118,6 +122,10 @@ function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, p
   position: relative;
   padding-left: 20px;
   overflow: hidden;
+
+  &.hidden-status {
+    padding-left: 0px;
+  }
 
   &.open {
     .collapse-icon {

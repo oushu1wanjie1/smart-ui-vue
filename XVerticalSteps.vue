@@ -10,7 +10,12 @@ import { defineComponent, provide, ref } from 'vue'
 export default defineComponent({
   name: 'XVerticalSteps',
   components: {},
-  props: {},
+  props: {
+    showStatus: {
+      type: Boolean,
+      default: false,
+    },
+  },
   emits: [],
   setup(props) {
     const steps = ref([])
