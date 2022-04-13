@@ -17,10 +17,13 @@
     <div class="x-vertical-step-container" @click="toggleOpen">
       <div class="x-vertical-step-title">
         <div class="x-vertical-step-title-content">
+          <!-- 如果没有配置open-title插槽，或者处在未打开的状态，则使用默认插槽-->
           <x-collapse-transition :visible="!slots.includes('open-title') || !open">
             <slot></slot>
           </x-collapse-transition>
+          <!-- 如果配置了open-title插槽，且处在打开的状态，则使用open-title插槽-->
           <x-collapse-transition :visible="slots.includes('open-title')&&open">
+            <slot name="open-title"></slot>
           </x-collapse-transition>
         </div>
         <div class="x-vertical-step-title-options">
