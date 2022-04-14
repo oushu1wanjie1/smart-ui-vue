@@ -13,7 +13,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.x-divider.ant-divider {
-  border-top: 1px solid #D5D8D8;
+.x-divider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #D5D8D8;
 }
 </style>
