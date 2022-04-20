@@ -1,5 +1,5 @@
 <template>
-  <div :class="classRef" class="x-step">
+  <div :class="{ 'x-step-select': isSelect, 'x-step-finish': isFinish }" class="x-step">
     <icon v-if="icon" :name="icon" class="x-step-top-icon" image></icon>
     <div class="x-step-content">
       <div class="x-step-dotted-container">
@@ -112,12 +112,11 @@ export default defineComponent({
       uid: computed(() => currentInstance.uid),
       setIndex,
     })
-    const isSelect = computed(() => index.value === parent.props.selectIndex)
-    const isFinish = computed(() => index.value <= parent.props.finishIndex)
     const showIndexRef = computed(() => _getShowIndexRef(parent.steps.value, stepItemState.uid))
-    const classRef = computed(() => {
-      return { 'x-step-select': isSelect, 'x-step-finish': isFinish }
+    const isSelect = computed(() => {
+      return (showIndexRef.value - 1) === parent.props.selectIndex
     })
+    const isFinish = computed(() => (showIndexRef.value - 1) <= parent.props.finishIndex)
     const navigatorToPath = (callback: any, routeLocation: RouteLocationRaw) => {
       if (callback) {
         callback()
@@ -132,7 +131,7 @@ export default defineComponent({
       slots: computed(() => Object.keys(context.slots)),
       parent,
       showIndexRef,
-      classRef,
+      index,
       isSelect,
       isFinish,
       navigatorToPath,
@@ -153,7 +152,7 @@ $select-color: #336CFF;
   text-align: center;
 
   &.x-step-finish {
-    .x-step-title {
+    .x-step-content .x-step-title {
       color: $finish-color;
 
       .x-step-title-circle {
@@ -167,7 +166,7 @@ $select-color: #336CFF;
   }
 
   &.x-step-select {
-    .x-step-title {
+    .x-step-content .x-step-title {
       color: $select-color;
 
       .x-step-title-circle {
