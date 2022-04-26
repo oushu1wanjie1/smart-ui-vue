@@ -6,6 +6,7 @@
   &.ant-tabs {
     .ant-tabs-bar {
       border-bottom-color: $color-line-bold;
+      position: relative;
     }
 
     .ant-tabs-nav {
@@ -79,6 +80,18 @@
     .ant-tabs-ink-bar {
       background-color: $color-primary-blue;
       border-radius: 2px;
+    }
+
+    //
+    .ant-tabs-extra-content {
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      height: 100%;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      z-index: 999;
     }
   }
 }

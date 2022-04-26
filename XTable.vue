@@ -27,15 +27,16 @@
       </div>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
-      <div class="filter-container" :id="`filter-${id}-${column.key}`">
+      <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
         <div
           v-for="item in scope.filters"
           :key="item.value"
-          :class="{ 'filter-item': true, 'filter-item-selected': scope.selectedKeys.find(selectedItem => selectedItem === item.value) }"
+          :class="{ 'filter-item': true, 'filter-item-selected': (filteredColumnKeys.find(fil => fil.key === column.key)?.value || []).some(selectedItem => selectedItem === item.value) }"
           @click="handleFilterItemClick(item, scope, column)">
-          {{ item.text }}
+          <span>{{ item.text }}</span>
         </div>
       </div>
+      <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">确定</x-button>
     </template>
     <template v-if="!loading && (isEmpty || isConditionalEmpty)" #footer>
       <x-empty v-if="isEmpty" :image="emptyImage" :description="emptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
@@ -71,11 +72,12 @@ import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
 import { useModel, uuid } from '@/smart-ui-vue/utils'
 import { debounce } from 'lodash-es'
+import XButton from '@/smart-ui-vue/XButton'
 const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
-  components: { XEmpty, Icon },
+  components: { XButton, XEmpty, Icon },
   name: 'XTable',
   emits: ['filtered', 'expand'],
   props: {
@@ -184,7 +186,7 @@ export default defineComponent({
             slots: { ...it.slots, customRender: undefined },
             customRender: (args) => {
               return {
-                children: h('div', { className: 'td-with-divider' }, render ? context.slots[render](args) : args.text),
+                children: h('div', { className: 'td-with-divider' }, (render && context.slots[render]) ? context.slots[render](args) : args.text),
                 props: {}
               }
             }
@@ -229,15 +231,21 @@ export default defineComponent({
       if (item.value === props.nullFilterValue) {
         // 清除筛选
         scope.clearFilters()
-        if (filteredColumnKeys.indexOf(column.key) > -1) filteredColumnKeys.splice(filteredColumnKeys.indexOf(column.key), 1)
+        if (filteredColumnKeys.findIndex(fil => fil.key === column.key) > -1) filteredColumnKeys.splice(filteredColumnKeys.findIndex(fil => fil.key === column.key), 1)
       } else {
         // 筛选
-        scope.setSelectedKeys([item.value])
-        nextTick(() => {
-          filteredColumnKeys.push(column.key)
-        })
+        let value = []
+        if (column.filterMultiple) {
+          value = [...(filteredColumnKeys.find(fil => fil.key === column.key)?.value || [])]
+          if (value.indexOf(item.value) > -1) value.splice(value.indexOf(item.value), 1)
+          else value.push(item.value)
+        } else value.push(item.value)
+        scope.setSelectedKeys(value)
+        if (filteredColumnKeys.find(fil => fil.key === column.key)) {
+          filteredColumnKeys.find(fil => fil.key === column.key).value = [...value]
+        } else filteredColumnKeys.push({ key: column.key, value: [...value], confirm: scope.confirm })
       }
-      scope.confirm()
+      if (!column.filterMultiple) scope.confirm()
     }
 
     watch(() => [...expandedRowKeys.value], () => {
@@ -256,10 +264,7 @@ export default defineComponent({
       (props.columns || []).forEach(item => {
         if (item.filters instanceof Function) {
           item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
-            console.log(1111, dynamicFilters.value[item.key].item, res)
             dynamicFilters.value[item.key] = { item: res, pageNum: dynamicFilters.value[item.key].pageNum + 1 }
-
-            console.log(2222, dynamicFilters.value[item.key].item, res)
           })
         }
       })
@@ -281,7 +286,6 @@ export default defineComponent({
         props.columns.forEach(item => {
           if (item.filters instanceof Function) {
             const handleMoreData = debounce((ev) => {
-              console.log(ev.target.scrollTop, ev.target.scrollHeight)
               if (ev.target.scrollTop / (ev.target.scrollHeight - 300) > AUTO_LOAD_OFFSET) {
                 item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
                   dynamicFilters.value[item.key] = {
@@ -307,7 +311,8 @@ export default defineComponent({
       mergedPagination,
       console: console,
       id,
-      dynamicFilters
+      dynamicFilters,
+      filteredColumnKeys
     }
   }
 })

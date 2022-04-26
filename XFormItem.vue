@@ -48,9 +48,9 @@ export default defineComponent({
     id: String,
     htmlFor: String,
     prefixCls: String,
-    label: Object as PropType<string | VNodeChild>,
-    help: Object as PropType<string | VNodeChild>,
-    extra: Object as PropType<string | VNodeChild>,
+    label: [String, Object] as PropType<string | VNodeChild>,
+    help: [String, Object] as PropType<string | VNodeChild>,
+    extra: [String, Object] as PropType<string | VNodeChild>,
     labelCol: Object,
     wrapperCol: Object,
     hasFeedback: {

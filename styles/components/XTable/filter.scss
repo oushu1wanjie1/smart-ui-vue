@@ -44,6 +44,9 @@
   .ant-table-filter-dropdown {
     max-height: 300px;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+
     .filter-container {
       padding: 10px;
 
@@ -65,6 +68,12 @@
           color: $color-primary-blue;
         }
       }
+    }
+    .filter-multiple-confirm-btn {
+      display: block;
+      margin-bottom: 10px;
+      align-self: flex-end;
+      height: 18px !important;
     }
   }
 }

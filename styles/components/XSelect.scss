@@ -267,7 +267,7 @@
     width: unset !important;
   }
 
-  .ant-select-dropdown-content {
+  .ant-select-dropdown-content, .rc-virtual-list {
     .ant-select-item-empty {
       @include font-normal();
       color: $color-text-comment;

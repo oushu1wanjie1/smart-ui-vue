@@ -1,7 +1,7 @@
 <template>
   <template v-if="slots.includes('prefixIcon')">
     <!-- 自定义前缀 icon -->
-    <div class="smartui-select-with-prefix-icon" :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '']" :borderedNormal="borderedNormal">
+    <div class="smartui-select-with-prefix-icon" :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '', mergedAttrs.class]" :borderedNormal="borderedNormal">
       <a-select
         class="smartui-select"
         v-model:value="valueLocal"
@@ -77,7 +77,7 @@ import { SelectProps } from 'ant-design-vue/es/select'
 import Icon from './helper/Icon'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
-const AUTO_LOAD_OFFSET = 0.2
+const AUTO_LOAD_OFFSET = 0.7
 // 滚动事件防抖间隔(ms)
 const DEBOUNCE_GAP = 800
 
@@ -85,6 +85,7 @@ export default {
   name: 'XSelect',
   components: { Icon },
   inheritAttrs: false,
+  emits: ['update:value'],
   props: {
     ...SelectProps(),
     /**
@@ -109,7 +110,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    value: [String, Number, Array],
+    value: [String, Number, Boolean, Array],
     /**
      * 扩展功能 - 滚动到底时是否自动异步加载
      * 扩展了focus和search事件，两个事件的回调函数现在将拥有第二个参数page（从1开始），用于表示当前页数。
@@ -147,7 +148,8 @@ export default {
      * 监听滚动事件，达到阈值时自动触发onSearch, onFocus
      */
     const handleMoreData = debounce((ev) => {
-      if (ev.target.scrollTop / ev.target.scrollHeight > AUTO_LOAD_OFFSET) {
+      console.log(ev.target.scrollTop, ev.target.scrollHeight, ev.target.clientHeight)
+      if (ev.target.scrollTop / (ev.target.scrollHeight - ev.target.clientHeight) > AUTO_LOAD_OFFSET) {
         page ++
         handleSearch(inputCache, page)
         handleFocus(page)
