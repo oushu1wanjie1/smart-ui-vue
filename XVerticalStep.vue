@@ -1,5 +1,5 @@
 <template>
-  <div :class="{open,'hidden-status':!parent.props.showStatus}" class="x-vertical-step">
+  <div :class="{open,'hidden-status':!parent.props.showStatus,'finish':isFinish}" class="x-vertical-step">
     <div v-if="parent.props.showStatus" class="x-vertical-step-status">
       <template v-if="isFinish">
         <div v-if="open" class="x-vertical-step-status-icon">
@@ -14,7 +14,7 @@
         <div v-else class="x-vertical-step-status-icon x-vertical-step-status-blank"></div>
       </template>
     </div>
-    <div class="x-vertical-step-container" @click="toggleOpen">
+    <div class="x-vertical-step-container" @click="!open&&toggleOpen($event)">
       <div class="x-vertical-step-title">
         <div class="x-vertical-step-title-content">
           <!-- 如果没有配置open-title插槽，或者处在未打开的状态，则使用默认插槽-->
@@ -31,7 +31,7 @@
           <icon v-if="showOption" color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
         </div>
       </div>
-      <x-collapse-transition :visible="slots.includes('content') || !open">
+      <x-collapse-transition :visible="slots.includes('content') && open">
         <div class="x-vertical-step-content">
           <slot name="content"></slot>
         </div>
@@ -140,6 +140,11 @@ function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, p
     }
   }
 
+  &.finish:not(:last-child) .x-vertical-step-status-icon:after,
+  &.finish:not(:first-child) .x-vertical-step-status-icon:before {
+    left: 6px;
+  }
+
   .x-vertical-step-status-icon {
     position: relative;
     width: 12px;
@@ -164,19 +169,20 @@ function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, p
     background: #EAEAEA;
   }
 
+
   &:not(:first-child) .x-vertical-step-status-icon:before {
     position: absolute;
-    top: -17px;
+    top: -31px;
     left: 5px;
     width: 1px;
-    height: 16px;
+    height: 30px;
     content: '';
     background: #EAEAEA;
   }
 
   .x-vertical-step-status {
     position: absolute;
-    top: 15px;
+    top: 30px;
     left: 0;
   }
 
@@ -210,8 +216,12 @@ function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, p
 
     .x-vertical-step-title {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
+
+      .x-vertical-step-title-content {
+        flex: 1;
+      }
 
       .x-vertical-step-title-options {
         transition: height ease 0.35s;

@@ -1,0 +1,94 @@
+@import '../variables';
+
+.smartui-collapse:not(.raw) {
+  padding: 15px;
+  background-color: #FFF;
+
+  // 如果显示边框，那么采用如下样式
+  &:not(.ant-collapse-borderless) {
+    border: 1px solid rgba(213, 216, 219, 0.5);
+    border-radius: 4px;
+  }
+
+  // 展开图标样式 left
+  &.ant-collapse-icon-position-left .ant-collapse-item {
+
+    // 展开时图标朝下
+    &.ant-collapse-item-active {
+      .ant-collapse-header {
+        .ant-collapse-arrow {
+          transform: translateY(-50%) rotate(180deg);
+        }
+      }
+    }
+
+    .ant-collapse-header {
+      padding-left: 20px;
+
+      // 不展开时箭头朝右
+      .ant-collapse-arrow {
+        left: 0;
+        transform: translateY(-50%) rotate(90deg);
+      }
+    }
+  }
+
+  // 展开图标样式 right
+  &.ant-collapse-icon-position-right .ant-collapse-item {
+
+    // 展开时图标朝下
+    &.ant-collapse-item-active {
+      .ant-collapse-header {
+        .ant-collapse-arrow {
+          transform: translateY(-50%) rotate(-180deg);
+        }
+      }
+    }
+
+    .ant-collapse-header {
+      padding-right: 20px;
+
+      // 不展开时箭头朝左
+      .ant-collapse-arrow {
+        right: 0;
+        transform: translateY(-50%) rotate(-90deg);
+      }
+    }
+  }
+
+  .ant-collapse-item {
+    border: 0;
+
+    // 当前 panel 激活时的样式
+    &.ant-collapse-item-active {
+
+      .ant-collapse-header {
+        margin-bottom: 10px;
+      }
+    }
+
+    .ant-collapse-header {
+      padding: 0;
+      background-color: #FFF;
+
+      .ant-collapse-arrow {
+        stroke: $color-text-sub;
+      }
+
+      .ant-collapse-extra {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+      }
+    }
+
+    .ant-collapse-content {
+      border-top: 1px solid $color-line-bold;
+
+      .ant-collapse-content-box {
+        padding: 15px 0 15px 0;
+      }
+    }
+  }
+}
