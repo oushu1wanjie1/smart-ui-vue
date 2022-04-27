@@ -1,8 +1,8 @@
 <template>
   <a-drawer
-    v-model:visible="visibleLocal"
-    v-bind="{ ...restProps, title: undefined }"
-    :wrapper-class-name="`smartui-drawer ${fixed ? 'smartui-drawer-fix-title' : ''}`"
+      v-bind="{ ...restProps, title: undefined }"
+      v-model:visible="visibleLocal"
+      :wrapper-class-name="`smartui-drawer ${fixed ? 'smartui-drawer-fix-title' : ''}`"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]>
       <slot :name="item"></slot>
@@ -54,7 +54,7 @@ const XDrawer = defineComponent({
     bodyStyle: Object,
     headerStyle: Object,
     drawerStyle: Object,
-    title: Object as PropType<string | VNodeChild>,
+    title: [String, Object] as PropType<string | VNodeChild>,
     visible: {
       type: Boolean,
       required: true,
@@ -71,18 +71,18 @@ const XDrawer = defineComponent({
     prefixCls: String,
     placement: {
       type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
-      default: 'right'
+      default: 'right',
     },
     level: {
       type: Object as any,
-      default: null
+      default: null,
     },
     wrapClassName: String,
     handle: Object as PropType<VNodeChild>,
     afterVisibleChange: Function,
     keyboard: {
       type: Boolean,
-      default: true
+      default: true,
     },
     onClose: Function,
     'onUpdate:visible': Function,
