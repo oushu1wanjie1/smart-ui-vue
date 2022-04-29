@@ -21,6 +21,10 @@ export default defineComponent({
     role: String,
     disabled: Boolean,
     danger: Boolean,
+    key: {
+      type: String,
+      required: true
+    },
     title: { type: [String, Boolean], default: undefined },
   },
   slots: ['icon', 'title'],

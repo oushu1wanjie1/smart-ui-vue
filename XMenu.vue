@@ -54,6 +54,9 @@ export default defineComponent({
      * 是否允许多选
      */
     multiple: { type: Boolean, default: false },
+    'onUpdate:selectedKeys': Function,
+    'onSelect': Function,
+    'onDeselect': Function,
   },
   emits: [
     'update:openKeys',
