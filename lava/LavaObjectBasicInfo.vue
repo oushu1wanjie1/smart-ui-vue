@@ -1,7 +1,7 @@
 <template>
   <div class="lava-object-basic-info">
     <div class="left">
-      <x-avatar class="avatar" v-if="type === USER && icon" :src="icon"/>
+      <x-avatar class="avatar" v-if="type === USER && icon" :user-id="Number.parseInt(id)"/>
       <icon class="avatar" v-else-if="type === ROLE && icon" :name="icon"></icon>
       <span class="avatar default" v-else></span>
     </div>
@@ -10,7 +10,8 @@
         <a @click="handleJump" :title="name">{{ name }}</a>
         <slot></slot>
       </div>
-      <div class="remark" :title="remark">{{ remark }}</div>
+      <div v-if="remark.length > 0" class="remark" :title="remark">{{ remark }}</div>
+      <div v-else class="no-remark" title="无备注">无备注</div>
     </div>
   </div>
 </template>
@@ -28,7 +29,7 @@ const JUMP_MAP: { [key: string]: string } = {
 }
 
 export default defineComponent({
-  name: 'LavaObjectBasicInfo.vue',
+  name: 'LavaObjectBasicInfo',
   components: {
     Icon,
     XAvatar
@@ -78,7 +79,7 @@ export default defineComponent({
 @import "../styles/variables";
 
 .lava-object-basic-info {
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   .left {
@@ -118,12 +119,17 @@ export default defineComponent({
   }
 
   .remark {
-    width: 200px;
+    max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: $color-primary-black;
     font-size: $font-size-small;
+  }
+
+  .no-remark {
+    color: $color-text-comment;
+    @include font-small;
   }
 }
 </style>
