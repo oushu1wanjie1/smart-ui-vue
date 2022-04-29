@@ -23,10 +23,10 @@
           </div>
         </template>
         <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
-          <icon name="ui-select/close" class="x-select-clear" color="comment-blue"/>
+          <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
         </template>
         <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
-          <icon name="ui-select/close" class="x-select-clear" color="comment-blue"/>
+          <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
         </template>
       </a-select>
       <span class="smartui-select-prefix-icon">
@@ -56,10 +56,10 @@
         </div>
       </template>
       <template v-if="!slots.includes('clearIcon')" v-slot:clearIcon>
-        <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+        <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
       </template>
       <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
-        <icon name="ui-select/close" class="x-select-clear" color="comment"/>
+        <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
       </template>
     </a-select>
   </template>
@@ -128,6 +128,7 @@ export default {
       type: Boolean,
       default: false
     },
+    'onUpdate:value': Function,
   },
   setup(props, context) {
     // props
@@ -203,6 +204,7 @@ export default {
         onDropdownVisibleChange: handleDropdownVisibleChange,
       }
       if (isAutoLoadMore.value) result.onPopupScroll = handleMoreData
+      delete result['onUpdate:value']
       return result
     }
 
