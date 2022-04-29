@@ -1,50 +1,55 @@
 <template>
   <a-table
-    class="smartui-table"
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
-    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
-    :columns="formattedColumns"
-    :dataSource="dataSource"
-    :loading="loading"
-    :expanded-row-keys="expandedRowKeys"
-    :pagination="mergedPagination"
-    :customHeaderRow="column => {
+      :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
+      :columns="formattedColumns"
+      :customHeaderRow="column => {
       return {
         class: {
           'thead-tr-with-divider': divider,
         }
       }
     }"
+      :dataSource="dataSource"
+      :expanded-row-keys="expandedRowKeys"
+      :loading="loading"
+      :pagination="mergedPagination"
+      :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
+      class="smartui-table"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
-      <slot :name="item" v-bind="scope"></slot>
+      <slot v-bind="scope" :name="item"></slot>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterIcon]>
       <div>
         <span v-if="column.title">{{ column.title }}</span>
         <slot v-else :name="column.slots.title"></slot>
-        <icon name="ui-table/filter" color="currentColor" class="btn-filter-icon"/>
+        <icon class="btn-filter-icon" color="currentColor" name="ui-table/filter"/>
       </div>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
-      <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
+      <div :id="`filter-${id}-${column.key}`"
+           :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }">
         <div
-          v-for="item in scope.filters"
-          :key="item.value"
-          :class="{ 'filter-item': true, 'filter-item-selected': (filteredColumnKeys.find(fil => fil.key === column.key)?.value || []).some(selectedItem => selectedItem === item.value) }"
-          @click="handleFilterItemClick(item, scope, column)">
+            v-for="item in scope.filters"
+            :key="item.value"
+            :class="{ 'filter-item': true, 'filter-item-selected': (filteredColumnKeys.find(fil => fil.key === column.key)?.value || []).some(selectedItem => selectedItem === item.value) }"
+            @click="handleFilterItemClick(item, scope, column)">
           <span>{{ item.text }}</span>
         </div>
       </div>
-      <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">确定</x-button>
+      <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">
+        确定
+      </x-button>
     </template>
     <template v-if="!loading && (isEmpty || isConditionalEmpty)" #footer>
-      <x-empty v-if="isEmpty" :image="emptyImage" :description="emptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
+      <x-empty v-if="isEmpty" :description="emptyDescription" :image="emptyImage"
+               :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
           <slot name="emptyDescription"></slot>
         </template>
       </x-empty>
-      <x-empty v-if="isConditionalEmpty" :image="conditionalEmptyImage" :description="conditionalEmptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
+      <x-empty v-if="isConditionalEmpty" :description="conditionalEmptyDescription" :image="conditionalEmptyImage"
+               :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
           <slot name="conditionalEmptyDescription"></slot>
         </template>
@@ -66,13 +71,14 @@ import {
   reactive,
   ref,
   toRefs,
-  watch
+  watch,
 } from 'vue'
 import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
 import { useModel, uuid } from '@/smart-ui-vue/utils'
 import { debounce } from 'lodash-es'
 import XButton from '@/smart-ui-vue/XButton'
+
 const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
@@ -83,22 +89,22 @@ export default defineComponent({
   props: {
     columns: {
       type: [Array, null],
-      default: null
+      default: null,
     },
     dataSource: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 是否加上尾部的纵向分隔线
     // 支持在columns中配置，单独为某个column后加分隔线，属性也是divider
     // template风格下不支持，若想在template风格下使用请在a-table-column的default slot下包裹一层<div class="td-with-divider">
     divider: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 可选项
     // 效果
@@ -111,7 +117,7 @@ export default defineComponent({
     // filter默认空值
     // 默认为''
     nullFilterValue: {
-      default: ''
+      default: '',
     },
     // 空状态时高度，默认为auto
     emptyHeight: {
@@ -119,36 +125,36 @@ export default defineComponent({
     },
     emptyImage: {
       type: String,
-      default: ''
+      default: '',
     },
     emptyDescription: {
       type: String,
     },
     conditionalEmptyImage: {
       type: String,
-      default: 'ui-empty/conditional-empty'
+      default: 'ui-empty/conditional-empty',
     },
     conditionalEmptyDescription: {
       type: String,
-      default: '暂无搜索结果'
+      default: '暂无搜索结果',
     },
     conditional: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 分页配置
     pagination: {
-      type: Object,
-      default: () => ({})
+      type: [Object, Boolean],
+      default: () => ({}),
     },
     customPageSize: {
       type: Boolean,
-      default: false
+      default: false,
     },
     expandedRowKeys: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props, context) {
     const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
@@ -158,7 +164,7 @@ export default defineComponent({
     const dynamicFilters = ref((props.columns || []).reduce((prev, item) => {
       return {
         ...prev,
-        [item.key]: { item: [], pageNum: 1 }
+        [item.key]: { item: [], pageNum: 1 },
       }
     }, {}))
     const formattedColumns = computed(() => {
@@ -187,9 +193,9 @@ export default defineComponent({
             customRender: (args) => {
               return {
                 children: h('div', { className: 'td-with-divider' }, (render && context.slots[render]) ? context.slots[render](args) : args.text),
-                props: {}
+                props: {},
               }
-            }
+            },
           }
         } else return it
       })
@@ -219,7 +225,7 @@ export default defineComponent({
         showSizeChanger: true,
         onShowSizeChange: (current, size) => {
           if (!customPageSize.value) window.localStorage.setItem('PAGE_SIZE', size)
-        }
+        },
       }
       if (!customPageSize.value) result.pageSize = Number(window.localStorage.getItem('PAGE_SIZE')) || 20
       return result
@@ -289,8 +295,8 @@ export default defineComponent({
               if (ev.target.scrollTop / (ev.target.scrollHeight - 300) > AUTO_LOAD_OFFSET) {
                 item.filters(dynamicFilters.value[item.key]?.pageNum).then(res => {
                   dynamicFilters.value[item.key] = {
-                    item: [ ...dynamicFilters.value[item.key].item, ...res],
-                    pageNum: dynamicFilters.value[item.key].pageNum + 1
+                    item: [...dynamicFilters.value[item.key].item, ...res],
+                    pageNum: dynamicFilters.value[item.key].pageNum + 1,
                   }
                 })
               }
@@ -312,9 +318,9 @@ export default defineComponent({
       console: console,
       id,
       dynamicFilters,
-      filteredColumnKeys
+      filteredColumnKeys,
     }
-  }
+  },
 })
 </script>
 
