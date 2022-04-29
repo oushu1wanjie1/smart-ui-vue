@@ -1,7 +1,16 @@
 @import '../variables';
 @import '../mixins';
+
+.ant-message {
+  @include font-normal;
+}
 .ant-message-notice-content {
   padding: 0;
+
+  .ant-message-custom-content {
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 .ant-message-custom-content {
