@@ -166,6 +166,8 @@ $select-color: #336CFF;
   }
 
   &.x-step-select {
+    font-weight: 600;
+
     .x-step-content .x-step-title {
       color: $select-color;
 

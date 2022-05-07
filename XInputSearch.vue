@@ -52,6 +52,8 @@ export default defineComponent({
 
     const handleClear = () => {
       localValueRef.value = ''
+      context.emit('search', localValueRef.value)
+      context.emit('change', localValueRef.value)
     }
 
     return {
@@ -89,7 +91,7 @@ export default defineComponent({
   .btn-search-close-wrapper {
     position: absolute;
     top: 50%;
-    right: 37px;
+    right: 30px;
     margin-top: -9px;
     line-height: 1;
     cursor: pointer;

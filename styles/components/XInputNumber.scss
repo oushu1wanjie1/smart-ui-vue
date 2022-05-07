@@ -2,10 +2,10 @@
 @import '../mixins';
 
 .smartui-number-input:not(.raw) {
-  margin-left: 46px;
-  margin-right: 46px;
+  margin-left: 45px;
+  margin-right: 45px;
   width: 120px;
-  height: 36px;
+  height: 32px;
   border-radius: 4px;
 
   .ant-input-number-input {
@@ -22,8 +22,8 @@
 
   .ant-input-number-handler {
     pointer-events: all;
-    width: 36px;
-    height: 36px !important;
+    width: 32px;
+    height: 32px !important;
     border: 1px solid #282B2E;
     border-radius: 4px;
     top: -1px;

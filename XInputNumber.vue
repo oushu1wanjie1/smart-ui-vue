@@ -1,10 +1,10 @@
 <template>
   <a-input-number
-    v-model:value="value"
-    v-bind="{ ...props }"
-    :class="`smartui-number-input`"
-    :style="{...wrapperStyle}" @change="handleChange"
-    max-length="3"
+      v-bind="{ ...props }"
+      v-model:value="value"
+      :class="`smartui-number-input`"
+      :style="{...wrapperStyle}" max-length="3"
+      @change="handleChange"
   >
   </a-input-number>
 </template>
@@ -16,13 +16,13 @@ import { useModel } from '@/smart-ui-vue/utils'
 
 export default {
   name: 'XInputNumber',
-  emits: ['change'],
+  emits: ['change', 'update:value'],
   props: {
     inputWidth: {
       type: String,
-      default: '120px'
+      default: '120px',
     },
-    ...InputNumber.props
+    ...InputNumber.props,
   },
   setup(props, context) {
     const wrapperStyle = ref(context.attrs.style)
@@ -45,9 +45,9 @@ export default {
       props,
       wrapperStyle,
       value,
-      handleChange
+      handleChange,
     }
-  }
+  },
 }
 </script>
 
