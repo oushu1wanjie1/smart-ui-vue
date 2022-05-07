@@ -27,16 +27,21 @@
       </div>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
-      <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
-        <div
-          v-for="item in scope.filters"
-          :key="item.value"
-          :class="{ 'filter-item': true, 'filter-item-selected': (filteredColumnKeys.find(fil => fil.key === column.key)?.value || []).some(selectedItem => selectedItem === item.value) }"
-          @click="handleFilterItemClick(item, scope, column)">
-          <span>{{ item.text }}</span>
+<!--      用户自定义的filter-->
+      <slot v-if="slots.includes(column.slots.filterDropdown)" :name="column.slots.filterDropdown"></slot>
+<!--      默认的filter-->
+      <template v-else>
+        <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
+          <div
+            v-for="item in scope.filters"
+            :key="item.value"
+            :class="{ 'filter-item': true, 'filter-item-selected': (filteredColumnKeys.find(fil => fil.key === column.key)?.value || []).some(selectedItem => selectedItem === item.value) }"
+            @click="handleFilterItemClick(item, scope, column)">
+            <span>{{ item.text }}</span>
+          </div>
         </div>
-      </div>
-      <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">确定</x-button>
+        <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">确定</x-button>
+      </template>
     </template>
     <template v-if="!loading && (isEmpty || isConditionalEmpty)" #footer>
       <x-empty v-if="isEmpty" :image="emptyImage" :description="emptyDescription" :image-style="{ width: '180px', height: '164.55px' }">
@@ -173,7 +178,7 @@ export default defineComponent({
           }
           if (!item.slots) it.slots = {}
           it.slots.filterIcon = `filterIcon_${item.key}`
-          it.slots.filterDropdown = `filterDropdown_${item.key}`
+          it.slots.filterDropdown = item.slots.filterDropdown || `filterDropdown_${item.key}`
         }
         // 处理divider
         if (props.divider || item.divider) {
@@ -241,9 +246,12 @@ export default defineComponent({
           else value.push(item.value)
         } else value.push(item.value)
         scope.setSelectedKeys(value)
-        if (filteredColumnKeys.find(fil => fil.key === column.key)) {
-          filteredColumnKeys.find(fil => fil.key === column.key).value = [...value]
-        } else filteredColumnKeys.push({ key: column.key, value: [...value], confirm: scope.confirm })
+        // 注意从setSelectedKeys开始到confirm完成前不能有任何改变表格状态的操作，一定要放到nextTick里，否则会导致confirm不能正常执行
+        nextTick(() => {
+          if (filteredColumnKeys.find(fil => fil.key === column.key)) {
+            filteredColumnKeys.find(fil => fil.key === column.key).value = [...value]
+          } else filteredColumnKeys.push({ key: column.key, value: [...value], confirm: scope.confirm })
+        })
       }
       if (!column.filterMultiple) scope.confirm()
     }

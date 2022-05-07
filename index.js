@@ -39,6 +39,7 @@ import XRow from './XRow'
 import XCol from './XCol'
 import XTooltip from './XTooltip'
 import XInputSearch from './XInputSearch'
+import XProgress from './XProgress'
 export default {
   utils,
   XAvatar,
@@ -81,4 +82,5 @@ export default {
   XRow,
   XCol,
   XTooltip,
+  XProgress
 }
