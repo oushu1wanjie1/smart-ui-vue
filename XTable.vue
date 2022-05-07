@@ -180,7 +180,7 @@ export default defineComponent({
           }
           if (!item.slots) it.slots = {}
           it.slots.filterIcon = `filterIcon_${item.key}`
-          it.slots.filterDropdown = item.slots.filterDropdown || `filterDropdown_${item.key}`
+          it.slots.filterDropdown = item.slots?.filterDropdown || `filterDropdown_${item.key}`
         }
         // 处理divider
         if (props.divider || item.divider) {
