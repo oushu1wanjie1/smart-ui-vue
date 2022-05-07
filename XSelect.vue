@@ -1,7 +1,11 @@
 <template>
   <template v-if="slots.includes('prefixIcon')">
     <!-- 自定义前缀 icon -->
-    <div class="smartui-select-with-prefix-icon" :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '', mergedAttrs.class]" :borderedNormal="borderedNormal">
+    <div
+      class="smartui-select-with-prefix-icon"
+      :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '', mergedAttrs.class]" :borderedNormal="borderedNormal"
+      :style="{ width: mergedAttrs?.style?.width }"
+    >
       <a-select
         class="smartui-select"
         v-model:value="valueLocal"
@@ -28,7 +32,7 @@
         <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
           <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
         </template>
-        <template v-if="!slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
+        <template v-if="$props.mode === 'multiple' && !slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
           <icon name="ui-select/complete" color="primary"/>
         </template>
       </a-select>
@@ -64,7 +68,7 @@
       <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
         <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
       </template>
-      <template v-if="!slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
+      <template v-if="$props.mode === 'multiple' && !slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
         <icon name="ui-select/complete" color="primary"/>
       </template>
     </a-select>
