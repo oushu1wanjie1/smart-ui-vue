@@ -28,6 +28,9 @@
         <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
           <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
         </template>
+        <template v-if="!slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
+          <icon name="ui-select/complete" color="primary"/>
+        </template>
       </a-select>
       <span class="smartui-select-prefix-icon">
         <slot name="prefixIcon"/>
@@ -61,6 +64,9 @@
       <template v-if="!slots.includes('removeIcon')" v-slot:removeIcon>
         <icon name="ui-select/close" class="x-select-clear" color="comment-black"/>
       </template>
+      <template v-if="!slots.includes('menuItemSelectedIcon')" v-slot:menuItemSelectedIcon>
+        <icon name="ui-select/complete" color="primary"/>
+      </template>
     </a-select>
   </template>
 </template>
@@ -71,7 +77,7 @@
  * - 添加了自动异步加载选项的功能
  */
 import { useModel } from './utils'
-import { computed, onBeforeUpdate, ref, toRefs } from 'vue'
+import { computed, onBeforeMount, onBeforeUpdate, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
 import { SelectProps } from 'ant-design-vue/es/select'
 import Icon from './helper/Icon'
@@ -207,6 +213,12 @@ export default {
       delete result['onUpdate:value']
       return result
     }
+
+    onBeforeMount(() => {
+      // 初始加载一次数据
+      handleSearch()
+      handleFocus()
+    })
 
     onBeforeUpdate(() => {
       mergedAttrs.value = updateAttrs()
