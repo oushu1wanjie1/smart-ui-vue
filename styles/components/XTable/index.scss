@@ -11,6 +11,10 @@
 
 .smartui-table:not(.raw) {
   &.ant-table-wrapper {
+    .ant-table {
+      border-bottom: 1px solid $color-line-bold;
+    }
+
     // 表格空状态
     @include empty;
     // 有固定列的表格hover样式
