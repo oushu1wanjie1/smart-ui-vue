@@ -175,6 +175,15 @@
     &.ant-select-allow-clear .ant-select-selector {
       padding-right: 32px;
     }
+
+    // 清除 icon
+    .ant-tag-close-icon {
+      line-height: 0;
+    }
+
+    .ant-select-selector::after {
+      line-height: 24px;
+    }
   }
 
   // 无操作状态、禁用状态时，无边框
