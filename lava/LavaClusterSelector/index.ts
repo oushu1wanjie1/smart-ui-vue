@@ -10,11 +10,11 @@ export interface ClusterInfo{
 const ICON_PATH_PREFIX = 'ui-cluster-selector'
 
 export enum ClusterStatus {
-  Starting = 'Starting',
-  Running = 'Running',
-  Stopping = 'Stopping',
-  Stopped = 'Stopped',
-  Terminating = 'Terminating',
+  starting = 'starting',
+  running = 'running',
+  stopping = 'stopping',
+  stopped = 'stopped',
+  deleting = 'deleting',
   WaitingToStart = 'WaitingToStart',
   Idle = 'Idle'
 }
@@ -38,7 +38,7 @@ type PartialRecord<K extends keyof any, T> = {
 };
 
 export const COMMON_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
-  [ClusterStatus.Starting]: {
+  [ClusterStatus.starting]: {
     description: '启动中',
     loadingStatus: true,
     iconName: `${ICON_PATH_PREFIX}/starting`,
@@ -46,7 +46,7 @@ export const COMMON_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
       color: '#C2D744',
     },
   },
-  [ClusterStatus.Running]: {
+  [ClusterStatus.running]: {
     description: '运行中',
     loadingStatus: false,
     iconName: `${ICON_PATH_PREFIX}/running`,
@@ -54,7 +54,7 @@ export const COMMON_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
       color: '#4BCAAD',
     },
   },
-  [ClusterStatus.Stopping]: {
+  [ClusterStatus.stopping]: {
     description: '停止中',
     loadingStatus: true,
     iconName: `${ICON_PATH_PREFIX}/stopping`,
@@ -62,7 +62,7 @@ export const COMMON_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
       color: '#CCA236',
     },
   },
-  [ClusterStatus.Stopped]: {
+  [ClusterStatus.stopped]: {
     description: '停止',
     loadingStatus: false,
     iconName: `${ICON_PATH_PREFIX}/stopped`,
@@ -74,7 +74,7 @@ export const COMMON_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
 
 export const MASTER_STATUS_MAP: PartialRecord<ClusterStatus, StatusMapItem> = {
   ...COMMON_STATUS_MAP,
-  [ClusterStatus.Terminating]: {
+  [ClusterStatus.deleting]: {
     description: '删除中',
     loadingStatus: true,
     iconName: `${ICON_PATH_PREFIX}/stopped`,

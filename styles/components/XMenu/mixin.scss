@@ -18,8 +18,14 @@
       margin-right: 5px;
     }
 
-    &:not(.ant-dropdown-menu-item-disabled):hover {
+
+    &:not(.ant-dropdown-menu-item-disabled):not(.ant-menu-item-disabled):hover {
       background: rgba(67, 134, 255, 0.2);
+    }
+
+    &.ant-dropdown-menu-item-disabled,
+    &.ant-menu-item-disabled {
+      background-color: white;
     }
   }
 
