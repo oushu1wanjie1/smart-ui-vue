@@ -5,7 +5,8 @@
       <a-select
         class="smartui-select"
         v-model:value="valueLocal"
-        v-bind="mergedAttrs"
+        v-bind="{ ...mergedAttrs, class: '' }"
+        style="width: 100%;"
         :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
       >
         <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]="scope">
