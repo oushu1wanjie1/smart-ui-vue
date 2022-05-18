@@ -210,10 +210,10 @@ export default {
           maxWidth: context.attrs.style?.width
         },
         ...props,
-        onSearch: handleSearch,
         onFocus: handleFocus,
         onDropdownVisibleChange: handleDropdownVisibleChange,
       }
+      if (props.onSearch) result.onSearch = handleSearch
       if (isAutoLoadMore.value) result.onPopupScroll = handleMoreData
       delete result['onUpdate:value']
       return result
