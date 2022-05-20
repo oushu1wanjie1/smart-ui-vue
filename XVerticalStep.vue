@@ -27,7 +27,8 @@
           </x-collapse-transition>
         </div>
         <div class="x-vertical-step-title-options">
-          <icon class="collapse-icon" color="#85888C" name="ui-vertical-step/collapse-close" @click="toggleOpen"></icon>
+          <icon v-if="showCollapse" class="collapse-icon" color="#85888C" name="ui-vertical-step/collapse-close"
+                @click="toggleOpen"></icon>
           <icon v-if="showOption" color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
         </div>
       </div>
@@ -50,7 +51,7 @@ import {
   inject,
   onBeforeMount,
   reactive,
-  Ref, toRefs,
+  Ref, toRefs, watch,
 } from 'vue'
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import XCollapseTransition from '@/smart-ui-vue/XCollapseTransition.vue'
@@ -65,6 +66,12 @@ export interface VerticalStepItemState {
   open: boolean
 }
 
+export interface VerticalStepItemProps {
+  isFinish: boolean
+  showCollapse: boolean
+  showOption: boolean
+}
+
 export default defineComponent({
   name: 'XVerticalStep',
   components: { XCollapseTransition, Icon },
@@ -72,6 +79,10 @@ export default defineComponent({
     isFinish: {
       type: Boolean,
       default: false,
+    },
+    showCollapse: {
+      type: Boolean,
+      default: true,
     },
     showOption: {
       type: Boolean,
@@ -86,10 +97,15 @@ export default defineComponent({
       uid: computed(() => currentInstance.uid),
       open: false,
     })
-    const toggleOpen = (event: any) => _toggleOpen(event, verticalStepItemState, parent)
+    const toggleOpen = (event: any) => _toggleOpen(event, verticalStepItemState, props, parent)
     const navigation = (event: any) => _navigation(event, context)
     onBeforeMount(() => {
       _addSelfToParentList(verticalStepItemState, parent)
+    })
+    watch(() => verticalStepItemState.open, () => {
+      if (verticalStepItemState.open) {
+        parent.steps.value.filter(item => item.uid !== currentInstance.uid).forEach(item => item.open = false)
+      }
     })
     return {
       slots: computed(() => Object.keys(context.slots)),
@@ -102,6 +118,9 @@ export default defineComponent({
 })
 
 function _addSelfToParentList(verticalStepItemState: VerticalStepItemState, parent: IVerticalStepsInject) {
+  if (parent.props.isDefaultOpenFirst && parent.steps.value.length === 0) {
+    verticalStepItemState.open = true
+  }
   parent.steps.value = parent.steps.value.find((item: VerticalStepItemState) => item.uid === verticalStepItemState.uid) ? parent.steps.value : [...parent.steps.value, verticalStepItemState]
 }
 
@@ -110,13 +129,15 @@ function _navigation(event: any, context: any) {
   context.emit('navigation')
 }
 
-function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, parent: IVerticalStepsInject) {
+function _toggleOpen(event: any, verticalStepItemState: VerticalStepItemState, props: VerticalStepItemProps, parent: IVerticalStepsInject) {
   event.stopPropagation()
-  const newOpen = !verticalStepItemState.open
-  if (newOpen) {
-    parent.steps.value.forEach((item: VerticalStepItemState) => item.open = false)
+  if (props.showCollapse) {
+    const newOpen = !verticalStepItemState.open
+    if (newOpen) {
+      parent.steps.value.forEach((item: VerticalStepItemState) => item.open = false)
+    }
+    verticalStepItemState.open = newOpen
   }
-  verticalStepItemState.open = newOpen
 }
 </script>
 

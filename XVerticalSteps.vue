@@ -11,6 +11,10 @@ export default defineComponent({
   name: 'XVerticalSteps',
   components: {},
   props: {
+    isDefaultOpenFirst: {
+      type: Boolean,
+      default: true,
+    },
     showStatus: {
       type: Boolean,
       default: false,
