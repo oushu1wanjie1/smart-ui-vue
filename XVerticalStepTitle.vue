@@ -43,6 +43,10 @@ export default defineComponent({
   font-weight: 400;
   color: #282B2E;
 
+  .step-note {
+    color: #85888C;
+  }
+
   &.has-nodes {
     .step-title-text {
       margin-top: 7px;
