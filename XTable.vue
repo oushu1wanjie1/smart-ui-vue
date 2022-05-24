@@ -28,7 +28,7 @@
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
 <!--      用户自定义的filter-->
-      <slot v-if="slots.includes(column.slots.filterDropdown)" :name="column.slots.filterDropdown"></slot>
+      <slot v-if="slots.includes(column.slots.filterDropdown)" :name="column.slots.filterDropdown" :scope="scope"></slot>
 <!--      默认的filter-->
       <template v-else>
         <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
