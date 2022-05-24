@@ -290,10 +290,10 @@ export default defineComponent({
               <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#${MODULE_NAME}/ui-table/sort-asc"></use></svg>
               <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort-desc"></use></svg>
             `
-        })
+        });
         /* eslint-enable max-len */
         // 动态筛选结果的无限滚动
-        props.columns.forEach(item => {
+        (props.columns ?? []).forEach(item => {
           if (item.filters instanceof Function) {
             const handleMoreData = debounce((ev) => {
               if (ev.target.scrollTop / (ev.target.scrollHeight - 300) > AUTO_LOAD_OFFSET) {
