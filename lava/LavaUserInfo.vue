@@ -9,7 +9,7 @@
           v-if="id && name"
           class="user-name"
           type="link"
-          @click="$router.push(`/main/user_center/user/${id}`)"
+          @click="$router.push(`/main/UserCenter/user/${id}`)"
           :title="name"
         >
           {{ name }}
