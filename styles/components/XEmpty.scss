@@ -8,8 +8,9 @@
     }
     .ant-empty-description {
       color: $color-primary-black;
-      font-size: 18px;
-      font-weight: normal;
+      //font-size: 18px;
+      //font-weight: normal;
+      @include font-normal;
     }
   }
 }

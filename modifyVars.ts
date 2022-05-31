@@ -18,7 +18,7 @@ const VARS = {
   // 组件/浮层圆角
   'border-radius-base': '4px',
   // 边框色
-  'border-color-base': 'rgba(213,216,219,0.5)',
+  'border-color-base': 'rgba(213,216,216, 1)',
   // Tooltip max width
   'tooltip-max-width': '200px',
   // 同时适用于 select
