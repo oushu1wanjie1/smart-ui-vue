@@ -1,12 +1,19 @@
 @import '../variables';
 @import '../mixins';
 
+
 .smartui-number-input:not(.raw) {
   margin-left: 45px;
   margin-right: 45px;
   width: 120px;
   height: 32px;
   border-radius: 4px;
+
+  .ant-input-number-handler[aria-disabled="true"] {
+    color: #D5D8DB !important;
+    border-color: #D5D8DB !important;
+    cursor: not-allowed !important;
+  }
 
   .ant-input-number-input {
     text-align: center;
