@@ -145,6 +145,12 @@
   @include button-variant-other($btn-default-color, transparent, transparent);
   border: none;
   font-size: 14px;
+  justify-content: space-between;
+  &,
+  & span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &:hover {
     // 去除上浮效果

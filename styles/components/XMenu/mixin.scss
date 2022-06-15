@@ -1,5 +1,5 @@
 @mixin dropdown-menu {
-  padding: 10px 12px 10px 10px;
+  padding: 10px;
   @include font-normal();
 
   background-color: #FFF;
@@ -31,10 +31,10 @@
 
   .ant-dropdown-menu-submenu,
   .ant-dropdown-menu-item, {
-    margin-bottom: 5px;
+    margin-top: 0;
 
-    &:last-child {
-      margin-bottom: 0;
+    &:not(:last-child) {
+      margin-bottom: 5px;
     }
   }
 

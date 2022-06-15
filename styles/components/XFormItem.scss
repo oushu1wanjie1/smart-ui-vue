@@ -8,7 +8,10 @@
   }
   // label
   .ant-form-item-label {
-    @include font-normal;
+    @include font-small;
+    > label {
+      @include font-small;
+    }
     // 目前 label min-height: 50px，不再需要 padding-bottom
     //padding-bottom: 10px;
   }
