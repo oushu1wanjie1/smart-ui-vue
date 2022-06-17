@@ -237,6 +237,7 @@ $select-color: #336CFF;
   }
 
   .x-step-description {
+    padding: 0 10px;
     margin-top: 10px;
     font-size: 14px;
     font-weight: 400;
