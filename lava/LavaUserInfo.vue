@@ -69,17 +69,22 @@ export default defineComponent({
 .lava-user-info {
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   .user-avatar {
     width: 24px;
     height: 24px;
     margin-right: 10px;
+    flex-shrink: 0;
   }
 
   .user-info {
     display: flex;
     flex-direction: column;
     color: $color-text-comment;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     // 加权重
     .user-name.ant-btn {
@@ -87,6 +92,7 @@ export default defineComponent({
       height: 20px;
       padding: 0;
       margin-bottom: 2px;
+      max-width: 100%;
 
       > span {
         overflow: hidden; //超出一行文字自动隐藏

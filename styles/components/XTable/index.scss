@@ -59,7 +59,7 @@
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding: 10px 15px;
+      padding: 10px 0 10px 15px;
       font-weight: normal;
       font-size: 12px;
       border-color: transparent;
@@ -91,7 +91,7 @@
       @include font-normal();
       // 单行时，vertical-align: middle 会居中
       // 多行时，行高撑大，padding 为 5
-      padding: 5px 15px;
+      padding: 5px 0 5px 15px;
       // height can be treat as min-height in table-cell
       height: 45px;
       border-bottom: none;
@@ -133,6 +133,10 @@
       border: 1px solid rgba($color-line-bold, .5);
     }
   }
+}
+
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+  padding-right: 0 !important;
 }
 
 // 筛选下拉框
