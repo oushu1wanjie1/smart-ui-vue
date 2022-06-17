@@ -56,6 +56,10 @@
       padding: 0;
     }
 
+    &-dangerous {
+      @include btn-dangerous;
+    }
+
     // To ensure that a space will be placed between character and 'Icon'
     > .anticon + span,
     span + .anticon, {
