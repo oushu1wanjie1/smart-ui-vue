@@ -24,7 +24,8 @@ $modal-footer-padding-bottom: 40px;
 $modal-content-radius: 10px;
 
 // close 图标相关样式
-$modal-close-top: -40px;
+$modal-close-top: 10px;
+$modal-close-right: 10px;
 $modal-close-x-base: 30px;
 $modal-close-x-width: $modal-close-x-base;
 $modal-close-x-height: $modal-close-x-base;

@@ -14,7 +14,7 @@
     // 右上角 'x' 区域
     .ant-modal-close {
       top: $modal-close-top;
-      color: white;
+      color: $color-primary-black;
 
       // 'x' svg 大小设置
       .ant-modal-close-x {
