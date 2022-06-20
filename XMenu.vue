@@ -56,6 +56,7 @@ export default defineComponent({
     multiple: { type: Boolean, default: false },
     'onUpdate:selectedKeys': Function,
     'onSelect': Function,
+    'onClick': Function,
     'onDeselect': Function,
   },
   emits: [
