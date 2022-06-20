@@ -250,7 +250,15 @@ $select-color: #336CFF;
 
   .x-step-links {
     margin-top: 5px;
+
+    button.ant-btn.ant-btn-link.x-btn.x-step-link {
+      padding: 5px 10px 5px 5px;
+      margin-top: 10px;
+      border: 1px solid #D5D8DB;
+      border-radius: 4px;
+    }
   }
+
 
 }
 
