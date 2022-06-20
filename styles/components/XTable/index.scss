@@ -60,9 +60,9 @@
       position: relative;
       color: $color-text-comment;
       padding: 10px 0 10px 15px;
-      font-weight: normal;
-      font-size: 12px;
+      @include font-small;
       border-color: transparent;
+      white-space: nowrap;
 
       // 表头筛选图标
       @include filter-icon;
@@ -137,6 +137,21 @@
 
 .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
   padding-right: 0 !important;
+}
+
+/* At the top level of your code */
+@media screen and (max-width: 1440px) {
+  .smartui-table:not(.raw) {
+    &.ant-table-wrapper {
+      // 表格td
+      .ant-table-tbody > tr > td {
+        @include font-small;
+        .ant-btn-link {
+          @include font-small;
+        }
+      }
+    }
+  }
 }
 
 // 筛选下拉框

@@ -26,6 +26,7 @@
     &:hover,
     &:active {
       @include button-color($color, $background-color, $border-color);
+      box-shadow: none;
     }
   }
 }
@@ -145,6 +146,7 @@
   @include button-variant-other($btn-default-color, transparent, transparent);
   border: none;
   font-size: 14px;
+  height: unset;
   justify-content: space-between;
   &,
   & span {
