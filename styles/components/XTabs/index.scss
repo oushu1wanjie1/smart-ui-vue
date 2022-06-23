@@ -5,6 +5,7 @@
 .smartui-tabs:not(.raw) {
   &.ant-tabs {
     .ant-tabs-bar {
+      margin: 0 0 10px 0;
       border-bottom-color: $color-line-bold;
       position: relative;
     }
@@ -12,7 +13,6 @@
     .ant-tabs-nav {
       // tab 标签
       .ant-tabs-tab {
-        padding: 0 0 10px 0;
         @include font-normal();
 
         .x-ant-tabs-icon-active {
