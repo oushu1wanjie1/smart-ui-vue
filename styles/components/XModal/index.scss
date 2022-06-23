@@ -14,6 +14,7 @@
     // 右上角 'x' 区域
     .#{$ant-prefix}-modal-close {
       top: $modal-close-top;
+      right: $modal-close-right;
       color: $color-primary-black;
 
       // 'x' svg 大小设置
@@ -25,7 +26,7 @@
 
       &:focus,
       &:hover {
-        color: white;
+        color: $color-primary-black;
         text-decoration: none;
       }
     }
