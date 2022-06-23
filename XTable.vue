@@ -1,23 +1,23 @@
 <template>
   <a-table
-      :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
-      :columns="formattedColumns"
-      :customHeaderRow="column => {
+    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
+    :columns="formattedColumns"
+    :customHeaderRow="column => {
       return {
         class: {
           'thead-tr-with-divider': divider,
         }
       }
     }"
-      :dataSource="dataSource"
-      :expanded-row-keys="expandedRowKeys"
-      :loading="loading"
-      :pagination="mergedPagination"
-      :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
-      class="smartui-table"
+    :dataSource="dataSource"
+    :expanded-row-keys="expandedRowKeys"
+    :loading="loading"
+    :pagination="mergedPagination"
+    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
+    class="smartui-table"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
-      <slot v-bind="scope" :name="item"></slot>
+      <slot :name="item" v-bind="scope"></slot>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterIcon]>
       <div>
@@ -27,11 +27,13 @@
       </div>
     </template>
     <template v-for="column in columnsHasFilter" :key="column.key" v-slot:[column.slots.filterDropdown]="scope">
-<!--      用户自定义的filter-->
-      <slot v-if="slots.includes(column.slots.filterDropdown)" :name="column.slots.filterDropdown"></slot>
-<!--      默认的filter-->
+      <!--      用户自定义的filter-->
+      <slot v-if="slots.includes(column.slots.filterDropdown)" :name="column.slots.filterDropdown"
+            :scope="scope"></slot>
+      <!--      默认的filter-->
       <template v-else>
-        <div :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }" :id="`filter-${id}-${column.key}`">
+        <div :id="`filter-${id}-${column.key}`"
+             :class="{'filter-container': true, 'filter-container-multiple': column.filterMultiple }">
           <div
             v-for="item in scope.filters"
             :key="item.value"
@@ -40,10 +42,12 @@
             <span>{{ item.text }}</span>
           </div>
         </div>
-        <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">确定</x-button>
+        <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">
+          确定
+        </x-button>
       </template>
     </template>
-    <template v-if="!loading && (isEmpty || isConditionalEmpty)" #footer>
+    <template v-if="!loading && (isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
       <x-empty v-if="isEmpty" :description="emptyDescription" :image="emptyImage"
                :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
@@ -73,13 +77,13 @@ import {
   reactive,
   ref,
   toRefs,
-  watch
+  watch,
 } from 'vue'
-import { NullFilterKey } from './constant'
 import XEmpty from '@/smart-ui-vue/XEmpty'
-import { useModel, uuid } from '@/smart-ui-vue/utils'
+import { uuid } from '@/smart-ui-vue/utils'
 import { debounce } from 'lodash-es'
 import XButton from '@/smart-ui-vue/XButton'
+
 const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
@@ -154,7 +158,7 @@ export default defineComponent({
     },
     expandedRowKeys: {
       type: Array,
-      default: () => [],
+      default: undefined,
     },
   },
   setup(props, context) {
@@ -258,10 +262,10 @@ export default defineComponent({
       if (!column.filterMultiple) scope.confirm()
     }
 
-    watch(() => [...expandedRowKeys.value], () => {
-      const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.ant-table-row`)
+    watch(() => [...(expandedRowKeys.value ?? [])], () => {
+      const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
-        if (expandedRowKeys.value.includes(row.getAttribute('data-row-key'))) {
+        if ((expandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
           row.classList.add('x-ant-table-row-expanded')
         } else {
           row.classList.remove('x-ant-table-row-expanded')
@@ -283,17 +287,17 @@ export default defineComponent({
     onMounted(() => {
       nextTick(() => {
         // 排序图标替换
-        document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
+        document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
           /* eslint-disable max-len */
           item.innerHTML = `
               <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort"></use></svg>
               <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#${MODULE_NAME}/ui-table/sort-asc"></use></svg>
               <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort-desc"></use></svg>
             `
-        })
+        });
         /* eslint-enable max-len */
         // 动态筛选结果的无限滚动
-        props.columns.forEach(item => {
+        (props.columns ?? []).forEach(item => {
           if (item.filters instanceof Function) {
             const handleMoreData = debounce((ev) => {
               if (ev.target.scrollTop / (ev.target.scrollHeight - 300) > AUTO_LOAD_OFFSET) {

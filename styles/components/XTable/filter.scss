@@ -2,17 +2,17 @@
 @import '../../mixins';
 
 @mixin filter-icon {
-  &.ant-table-column-has-filters {
-    .ant-table-header-column {
+  &.#{$ant-prefix}-table-column-has-filters {
+    .#{$ant-prefix}-table-header-column {
       display: none;
     }
   }
-  &.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:hover,
-  &.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:hover {
+  &.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters:hover .anticon-filter:hover,
+  &.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters:hover .#{$ant-prefix}-table-filter-icon:hover {
     color: $color-primary-blue;
     background-color: transparent;
   }
-  .ant-table-filter-icon {
+  .#{$ant-prefix}-table-filter-icon {
     align-items: center;
     justify-content: flex-start;
     position: static;
@@ -29,19 +29,19 @@
       flex-shrink: 0;
     }
 
-    &.ant-table-filter-selected {
+    &.#{$ant-prefix}-table-filter-selected {
       color: $color-primary-blue
     }
   }
-  &.ant-table-column-has-actions.ant-table-column-has-filters .anticon-filter.ant-table-filter-open,
-  &.ant-table-column-has-actions.ant-table-column-has-filters .ant-table-filter-icon.ant-table-filter-open {
+  &.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters .anticon-filter.#{$ant-prefix}-table-filter-open,
+  &.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters .#{$ant-prefix}-table-filter-icon.#{$ant-prefix}-table-filter-open {
     color: $color-primary-blue;
     background-color: transparent;
   }
 }
 
 @mixin filter-dropdown {
-  .ant-table-filter-dropdown {
+  .#{$ant-prefix}-table-filter-dropdown {
     max-height: 300px;
     overflow: auto;
     display: flex;

@@ -9,7 +9,7 @@
           v-if="id && name"
           class="user-name"
           type="link"
-          @click="$router.push(`/main/user_center/user/${id}`)"
+          @click="$router.push(`/main/UserCenter/user/${id}`)"
           :title="name"
         >
           {{ name }}
@@ -69,24 +69,30 @@ export default defineComponent({
 .lava-user-info {
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   .user-avatar {
     width: 24px;
     height: 24px;
     margin-right: 10px;
+    flex-shrink: 0;
   }
 
   .user-info {
     display: flex;
     flex-direction: column;
     color: $color-text-comment;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     // 加权重
-    .user-name.ant-btn {
+    .user-name.#{$ant-prefix}-btn {
       justify-content: flex-start;
       height: 20px;
       padding: 0;
       margin-bottom: 2px;
+      max-width: 100%;
 
       > span {
         overflow: hidden; //超出一行文字自动隐藏

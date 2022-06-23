@@ -3,42 +3,45 @@
 
 .smartui-form-item {
   margin-bottom: 0;
-  &.ant-form-item-with-help {
+  &.#{$ant-prefix}-form-item-with-help {
     margin-bottom: 0;
   }
   // label
-  .ant-form-item-label {
-    @include font-normal;
+  .#{$ant-prefix}-form-item-label {
+    @include font-small;
+    > label {
+      @include font-small;
+    }
     // 目前 label min-height: 50px，不再需要 padding-bottom
     //padding-bottom: 10px;
   }
   // 成功提示不显示
-  .ant-form-item-explain-success {
+  .#{$ant-prefix}-form-item-explain-success {
     display: none;
   }
   // validating提示不显示
-  .ant-form-item-explain-validating {
+  .#{$ant-prefix}-form-item-explain-validating {
     display: none;
   }
   // 错误提示
   // 通用样式
-  .ant-form-item-explain-error {
+  .#{$ant-prefix}-form-item-explain-error {
     & > [role="alert"] {
       color: $color-danger;
     }
   }
   &:not(:hover) {
-    .ant-form-item-explain-error {
+    .#{$ant-prefix}-form-item-explain-error {
       display: none;
     }
   }
-  &:not(.ant-form-item-has-error) {
-    .ant-form-item-explain-error {
+  &:not(.#{$ant-prefix}-form-item-has-error) {
+    .#{$ant-prefix}-form-item-explain-error {
       display: none;
     }
   }
   &:not(.error-bottom):hover {
-    .ant-form-item-explain-error {
+    .#{$ant-prefix}-form-item-explain-error {
       position: absolute;
       top: -41px;
       left: 0;
@@ -63,7 +66,7 @@
   }
   // 当上方空间不够时错误tooltip显示在下方
   &.error-bottom:hover {
-    .ant-form-item-explain-error {
+    .#{$ant-prefix}-form-item-explain-error {
       position: absolute;
       bottom: -52px;
       left: 0;
@@ -88,9 +91,9 @@
   }
 
   // 验证失败时的表单（因为有嵌套表单的存在，这里必须一层层下探到指定元素）
-  &.ant-form-item-has-error {
-    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input-affix-wrapper:not(.raw) {
-      &.ant-input-affix-wrapper {
+  &.#{$ant-prefix}-form-item-has-error {
+    & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input-affix-wrapper:not(.raw) {
+      &.#{$ant-prefix}-input-affix-wrapper {
         @include input-underline($color-danger);
         &-focused, &:hover {
           @include input-underline($color-danger);
@@ -98,18 +101,18 @@
       }
 
     }
-    & > .ant-form-item-control > .ant-form-item-control-input > .ant-form-item-control-input-content > .ant-input:not(.raw) {
-      &.ant-input {
+    & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input:not(.raw) {
+      &.#{$ant-prefix}-input {
         @include input-underline($color-danger);
       }
     }
   }
 }
 
-.ant-form.ant-form-horizontal {
+.#{$ant-prefix}-form.#{$ant-prefix}-form-horizontal {
   // 默认右对齐 -> 左对齐
   // 保持居中
-  .ant-form-item-label {
+  .#{$ant-prefix}-form-item-label {
     display: inline-flex;
     align-items: center;
 
@@ -119,22 +122,22 @@
   }
 
   // 居中
-  .ant-form-item-control {
+  .#{$ant-prefix}-form-item-control {
     // default flex-direction: column
     justify-content: center;
   }
 
-  .ant-form-item-control-input {
+  .#{$ant-prefix}-form-item-control-input {
     min-height: 50px;
   }
 
-  .ant-form-item[autoheight="true"] {
-    .ant-form-item-control-input {
+  .#{$ant-prefix}-form-item[autoheight="true"] {
+    .#{$ant-prefix}-form-item-control-input {
       min-height: unset;
     }
   }
 
-  .smartui-form-item-disabled > .ant-form-item-label > label {
+  .smartui-form-item-disabled > .#{$ant-prefix}-form-item-label > label {
     color: $color-text-comment;
   }
 }

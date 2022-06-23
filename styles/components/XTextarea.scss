@@ -1,7 +1,7 @@
 .smartui-textarea-container:not(.raw) {
   position: relative;
 
-  textarea.ant-input {
+  textarea.#{$ant-prefix}-input {
     padding: 14px 9px 14px 9px;
     @include font-normal();
     color: $color-primary-black;
@@ -59,7 +59,7 @@
   }
 
   &.smartui-textarea-container-disabled {
-    textarea.ant-input {
+    textarea.#{$ant-prefix}-input {
       color: $color-text-comment;
 
       &,

@@ -24,8 +24,8 @@ import XAvatar from '../XAvatar.vue'
 import { USER, ROLE } from '@/smart-ui-vue/lava/LavaAuthOfObject/type'
 
 const JUMP_MAP: { [key: string]: string } = {
-  'user': '/main/user_center/user',
-  'role': '/main/user_center/role'
+  'user': '/main/UserCenter/user',
+  'role': '/main/UserCenter/role'
 }
 
 export default defineComponent({

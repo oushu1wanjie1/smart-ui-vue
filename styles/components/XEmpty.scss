@@ -2,14 +2,15 @@
 @import '../mixins';
 
 .smartui-empty:not(.raw) {
-  &.ant-empty {
-    .ant-empty-image {
+  &.#{$ant-prefix}-empty {
+    .#{$ant-prefix}-empty-image {
       height: auto;
     }
-    .ant-empty-description {
+    .#{$ant-prefix}-empty-description {
       color: $color-primary-black;
-      font-size: 18px;
-      font-weight: normal;
+      //font-size: 18px;
+      //font-weight: normal;
+      @include font-normal;
     }
   }
 }

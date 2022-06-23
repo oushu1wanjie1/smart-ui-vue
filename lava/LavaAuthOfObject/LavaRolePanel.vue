@@ -14,7 +14,7 @@
         <div class="name">
           <div class="role-name">
             <icon name="lava-auth-of-object/role-blue"></icon>
-            <a :title="role.name" @click="$router.push(`/main/user_center/role/${role.id}`)">{{ role.name }}</a>
+            <a :title="role.name" @click="$router.push(`/main/UserCenter/role/${role.id}`)">{{ role.name }}</a>
           </div>
         </div>
         <div class="desc" :title="role.description">{{ role.description }}</div>

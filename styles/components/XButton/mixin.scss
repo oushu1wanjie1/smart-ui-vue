@@ -26,6 +26,7 @@
     &:hover,
     &:active {
       @include button-color($color, $background-color, $border-color);
+      box-shadow: none;
     }
   }
 }
@@ -74,7 +75,7 @@
 
   @include button-size($btn-height-base, $btn-padding-horizontal-base, $font-size, $btn-border-radius-base);
 
-  &:not(.ant-btn[disabled]):hover {
+  &:not(.#{$ant-prefix}-btn[disabled]):hover {
     //transform: translateY(-2px);
   }
 }
@@ -145,6 +146,13 @@
   @include button-variant-other($btn-default-color, transparent, transparent);
   border: none;
   font-size: 14px;
+  height: unset;
+  justify-content: space-between;
+  &,
+  & span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &:hover {
     // 去除上浮效果
@@ -266,4 +274,20 @@
       }
     }
   }
+}
+
+@mixin btn-dangerous {
+  @include button-variant-other($color-danger, $btn-default-bg-color, $color-danger);
+  &:hover, {
+    @include button-variant-other($btn-default-hover-focus-color, $color-danger, $color-danger);
+  }
+
+  &:active {
+    @include button-color($btn-default-active-color, $color-danger, $color-danger);
+    box-shadow: 0 0 0 2px rgba($btn-default-active-bg-color, .2);
+  }
+
+  // 不放到 button-variant-other 中的原因：
+  // 同上
+  @include button-disabled($btn-default-disabled-color, $btn-default-disabled-bg-color, $btn-default-disabled-border-color);
 }

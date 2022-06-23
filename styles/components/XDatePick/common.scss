@@ -10,7 +10,7 @@
     display: none;
   }
 
-  &.selected svg.icon.ant-calendar-picker-icon {
+  &.selected svg.icon.#{$ant-prefix}-calendar-picker-icon {
     opacity: 0;
   }
 

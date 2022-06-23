@@ -4,50 +4,50 @@
 
 .x-popover:not(.raw) {
   // 通用配置
-  &.ant-popover {
+  &.#{$ant-prefix}-popover {
     // 内容
-    .ant-popover-inner {
+    .#{$ant-prefix}-popover-inner {
       background-color: white;
       border-radius: 4px;
       padding: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    .ant-popover-arrow {
-      .ant-popover-arrow-content {
+    .#{$ant-prefix}-popover-arrow {
+      .#{$ant-prefix}-popover-arrow-content {
         background-color: white;
       }
     }
   }
   // 不同方向的特殊配置
-  &.ant-popover-placement-topLeft {
+  &.#{$ant-prefix}-popover-placement-topLeft {
     @include arrow('top', 'left');
   }
 
-  &.ant-popover-placement-topRight {
+  &.#{$ant-prefix}-popover-placement-topRight {
     @include arrow('top', 'right');
   }
 
-  &.ant-popover-placement-bottomLeft {
+  &.#{$ant-prefix}-popover-placement-bottomLeft {
     @include arrow('bottom', 'left');
   }
 
-  &.ant-popover-placement-bottomRight {
+  &.#{$ant-prefix}-popover-placement-bottomRight {
     @include arrow('bottom', 'right');
   }
 
-  &.ant-popover-placement-leftTop {
+  &.#{$ant-prefix}-popover-placement-leftTop {
     @include arrow('left', 'top');
   }
 
-  &.ant-popover-placement-leftBottom {
+  &.#{$ant-prefix}-popover-placement-leftBottom {
     @include arrow('left', 'bottom');
   }
 
-  &.ant-popover-placement-rightTop {
+  &.#{$ant-prefix}-popover-placement-rightTop {
     @include arrow('right', 'top');
   }
 
-  &.ant-popover-placement-rightBottom {
+  &.#{$ant-prefix}-popover-placement-rightBottom {
     @include arrow('right', 'bottom');
   }
 }

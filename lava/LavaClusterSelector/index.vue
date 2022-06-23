@@ -9,7 +9,9 @@
           <span>{{ item.name }}</span>
           <icon class="select-option-icon" image v-if="item.version === Version.Enterprise" name="ui-cluster-selector/enterprise" title="企业版" alt="企业版"/>
           <icon class="select-option-icon" image v-else-if="item.version === Version.Standard" name="ui-cluster-selector/standard" title="标准版" alt="标准版"/>
-          <icon class="select-option-icon" :name="MASTER_STATUS_MAP[item.status].iconName" image :alt="MASTER_STATUS_MAP[item.status].description"/>
+          <template v-if="MASTER_STATUS_MAP[item.status]">
+            <icon class="select-option-icon" :name="MASTER_STATUS_MAP[item.status].iconName" image :alt="MASTER_STATUS_MAP[item.status].description"/>
+          </template>
         </div>
       </x-select-option>
     </x-select>

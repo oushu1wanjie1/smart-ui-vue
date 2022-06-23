@@ -1,13 +1,13 @@
 @import "./mixin";
 
 .smartui-menu:not(.raw) {
-  &.ant-dropdown-menu {
+  &.#{$ant-prefix}-dropdown-menu {
     @include dropdown-menu()
   }
 }
 
 .smartui-submenu-popup {
-  >.ant-dropdown-menu {
+  >.#{$ant-prefix}-dropdown-menu {
     @include dropdown-menu()
   }
 }

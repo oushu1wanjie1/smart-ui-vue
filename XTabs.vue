@@ -157,7 +157,7 @@ export default defineComponent({
 @import './styles/components/XTabs/index';
 
 .x-tabs-fix-top {
-  :deep(.ant-tabs-top-bar) {
+  :deep(.#{$ant-prefix}-tabs-top-bar) {
     position: fixed;
     // 在 CSS 中使用组件中的变量
     top: v-bind(tabBarTop);

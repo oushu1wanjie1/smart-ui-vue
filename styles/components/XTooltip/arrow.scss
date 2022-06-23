@@ -95,14 +95,14 @@
 // main
 @mixin arrow($d1, $d2) {
   padding-#{rev($d1)}: 7px;
-  .ant-tooltip-inner {
+  .#{$ant-prefix}-tooltip-inner {
     @include border-radius-remove($d1, $d2);
   }
-  .ant-tooltip-arrow {
+  .#{$ant-prefix}-tooltip-arrow {
     @include position($d1, $d2);
     @include size($d1);
     @include outer-shadow($d1, $d2);
-    .ant-tooltip-arrow-content {
+    .#{$ant-prefix}-tooltip-arrow-content {
       @include size($d1);
       @include arrow-trans-origin($d1, $d2);
       @include arrow-trans-rule($d1, $d2);

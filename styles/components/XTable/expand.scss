@@ -2,8 +2,8 @@
 @import '../../mixins';
 
 @mixin expand {
-  .ant-table-tbody > tr.x-ant-table-row-expanded > td:first-of-type:before,
-  .ant-table-tbody > tr.x-ant-table-row-expanded:hover > td:first-of-type:before {
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded > td:first-of-type:before,
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded:hover > td:first-of-type:before {
     position: absolute;
     pointer-events: none;
     content: '';
@@ -16,8 +16,8 @@
     border-radius: 4px 4px 0 0 !important;
   }
 
-  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:first-of-type:before,
-  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row:hover > td:first-of-type:before {
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + .#{$ant-prefix}-table-expanded-row > td:first-of-type:before,
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + .#{$ant-prefix}-table-expanded-row:hover > td:first-of-type:before {
     position: absolute;
     pointer-events: none;
     content: '';
@@ -30,13 +30,13 @@
     border-radius: 0 0 4px 4px !important;
   }
 
-  .ant-table-tbody > tr.x-ant-table-row-expanded > td,
-  .ant-table-tbody > tr.x-ant-table-row-expanded + tr > td,
-  .ant-table-tbody > tr.x-ant-table-row-expanded + tr + tr > td {
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded > td,
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + tr > td,
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + tr + tr > td {
     border-color: transparent;
   }
 
-  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:first-of-type:after {
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + .#{$ant-prefix}-table-expanded-row > td:first-of-type:after {
     position: absolute;
     pointer-events: none;
     content: '';
@@ -46,7 +46,7 @@
     left: 2px;
     background-color: white;
   }
-  .ant-table-tbody > tr.x-ant-table-row-expanded + .ant-table-expanded-row > td:last-of-type:after {
+  .#{$ant-prefix}-table-tbody > tr.x-ant-table-row-expanded + .#{$ant-prefix}-table-expanded-row > td:last-of-type:after {
     position: absolute;
     pointer-events: none;
     content: '';

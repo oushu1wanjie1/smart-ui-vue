@@ -1,22 +1,22 @@
 @mixin empty {
   &.x-ant-table-empty {
-    .ant-spin-nested-loading {
+    .#{$ant-prefix}-spin-nested-loading {
       height: 100%;
-      .ant-spin-container {
+      .#{$ant-prefix}-spin-container {
         height: 100%;
-        .ant-table-empty {
+        .#{$ant-prefix}-table-empty {
           height: 100%;
-          .ant-table-content {
+          .#{$ant-prefix}-table-content {
             height: 100%;
             display: flex;
             flex-direction: column;
-            .ant-table-body {
+            .#{$ant-prefix}-table-body {
               flex-shrink: 0;
             }
-            .ant-table-placeholder {
+            .#{$ant-prefix}-table-placeholder {
               display: none;
             }
-            .ant-table-footer {
+            .#{$ant-prefix}-table-footer {
               flex-grow: 1;
               display: flex;
               align-items: center;

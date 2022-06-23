@@ -237,6 +237,7 @@ $select-color: #336CFF;
   }
 
   .x-step-description {
+    padding: 0 10px;
     margin-top: 10px;
     font-size: 14px;
     font-weight: 400;
@@ -249,7 +250,15 @@ $select-color: #336CFF;
 
   .x-step-links {
     margin-top: 5px;
+
+    button.#{$ant-prefix}-btn.#{$ant-prefix}-btn-link.x-btn.x-step-link {
+      padding: 5px 10px 5px 5px;
+      margin-top: 10px;
+      border: 1px solid #D5D8DB;
+      border-radius: 4px;
+    }
   }
+
 
 }
 

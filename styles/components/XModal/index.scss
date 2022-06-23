@@ -2,22 +2,22 @@
 @import "../../mixins";
 
 .x-modal:not(.raw) {
-  &.ant-modal {
+  &.#{$ant-prefix}-modal {
     // 暂时解决方案
     width: $modal-width !important;
 
     // 内容区域，包含 close、header、body、footer
-    .ant-modal-content {
+    .#{$ant-prefix}-modal-content {
       border-radius: $modal-content-radius;
     }
 
     // 右上角 'x' 区域
-    .ant-modal-close {
+    .#{$ant-prefix}-modal-close {
       top: $modal-close-top;
-      color: white;
+      color: $color-primary-black;
 
       // 'x' svg 大小设置
-      .ant-modal-close-x {
+      .#{$ant-prefix}-modal-close-x {
         width: $modal-close-x-width;
         height: $modal-close-x-height;
         line-height: $modal-close-x-line-height;
@@ -30,12 +30,12 @@
       }
     }
 
-    .ant-modal-header {
+    .#{$ant-prefix}-modal-header {
       padding: $modal-header-padding-top $modal-header-padding-horizontal $modal-header-padding-bottom;
       background: none;
       border: 0;
 
-      .ant-modal-title {
+      .#{$ant-prefix}-modal-title {
         // flex 永远滴神
         display: flex;
         justify-content: center;
@@ -53,14 +53,14 @@
       }
     }
 
-    .ant-modal-body {
+    .#{$ant-prefix}-modal-body {
       padding: $modal-body-padding-vertical $modal-body-padding-horizontal;
       font-size: $font-size-normal;
       line-height: $modal-body-line-height;
       text-align: center;
     }
 
-    .ant-modal-footer {
+    .#{$ant-prefix}-modal-footer {
       padding: $modal-footer-padding-top $modal-footer-padding-horizontal $modal-footer-padding-bottom;
       border: 0;
 

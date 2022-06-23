@@ -1,6 +1,6 @@
 // dropdown menu 情况下
 .smartui-menu-divider:not(.raw) {
-  &.ant-dropdown-menu-item-divider {
+  &.#{$ant-prefix}-dropdown-menu-item-divider {
     margin-top: 0;
     margin-bottom: 5px;
   }

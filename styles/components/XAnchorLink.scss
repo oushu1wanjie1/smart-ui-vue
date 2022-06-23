@@ -2,14 +2,14 @@
 @import '../mixins';
 
 .smartui-anchor-link:not(.raw) {
-  &.ant-anchor-link {
+  &.#{$ant-prefix}-anchor-link {
     padding-top: 20px;
     padding-bottom: 20px;
 
     &:last-of-type {
       padding-bottom: 0;
     }
-    .ant-anchor-link-title {
+    .#{$ant-prefix}-anchor-link-title {
       position: relative;
       overflow: visible;
       color: $color-text-sub;
@@ -31,8 +31,8 @@
       }
     }
   }
-  &.ant-anchor-link-active {
-    & > .ant-anchor-link-title {
+  &.#{$ant-prefix}-anchor-link-active {
+    & > .#{$ant-prefix}-anchor-link-title {
       color: $color-primary-blue;
       & > .x-ant-anchor-link-point {
         transition: opacity 0.3s step-end;
@@ -44,8 +44,8 @@
 
 // 第一个元素padding-top为0
 .smartui-anchor:not(.raw) {
-  .ant-anchor {
-    .ant-anchor-ink + .ant-anchor-link {
+  .#{$ant-prefix}-anchor {
+    .#{$ant-prefix}-anchor-ink + .#{$ant-prefix}-anchor-link {
       padding-top: 0
     }
   }

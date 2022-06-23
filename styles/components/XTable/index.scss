@@ -10,26 +10,26 @@
 @import './expand';
 
 .smartui-table:not(.raw) {
-  &.ant-table-wrapper {
-    .ant-table {
+  &.#{$ant-prefix}-table-wrapper {
+    .#{$ant-prefix}-table {
       border-bottom: 1px solid $color-line-bold;
     }
 
     // 表格空状态
     @include empty;
     // 有固定列的表格hover样式
-    .ant-table.ant-table-layout-fixed {
+    .#{$ant-prefix}-table.#{$ant-prefix}-table-layout-fixed {
       @include fixed-table-row-hover
     }
     // 无固定列的表格hover样式
-    .ant-table:not(.ant-table-layout-fixed) {
-      .ant-table-tbody > tr:hover > td {
+    .#{$ant-prefix}-table:not(.#{$ant-prefix}-table-layout-fixed) {
+      .#{$ant-prefix}-table-tbody > tr:hover > td {
         border-color: transparent;
       }
-      .ant-table-tbody > tr:hover + tr > td {
+      .#{$ant-prefix}-table-tbody > tr:hover + tr > td {
         border-color: transparent;
       }
-      .ant-table-tbody > tr:hover > td:first-of-type:before {
+      .#{$ant-prefix}-table-tbody > tr:hover > td:first-of-type:before {
         position: absolute;
         pointer-events: none;
         content: '';
@@ -41,28 +41,28 @@
         border-radius: 4px;
       }
     }
-    .ant-table .ant-table-tbody > tr.unhoverable > td:before {
+    .#{$ant-prefix}-table .#{$ant-prefix}-table-tbody > tr.unhoverable > td:before {
       border: none !important;
     }
 
-    .ant-table {
+    .#{$ant-prefix}-table {
       @include expand;
     }
 
     // 表格与外部容器的间距
-    .ant-table-content {
+    .#{$ant-prefix}-table-content {
       overflow-x: auto;
     }
 
     // 表头thead
-    .ant-table-thead > tr > th {
+    .#{$ant-prefix}-table-thead > tr > th {
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding: 10px 15px;
-      font-weight: normal;
-      font-size: 12px;
+      padding: 10px 0 10px 15px;
+      @include font-small;
       border-color: transparent;
+      white-space: nowrap;
 
       // 表头筛选图标
       @include filter-icon;
@@ -72,26 +72,26 @@
 
     }
     // thead with divider
-    .ant-table-thead > tr.thead-tr-with-divider {
+    .#{$ant-prefix}-table-thead > tr.thead-tr-with-divider {
       th:before {
         @include th-with-divider
       }
-      th:last-of-type:before, th.ant-table-selection-column:before {
+      th:last-of-type:before, th.#{$ant-prefix}-table-selection-column:before {
         display: none;
       }
     }
 
     // 表格tr
-    .ant-table-tbody > tr {
+    .#{$ant-prefix}-table-tbody > tr {
       position: relative;
     }
     // 表格td
-    .ant-table-tbody > tr > td {
+    .#{$ant-prefix}-table-tbody > tr > td {
       background-color: white;
       @include font-normal();
       // 单行时，vertical-align: middle 会居中
       // 多行时，行高撑大，padding 为 5
-      padding: 5px 15px;
+      padding: 5px 0 5px 15px;
       // height can be treat as min-height in table-cell
       height: 45px;
       border-bottom: none;
@@ -99,26 +99,26 @@
       border-color: $color-line-bold;
 
       // td中的btn-link配置
-      .ant-btn-link {
+      .#{$ant-prefix}-btn-link {
         padding: 0;
       }
       // td with divider配置
       @include td-with-divider;
     }
     // fixed table divider
-    .ant-table.ant-table-layout-fixed {
+    .#{$ant-prefix}-table.#{$ant-prefix}-table-layout-fixed {
       @include fixed-table-divider
     }
     // 取消默认的表格hover样式
-    .ant-table-tbody > tr:hover > td {
+    .#{$ant-prefix}-table-tbody > tr:hover > td {
       background-color: white;
     }
     // 选择框与x-checkbox样式一致
-    .ant-table-selection, .ant-table-selection-column {
+    .#{$ant-prefix}-table-selection, .#{$ant-prefix}-table-selection-column {
       @include checkbox-style;
     }
     // footer
-    .ant-table-footer {
+    .#{$ant-prefix}-table-footer {
       background-color: white;
     }
     // 分页
@@ -126,11 +126,30 @@
   }
 
   // 当作为页面级元素时的border配置（border: true）
-  &.smartui-table-border.ant-table-wrapper {
-    .ant-table {
+  &.smartui-table-border.#{$ant-prefix}-table-wrapper {
+    .#{$ant-prefix}-table {
       padding: 10px;
       border-radius: 4px;
       border: 1px solid rgba($color-line-bold, .5);
+    }
+  }
+}
+
+.#{$ant-prefix}-table-thead > tr > th.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters {
+  padding-right: 0 !important;
+}
+
+/* At the top level of your code */
+@media screen and (max-width: 1440px) {
+  .smartui-table:not(.raw) {
+    &.#{$ant-prefix}-table-wrapper {
+      // 表格td
+      .#{$ant-prefix}-table-tbody > tr > td {
+        @include font-small;
+        .#{$ant-prefix}-btn-link {
+          @include font-small;
+        }
+      }
     }
   }
 }

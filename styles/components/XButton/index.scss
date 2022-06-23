@@ -2,11 +2,11 @@
 @import "mixin.scss";
 
 .x-btn:not(.raw) {
-  &.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
+  &.#{$ant-prefix}-btn.#{$ant-prefix}-btn-loading:not(.#{$ant-prefix}-btn-circle):not(.#{$ant-prefix}-btn-circle-outline):not(.#{$ant-prefix}-btn-icon-only) {
     padding-left: 10px;
   }
 
-  &.ant-btn {
+  &.#{$ant-prefix}-btn {
     line-height: $btn-line-height;
 
     // 基本样式（字体等）
@@ -30,7 +30,7 @@
       @include btn-primary();
     }
     // icon only primary配色
-    &-primary.ant-btn-icon-only {
+    &-primary.#{$ant-prefix}-btn-icon-only {
       @include btn-primary-icon-only();
     }
 
@@ -51,9 +51,13 @@
       width: 100%;
     }
 
-    &-text.ant-btn-icon-only {
+    &-text.#{$ant-prefix}-btn-icon-only {
       @include btn-text-icon-only();
       padding: 0;
+    }
+
+    &-dangerous {
+      @include btn-dangerous;
     }
 
     // To ensure that a space will be placed between character and 'Icon'

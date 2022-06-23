@@ -74,7 +74,7 @@ export default defineComponent({
 .smartui-input-search {
   position: relative;
 
-  .ant-input-affix-wrapper {
+  .#{$ant-prefix}-input-affix-wrapper {
     height: 30px;
   }
 

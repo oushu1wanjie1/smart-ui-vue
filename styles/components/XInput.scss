@@ -30,7 +30,7 @@
 
 .smartui-input:not(.raw) {
   // input输入框(输入框没有伪元素，只能用border)
-  .ant-input, &.ant-input {
+  .#{$ant-prefix}-input, &.#{$ant-prefix}-input {
     // 自动填充样式配置
     &:-webkit-autofill {
       background-color: transparent;
@@ -45,89 +45,89 @@
     }
   }
 
-  &.ant-input {
+  &.#{$ant-prefix}-input {
     @include input-underline($color-line-bold);
     // hover
-    &:not(.ant-input[disabled]):hover {
+    &:not(.#{$ant-prefix}-input[disabled]):hover {
       @include input-underline($color-text-comment);
     }
 
     // focus
-    &:not(.ant-input[disabled]):focus {
+    &:not(.#{$ant-prefix}-input[disabled]):focus {
       @include input-underline($color-primary-blue);
     }
 
-    &.ant-input[disabled] {
+    &.#{$ant-prefix}-input[disabled] {
       background: transparent;
       border-bottom-color: rgba($color-line-bold, .5);
     }
   }
 
 
-  .ant-input-affix-wrapper, &.ant-input-affix-wrapper {
-    &:not(.ant-input-search) {
+  .#{$ant-prefix}-input-affix-wrapper, &.#{$ant-prefix}-input-affix-wrapper {
+    &:not(.#{$ant-prefix}-input-search) {
       @include input-underline($color-line-bold);
       padding: 0;
       overflow: hidden;
       // prefix
-      .ant-input-prefix {
+      .#{$ant-prefix}-input-prefix {
         margin-right: 5px;
         margin-left: 9px;
         @include prefix-suffix-active-toggle(false);
       }
 
       // 输入框本体
-      .ant-input {
+      .#{$ant-prefix}-input {
         border: none;
         box-shadow: none !important;
       }
 
       // suffix
-      .ant-input-suffix {
+      .#{$ant-prefix}-input-suffix {
         margin-right: 9px;
         margin-left: 5px;
         @include prefix-suffix-active-toggle(false);
       }
 
       // 输入框hover
-      &:not(.ant-input-affix-wrapper-disabled):hover {
+      &:not(.#{$ant-prefix}-input-affix-wrapper-disabled):hover {
         @include input-underline($color-text-comment);
       }
     }
 
-    &.ant-input-affix-wrapper-disabled {
+    &.#{$ant-prefix}-input-affix-wrapper-disabled {
       background-color: transparent;
       border-bottom-color: rgba($color-line-bold, .5);
 
-      .ant-input-prefix,
-      .ant-input-suffix, {
+      .#{$ant-prefix}-input-prefix,
+      .#{$ant-prefix}-input-suffix, {
         opacity: .3;
       }
     }
   }
 
-  &.ant-input-affix-wrapper-focused,
-  &.ant-input-affix-wrapper-focused-focused:hover,
-  &.ant-input-affix-wrapper-focused:focus {
-    &:not(.ant-input-search):not(.ant-input-affix-wrapper-disabled) {
+  &.#{$ant-prefix}-input-affix-wrapper-focused,
+  &.#{$ant-prefix}-input-affix-wrapper-focused-focused:hover,
+  &.#{$ant-prefix}-input-affix-wrapper-focused:focus {
+    &:not(.#{$ant-prefix}-input-search):not(.#{$ant-prefix}-input-affix-wrapper-disabled) {
       // 下划线
       @include input-underline($color-primary-blue);
       // prefix
-      .ant-input-prefix {
+      .#{$ant-prefix}-input-prefix {
         @include prefix-suffix-active-toggle(true);
       }
 
       // suffix
-      .ant-input-suffix {
+      .#{$ant-prefix}-input-suffix {
         @include prefix-suffix-active-toggle(true);
       }
     }
   }
 
-  .ant-input-search {
+  .#{$ant-prefix}-input-search {
     height: 30px !important;
 
-    .ant-input {
+    .#{$ant-prefix}-input {
       height: 100% !important;
     }
   }

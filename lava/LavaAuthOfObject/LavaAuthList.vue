@@ -126,7 +126,7 @@ export default defineComponent({
   .lava-auth-list-spin {
     height: 100%;
 
-    .ant-spin-container {
+    .#{$ant-prefix}-spin-container {
       height: 100%;
     }
   }
