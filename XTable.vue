@@ -263,7 +263,7 @@ export default defineComponent({
     }
 
     watch(() => [...(expandedRowKeys.value ?? [])], () => {
-      const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.ant-table-row`)
+      const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
         if ((expandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
           row.classList.add('x-ant-table-row-expanded')
@@ -287,7 +287,7 @@ export default defineComponent({
     onMounted(() => {
       nextTick(() => {
         // 排序图标替换
-        document.querySelectorAll('.ant-table-column-sorter-inner .anticon').forEach(item => {
+        document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
           /* eslint-disable max-len */
           item.innerHTML = `
               <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${MODULE_NAME}/ui-table/sort"></use></svg>

@@ -7,8 +7,8 @@
   border-radius: 0 0 4px 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 
-  .ant-dropdown-menu-submenu > .ant-dropdown-menu-submenu-title,
-  .ant-dropdown-menu-item, {
+  .#{$ant-prefix}-dropdown-menu-submenu > .#{$ant-prefix}-dropdown-menu-submenu-title,
+  .#{$ant-prefix}-dropdown-menu-item, {
     padding: 6px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -19,18 +19,18 @@
     }
 
 
-    &:not(.ant-dropdown-menu-item-disabled):not(.ant-menu-item-disabled):hover {
+    &:not(.#{$ant-prefix}-dropdown-menu-item-disabled):not(.#{$ant-prefix}-menu-item-disabled):hover {
       background: rgba(67, 134, 255, 0.2);
     }
 
-    &.ant-dropdown-menu-item-disabled,
-    &.ant-menu-item-disabled {
+    &.#{$ant-prefix}-dropdown-menu-item-disabled,
+    &.#{$ant-prefix}-menu-item-disabled {
       background-color: white;
     }
   }
 
-  .ant-dropdown-menu-submenu,
-  .ant-dropdown-menu-item, {
+  .#{$ant-prefix}-dropdown-menu-submenu,
+  .#{$ant-prefix}-dropdown-menu-item, {
     margin-top: 0;
 
     &:not(:last-child) {
@@ -38,7 +38,7 @@
     }
   }
 
-  .ant-dropdown-menu-submenu-title {
+  .#{$ant-prefix}-dropdown-menu-submenu-title {
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -1,21 +1,21 @@
 // dropdown menu
-.smartui-menu.ant-dropdown-menu:not(.raw),
-.smartui-submenu.ant-dropdown-menu-submenu:not(.raw),
+.smartui-menu.#{$ant-prefix}-dropdown-menu:not(.raw),
+.smartui-submenu.#{$ant-prefix}-dropdown-menu-submenu:not(.raw),
 // 场景：弹出形式的 sub-menu
-.smartui-submenu-popup.ant-dropdown-menu-submenu:not(.raw) {
-  .ant-dropdown-menu-item-group {
-    .ant-dropdown-menu-item-group-title {
+.smartui-submenu-popup.#{$ant-prefix}-dropdown-menu-submenu:not(.raw) {
+  .#{$ant-prefix}-dropdown-menu-item-group {
+    .#{$ant-prefix}-dropdown-menu-item-group-title {
       padding: 0;
     }
 
-    .ant-dropdown-menu-item-group-title:not(:empty) {
+    .#{$ant-prefix}-dropdown-menu-item-group-title:not(:empty) {
       @include font-small();
       padding: 0 20px;
       margin-bottom: 5px;
       color: $color-text-comment;
     }
 
-    .ant-dropdown-menu-item-group-list {
+    .#{$ant-prefix}-dropdown-menu-item-group-list {
       margin: 0;
     }
   }

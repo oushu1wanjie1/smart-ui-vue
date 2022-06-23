@@ -2,12 +2,12 @@
 @import '../mixins';
 
 .smartui-card:not(.raw) {
-  &.ant-card {
+  &.#{$ant-prefix}-card {
     border-radius: 4px;
     border: 1px solid rgba($color-line-bold, .5);
     box-shadow: none;
 
-    .ant-card-body {
+    .#{$ant-prefix}-card-body {
       padding: 15px 15px 15px 15px;
     }
   }

@@ -4,50 +4,50 @@
 
 .x-tooltip:not(.raw) {
   // 通用配置
-  &.ant-tooltip {
+  &.#{$ant-prefix}-tooltip {
     // 内容
-    .ant-tooltip-inner {
+    .#{$ant-prefix}-tooltip-inner {
       background-color: white;
       border-radius: 4px;
       padding: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    .ant-tooltip-arrow {
-      .ant-tooltip-arrow-content {
+    .#{$ant-prefix}-tooltip-arrow {
+      .#{$ant-prefix}-tooltip-arrow-content {
         background-color: white;
       }
     }
   }
   // 不同方向的特殊配置
-  &.ant-tooltip-placement-topLeft {
+  &.#{$ant-prefix}-tooltip-placement-topLeft {
     @include arrow('top', 'left');
   }
 
-  &.ant-tooltip-placement-topRight {
+  &.#{$ant-prefix}-tooltip-placement-topRight {
     @include arrow('top', 'right');
   }
 
-  &.ant-tooltip-placement-bottomLeft {
+  &.#{$ant-prefix}-tooltip-placement-bottomLeft {
     @include arrow('bottom', 'left');
   }
 
-  &.ant-tooltip-placement-bottomRight {
+  &.#{$ant-prefix}-tooltip-placement-bottomRight {
     @include arrow('bottom', 'right');
   }
 
-  &.ant-tooltip-placement-leftTop {
+  &.#{$ant-prefix}-tooltip-placement-leftTop {
     @include arrow('left', 'top');
   }
 
-  &.ant-tooltip-placement-leftBottom {
+  &.#{$ant-prefix}-tooltip-placement-leftBottom {
     @include arrow('left', 'bottom');
   }
 
-  &.ant-tooltip-placement-rightTop {
+  &.#{$ant-prefix}-tooltip-placement-rightTop {
     @include arrow('right', 'top');
   }
 
-  &.ant-tooltip-placement-rightBottom {
+  &.#{$ant-prefix}-tooltip-placement-rightBottom {
     @include arrow('right', 'bottom');
   }
 }

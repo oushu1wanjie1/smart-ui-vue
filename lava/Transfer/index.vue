@@ -629,14 +629,14 @@ export default defineComponent({
 // 【搜索】输入框
 .custom-transfer-left-table,
 .custom-transfer-right-table {
-  .ant-input-affix-wrapper {
+  .#{$ant-prefix}-input-affix-wrapper {
     height: 30px;
     padding-right: 15px;
     padding-left: 15px;
     border: 1px solid $color-line-bold;
     border-radius: 4px;
 
-    & > input.ant-input {
+    & > input.#{$ant-prefix}-input {
       @include font-small;
       height: 100%;
     }
@@ -746,7 +746,7 @@ span, p {
   background-color: white;
   box-shadow: 0 2px 8px #00000026;
 
-  .ant-menu-vertical .ant-menu-item {
+  .#{$ant-prefix}-menu-vertical .#{$ant-prefix}-menu-item {
     padding: 0 12px;
   }
 

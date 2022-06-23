@@ -2,14 +2,14 @@
 
 
 .x-switch:not(.raw) {
-  &.ant-switch {
+  &.#{$ant-prefix}-switch {
     // 主色调更改
-    &.ant-switch-checked {
+    &.#{$ant-prefix}-switch-checked {
       background-color: $color-primary-blue;
     }
 
     // 【禁用】、【加载】时，透明度更改
-    &.ant-switch-loading, &.ant-switch-disabled {
+    &.#{$ant-prefix}-switch-loading, &.#{$ant-prefix}-switch-disabled {
       cursor: not-allowed;
       opacity: 0.3;
     }

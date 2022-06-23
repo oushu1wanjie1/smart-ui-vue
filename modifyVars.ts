@@ -1,4 +1,5 @@
 const VARS = {
+  '@ant-prefix': 'antv',
   // 全局主色
   'primary-color': '#336CFF',
   // 信息颜色

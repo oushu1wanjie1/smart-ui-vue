@@ -1,26 +1,26 @@
 .smartui-spin:not(.raw) {
-  &.ant-spin {
+  &.#{$ant-prefix}-spin {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
 
-    .ant-spin-dot {
+    .#{$ant-prefix}-spin-dot {
       //transform: translate(-50%, -50%);
       margin: 0 !important;
     }
 
-    .ant-spin-text {
+    .#{$ant-prefix}-spin-text {
       padding-top: 30px;
     }
   }
 }
 
-.ant-spin-nested-loading {
+.#{$ant-prefix}-spin-nested-loading {
   > div {
-    > .smartui-spin:not(.raw).ant-spin {
-      .ant-spin-dot {
+    > .smartui-spin:not(.raw).#{$ant-prefix}-spin {
+      .#{$ant-prefix}-spin-dot {
         position: unset;
       }
     }

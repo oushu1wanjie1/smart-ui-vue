@@ -33,7 +33,7 @@ export default defineComponent({
 
     function handleAddPoint(): void {
       const linkEl: HTMLElement = (<Ref<ComponentPublicInstance>>anchorLink).value.$el
-      const linkTitle = linkEl.querySelector('.ant-anchor-link-title')
+      const linkTitle = linkEl.querySelector('.antv-anchor-link-title')
       const div = document.createElement('div')
       div.setAttribute('class', 'x-ant-anchor-link-point')
       div.style.left = left.value

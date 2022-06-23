@@ -3,15 +3,15 @@
 
 // tabs 下面的一条灰线的配色
 .smartui-tabs:not(.raw) {
-  &.ant-tabs {
-    .ant-tabs-bar {
+  &.#{$ant-prefix}-tabs {
+    .#{$ant-prefix}-tabs-bar {
       border-bottom-color: $color-line-bold;
       position: relative;
     }
 
-    .ant-tabs-nav {
+    .#{$ant-prefix}-tabs-nav {
       // tab 标签
-      .ant-tabs-tab {
+      .#{$ant-prefix}-tabs-tab {
         padding: 0 0 10px 0;
         @include font-normal();
 
@@ -37,7 +37,7 @@
         }
       }
 
-      .ant-tabs-tab:hover {
+      .#{$ant-prefix}-tabs-tab:hover {
         color: $color-primary-blue;
 
         .x-ant-tabs-icon-active {
@@ -50,19 +50,19 @@
       }
 
       // tab 间距
-      .ant-tabs-tab:not(:last-child) {
+      .#{$ant-prefix}-tabs-tab:not(:last-child) {
         margin-right: 48px;
       }
 
       // 【禁用】时，tab 样式
-      .ant-tabs-tab-disabled,
-      .ant-tabs-tab-disabled:hover {
+      .#{$ant-prefix}-tabs-tab-disabled,
+      .#{$ant-prefix}-tabs-tab-disabled:hover {
         color: $color-text-comment;
         cursor: not-allowed;
       }
 
       // 【选中】时，tab 样式
-      .ant-tabs-tab-active {
+      .#{$ant-prefix}-tabs-tab-active {
         font-weight: normal;
         text-shadow: none;
 
@@ -77,13 +77,13 @@
     }
 
     // tab 【选中】时，底线配色、圆角
-    .ant-tabs-ink-bar {
+    .#{$ant-prefix}-tabs-ink-bar {
       background-color: $color-primary-blue;
       border-radius: 2px;
     }
 
     //
-    .ant-tabs-extra-content {
+    .#{$ant-prefix}-tabs-extra-content {
       position: absolute;
       right: 0;
       bottom: 5px;

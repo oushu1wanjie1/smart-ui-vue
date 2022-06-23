@@ -59,30 +59,30 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-//svg.icon.ant-calendar-picker-icon {
+//svg.icon.#{$ant-prefix}-calendar-picker-icon {
 //  top: 12px;
 //}
 .custom-range-picker {
   position: relative;
   display: inline-block;
 
-  .ant-calendar-range-left .ant-calendar-input-wrap {
+  .#{$ant-prefix}-calendar-range-left .#{$ant-prefix}-calendar-input-wrap {
     border-right: 0 !important;
   }
 
-  .ant-calendar-range-right .ant-calendar-input-wrap {
+  .#{$ant-prefix}-calendar-range-right .#{$ant-prefix}-calendar-input-wrap {
     border-left: 0 !important;
   }
 
-  .ant-calendar-range-middle {
+  .#{$ant-prefix}-calendar-range-middle {
     color: #D8D8D8;
   }
 
-  span.ant-calendar-range-picker-separator {
+  span.#{$ant-prefix}-calendar-range-picker-separator {
     opacity: 0;
   }
 
-  span.ant-calendar-picker-input.ant-input {
+  span.#{$ant-prefix}-calendar-picker-input.#{$ant-prefix}-input {
     border-radius: 4px;
   }
 
@@ -95,49 +95,49 @@ export default defineComponent({
 }
 
 .custom-range-picker-select {
-  span.ant-calendar-picker-input.ant-input {
+  span.#{$ant-prefix}-calendar-picker-input.#{$ant-prefix}-input {
     color: #336CFF;
     border-color: #336CFF;
   }
 
-  .ant-calendar-input-wrap {
+  .#{$ant-prefix}-calendar-input-wrap {
     border: 1px solid #336CFF;
   }
 }
 
 .custom-range-picker.custom-range-picker-active {
-  .ant-calendar-input-wrap {
+  .#{$ant-prefix}-calendar-input-wrap {
     border: 1px solid #336CFF;
   }
 
-  span.ant-calendar-picker-input.ant-input {
+  span.#{$ant-prefix}-calendar-picker-input.#{$ant-prefix}-input {
     background: #336CFF;
   }
 
-  .ant-calendar-range-picker-separator, .ant-calendar-picker-icon {
+  .#{$ant-prefix}-calendar-range-picker-separator, .#{$ant-prefix}-calendar-picker-icon {
     color: #D8D8D8;
     stroke: #D8D8D8;
   }
 
-  .ant-calendar-range-picker-input {
+  .#{$ant-prefix}-calendar-range-picker-input {
     color: #fff;
   }
 
-  .ant-calendar-input-wrap, .ant-calendar-input,
-  span.anticon.anticon-close-circle.ant-calendar-picker-clear {
+  .#{$ant-prefix}-calendar-input-wrap, .#{$ant-prefix}-calendar-input,
+  span.anticon.anticon-close-circle.#{$ant-prefix}-calendar-picker-clear {
     color: #fff;
     background: #336CFF;
   }
 }
 
 .custom-range-picker-active {
-  svg.icon.ant-calendar-picker-icon {
+  svg.icon.#{$ant-prefix}-calendar-picker-icon {
     color: #fff !important;
     opacity: 0.5;
   }
 }
 
-.custom-range-picker-active:hover svg.icon.ant-calendar-picker-icon {
+.custom-range-picker-active:hover svg.icon.#{$ant-prefix}-calendar-picker-icon {
   opacity: 0;
 }
 </style>

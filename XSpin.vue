@@ -32,8 +32,8 @@ export default defineComponent({
 @import './styles/components/XSpin.scss';
 
 .smartui-spin:not(.raw) {
-  &.ant-spin {
-    .ant-spin-dot {
+  &.#{$ant-prefix}-spin {
+    .#{$ant-prefix}-spin-dot {
       font-size: v-bind(dotFontSize);
     }
   }

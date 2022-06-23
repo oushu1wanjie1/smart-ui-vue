@@ -49,7 +49,7 @@ $ant-tag-checkable-padding-vertical: 17.5px;
 
 .x-tag:not(.raw) {
 
-  &.ant-tag {
+  &.#{$ant-prefix}-tag {
     @include tag-variant-primary($ant-tag-primary-color, $ant-tag-primary-bg-color);
 
     &.x-tag-gray {
@@ -65,7 +65,7 @@ $ant-tag-checkable-padding-vertical: 17.5px;
     display: inline-flex;
     align-items: center;
 
-    .ant-tag-close-icon {
+    .#{$ant-prefix}-tag-close-icon {
       color: currentColor;
       width:18px;
       height: 18px;
@@ -90,7 +90,7 @@ $ant-tag-checkable-padding-vertical: 17.5px;
     @include tag-disabled();
 
     // 覆盖 antd 默认内边距效果
-    .ant-tag > .anticon + span, .ant-tag > span + .anticon {
+    .#{$ant-prefix}-tag > .anticon + span, .#{$ant-prefix}-tag > span + .anticon {
       margin-left: 0;
     }
 
@@ -116,7 +116,7 @@ $ant-tag-checkable-padding-vertical: 17.5px;
     //}
   }
 
-  &.ant-tag-checkable {
+  &.#{$ant-prefix}-tag-checkable {
     // flex 一把梭
     display: inline-flex;
     justify-content: center;

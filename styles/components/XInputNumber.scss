@@ -9,17 +9,17 @@
   height: 32px;
   border-radius: 4px;
 
-  .ant-input-number-handler[aria-disabled="true"] {
+  .#{$ant-prefix}-input-number-handler[aria-disabled="true"] {
     color: #D5D8DB !important;
     border-color: #D5D8DB !important;
     cursor: not-allowed !important;
   }
 
-  .ant-input-number-input {
+  .#{$ant-prefix}-input-number-input {
     text-align: center;
   }
 
-  .ant-input-number-handler-wrap {
+  .#{$ant-prefix}-input-number-handler-wrap {
     opacity: 1;
     background: transparent;
     width: 100%;
@@ -27,7 +27,7 @@
     pointer-events: none;
   }
 
-  .ant-input-number-handler {
+  .#{$ant-prefix}-input-number-handler {
     pointer-events: all;
     width: 32px;
     height: 32px !important;

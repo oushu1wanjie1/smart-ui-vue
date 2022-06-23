@@ -95,10 +95,10 @@
 // main
 @mixin arrow($d1, $d2) {
   padding-#{rev($d1)}: 7px;
-  .ant-popover-inner {
+  .#{$ant-prefix}-popover-inner {
     @include border-radius-remove($d1, $d2);
   }
-  .ant-popover-arrow {
+  .#{$ant-prefix}-popover-arrow {
     @include position($d1, $d2);
     @include size($d1);
     @include outer-shadow($d1, $d2);
@@ -107,7 +107,7 @@
     border-width: 0;
     transform: none;
     overflow: hidden;
-    .ant-popover-arrow-content {
+    .#{$ant-prefix}-popover-arrow-content {
       display: block;
       @include size($d1);
       @include arrow-trans-origin($d1, $d2);

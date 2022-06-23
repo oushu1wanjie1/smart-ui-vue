@@ -154,7 +154,7 @@ export default defineComponent({
       if (visible && !isColored) {
         nextTick(() => {
           // 配置文字颜色
-          const inner = <HTMLElement | null>document.querySelector(`.x-tooltip-${tooltipId} .ant-tooltip-inner`)
+          const inner = <HTMLElement | null>document.querySelector(`.x-tooltip-${tooltipId} .antv-tooltip-inner`)
           if (inner) inner.style.color = textColor.value
           isColored = true
         })

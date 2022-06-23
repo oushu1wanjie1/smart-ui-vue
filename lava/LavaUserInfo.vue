@@ -87,7 +87,7 @@ export default defineComponent({
     text-overflow: ellipsis;
 
     // 加权重
-    .user-name.ant-btn {
+    .user-name.#{$ant-prefix}-btn {
       justify-content: flex-start;
       height: 20px;
       padding: 0;
