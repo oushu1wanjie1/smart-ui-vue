@@ -11,9 +11,10 @@
     @include font-small;
     > label {
       @include font-small;
+      color: $color-text-comment
     }
     // 目前 label min-height: 50px，不再需要 padding-bottom
-    //padding-bottom: 10px;
+    padding-bottom: 0;
   }
   // 成功提示不显示
   .#{$ant-prefix}-form-item-explain-success {

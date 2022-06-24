@@ -3,9 +3,8 @@
     <component
       v-for="item in items"
       :key="item.name"
-      v-bind="item.props || {}"
+      v-bind="createBindProps(item)"
       :is="itemLibs[item.name]"
-      v-on="(item.events || []).reduce((prev, eventName) => ({ eventName: $ev => $emit(eventName, $ev) }), {})"
       v-model:value="paramsLocal[item.key]"
       :class="{ 'operation': true, 'placement-right': item.right }"
     />
@@ -19,7 +18,6 @@ import { useModel } from '@/smart-ui-vue/utils'
 
 export default defineComponent({
   name: 'LavaOperations',
-  emits: ['change'],
   props: {
     // 参数结构
     params: {
@@ -49,8 +47,23 @@ export default defineComponent({
 
     watch(paramsLocal, (val) => context.emit('change', val), { deep: true, immediate: !props.async })
 
+    // 合并item的props和events
+    const createBindProps = (item: LavaOperationsItemParams) => {
+      return {
+        ...(item.props || {}),
+        ...(item.events || []).reduce((prev, eventName) => {
+          const eventNameWithPrefix = 'on' + eventName.substring(0, 1).toUpperCase() + eventName.substring(1)
+          return {
+            ...prev,
+            [eventNameWithPrefix]: ($ev: any) => context.emit(eventName, $ev)
+          }
+        }, {})
+      }
+    }
+
     return {
       paramsLocal,
+      createBindProps,
       // 所有item组件库
       itemLibs: props.libs instanceof Array ? props.libs.reduce((prev, lib) => ({ ...prev, ...lib }), {}) : []
     }
@@ -64,6 +77,10 @@ export default defineComponent({
   margin-bottom: 10px;
   .operation {
     margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
 
     &.placement-right {
       margin-left: auto;
