@@ -71,7 +71,7 @@ import XDrawer from '../../XDrawer.vue'
 import XAvatar from '../../XAvatar.vue'
 import { USER, ADD, ROLE, AVATAR_NUM, UserOrRoleSelectorOption } from './type'
 import { Strategy } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
-import { message } from 'ant-design-vue'
+import { message } from 'ant-design-vue-3'
 
 export default defineComponent({
   name: 'LavaAuthEdit',
