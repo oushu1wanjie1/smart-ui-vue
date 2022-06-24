@@ -58,7 +58,7 @@ import XDrawer from '../../XDrawer.vue'
 import LavaRolePanel from './LavaRolePanel.vue'
 import { ADD, USER, SOURCE_SELF, ActionSelectOption } from './type'
 import { Strategy, isShowRolePanel } from './strategy'
-import { message } from 'ant-design-vue'
+import { message } from 'ant-design-vue-3'
 import { debounce } from 'lodash'
 
 export default defineComponent({

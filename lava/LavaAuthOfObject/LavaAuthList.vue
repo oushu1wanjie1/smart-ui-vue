@@ -51,7 +51,7 @@ import LavaObjectBasicInfo from '../LavaObjectBasicInfo.vue'
 import LavaActionTag from './LavaActionTag.vue'
 import { USER, ROLE, SOURCE_SELF, AuthListItem } from './type'
 import { Strategy, isShowRolePanel } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
-import { message } from 'ant-design-vue'
+import { message } from 'ant-design-vue-3'
 import { debounce } from 'lodash'
 
 export default defineComponent({

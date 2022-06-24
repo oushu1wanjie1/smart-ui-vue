@@ -92,7 +92,7 @@ import {
   RS_DATABASE,
   RS_SCHEMA, RS_TABLE,
 } from './type'
-import { message } from 'ant-design-vue'
+import { message } from 'ant-design-vue-3'
 import { StrategyCommon, StrategyDb } from '@/smart-ui-vue/lava/LavaAuthOfObject/strategy'
 
 export default defineComponent({
