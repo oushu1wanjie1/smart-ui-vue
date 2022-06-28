@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, watch } from 'vue'
+import { defineComponent, inject, PropType, provide, watch } from 'vue'
 import { LavaOperationsItemParams } from '@/smart-ui-vue/lava/LavaOpeartions/index'
 import { useModel } from '@/smart-ui-vue/utils'
 
@@ -44,8 +44,18 @@ export default defineComponent({
   },
   setup(props, context) {
     const paramsLocal = useModel('params', props, context)
+    const scope = inject('scope')
 
-    watch(paramsLocal, (val) => context.emit('change', val), { deep: true, immediate: !props.async })
+    // provide父组件状态
+    provide('scope', scope)
+
+    // provide全部组件参数
+    provide('params', paramsLocal)
+
+    watch(paramsLocal, (val) => {
+      console.log('operationchange', val)
+      context.emit('change', val)
+    }, { deep: true, immediate: !props.async })
 
     // 合并item的props和events
     const createBindProps = (item: LavaOperationsItemParams) => {
@@ -64,6 +74,7 @@ export default defineComponent({
     return {
       paramsLocal,
       createBindProps,
+      scope,
       // 所有item组件库
       itemLibs: props.libs instanceof Array ? props.libs.reduce((prev, lib) => ({ ...prev, ...lib }), {}) : []
     }
