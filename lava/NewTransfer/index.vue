@@ -597,6 +597,10 @@ export default defineComponent({
           //max-height: calc(100% - 53.5px + 16px) !important;
         }
       }
+
+      .smartui-table:not(.raw).antv-table-wrapper .antv-table-footer {
+        display: none;
+      }
     }
   }
 
@@ -611,8 +615,12 @@ export default defineComponent({
       border-radius: 4px;
     }
 
+    .smartui-table:not(.raw).antv-table-wrapper .antv-table {
+      border-bottom: none;
+    }
+
     .smartui-table {
-      max-height: calc(100% - 35px) !important;
+      height: calc(100% - 35px) !important;
 
       .#{$ant-prefix}-spin-nested-loading {
         height: 100%;
