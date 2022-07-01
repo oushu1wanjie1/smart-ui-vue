@@ -1,0 +1,22 @@
+<template>
+  <x-popover v-if="process.env.NODE_ENV === 'development'" title="开发工具" trigger="click">
+    <template #content>
+      <slot />
+    </template>
+    <x-button class="fixed bottom-20 right-10">工具</x-button>
+  </x-popover>
+</template>
+
+<script lang="ts">
+
+import XPopover from '@/smart-ui-vue/XPopover.vue'
+import XButton from '@/smart-ui-vue/XButton.vue'
+export default {
+  name: 'LavaDevTools',
+  components: { XButton, XPopover },
+}
+</script>
+
+<style lang="scss">
+
+</style>

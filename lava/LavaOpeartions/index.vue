@@ -1,10 +1,10 @@
 <template>
   <div class="lava-operations">
     <component
-      v-for="item in items"
-      :key="item.name"
+      v-for="(item, name) in items"
+      :key="name"
       v-bind="createBindProps(item)"
-      :is="itemLibs[item.name]"
+      :is="itemLibs[name]"
       v-model:value="paramsLocal[item.key]"
       :class="{ 'operation': true, 'placement-right': item.right }"
     />
@@ -26,8 +26,8 @@ export default defineComponent({
     },
     // item组件配置
     items: {
-      type: Array as PropType<LavaOperationsItemParams[]>,
-      default: () => []
+      type: Object as PropType<Record<string, LavaOperationsItemParams>>,
+      default: () => ({})
     },
     // 是否异步加载
     // 设为true则等到所有的异步组件加载完成才会触发一次初始化的change事件

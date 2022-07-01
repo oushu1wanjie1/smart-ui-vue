@@ -1,7 +1,7 @@
 // LavaOperations组件item选项
 export interface LavaOperationsItemParams {
   // item组件名称
-  name: string,
+  name?: string,
   // item组件props
   props?: Record<string, any>,
   // item组件需要声明的events
