@@ -1,5 +1,5 @@
 <template>
-  <x-popover v-if="process.env.NODE_ENV === 'development'" title="开发工具" trigger="click">
+  <x-popover v-if="env === 'development'" title="开发工具" trigger="click">
     <template #content>
       <slot />
     </template>
@@ -14,6 +14,13 @@ import XButton from '@/smart-ui-vue/XButton.vue'
 export default {
   name: 'LavaDevTools',
   components: { XButton, XPopover },
+  setup() {
+    const env = process.env.NODE_ENV
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV, env)
+    return {
+      env
+    }
+  }
 }
 </script>
 
