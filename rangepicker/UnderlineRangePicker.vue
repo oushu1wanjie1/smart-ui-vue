@@ -10,7 +10,7 @@
       <template v-for="item in slots" v-slot:[item]>
         <slot :name="item"></slot>
       </template>
-      <template v-if="!(slots&&slots.includes('suffixIcon'))" #suffixIcon>
+      <template #suffixIcon>
         <icon color="#85888C" name="ui-date-pick/calendar"></icon>
       </template>
     </a-range-picker>

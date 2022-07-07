@@ -62,7 +62,7 @@ export default defineComponent({
 //svg.icon.#{$ant-prefix}-calendar-picker-icon {
 //  top: 12px;
 //}
-.custom-range-picker {
+.smartui-range-picker-bordered.custom-range-picker {
   position: relative;
   display: inline-block;
 
@@ -94,7 +94,7 @@ export default defineComponent({
   }
 }
 
-.custom-range-picker-select {
+.smartui-range-picker-bordered.custom-range-picker-select {
   span.#{$ant-prefix}-calendar-picker-input.#{$ant-prefix}-input {
     color: #336CFF;
     border-color: #336CFF;
@@ -105,7 +105,7 @@ export default defineComponent({
   }
 }
 
-.custom-range-picker.custom-range-picker-active {
+.smartui-range-picker-bordered.custom-range-picker.custom-range-picker-active {
   .#{$ant-prefix}-calendar-input-wrap {
     border: 1px solid #336CFF;
   }
