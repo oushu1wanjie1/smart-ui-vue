@@ -3,7 +3,7 @@
     <!-- 自定义前缀 icon -->
     <div
       class="smartui-select-with-prefix-icon"
-      :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'width-100': '', mergedAttrs.class]" :borderedNormal="borderedNormal"
+      :class="[disabled ? 'smartui-select-with-prefix-icon-disabled' : '', isInForm ? 'w-full': '', mergedAttrs.class]" :borderedNormal="borderedNormal"
       :style="{ width: mergedAttrs?.style?.width }"
     >
       <a-select

@@ -29,7 +29,10 @@
         <div class="x-vertical-step-title-options">
           <icon v-if="showCollapse" class="collapse-icon" color="#85888C" name="ui-vertical-step/collapse-close"
                 @click="toggleOpen"></icon>
-          <icon v-if="showOption" color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
+          <x-tooltip>
+            <template #title>前往设置</template>
+            <icon v-if="showOption" color="#336CFF" name="ui-vertical-step/navigation" @click="navigation"></icon>
+          </x-tooltip>
         </div>
       </div>
       <x-collapse-transition :visible="slots.includes('content') && open">
@@ -55,6 +58,7 @@ import {
 } from 'vue'
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import XCollapseTransition from '@/smart-ui-vue/XCollapseTransition.vue'
+import XTooltip from '@/smart-ui-vue/XTooltip.vue'
 
 export interface IVerticalStepsInject {
   props: any
@@ -74,7 +78,7 @@ export interface VerticalStepItemProps {
 
 export default defineComponent({
   name: 'XVerticalStep',
-  components: { XCollapseTransition, Icon },
+  components: { XTooltip, XCollapseTransition, Icon },
   props: {
     isFinish: {
       type: Boolean,
