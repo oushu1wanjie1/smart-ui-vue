@@ -7,7 +7,7 @@
   <div
     v-else
     :class="{
-      'smartui-textarea-container-disabled': disabled !== undefined
+      'smartui-textarea-container-disabled': !!disabled
     }"
     :style="$attrs.style"
     class="smartui-textarea-container"
