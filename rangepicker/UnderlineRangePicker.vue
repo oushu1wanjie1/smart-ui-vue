@@ -22,7 +22,7 @@
 import { computed } from 'vue'
 import { DatePicker } from 'ant-design-vue'
 import { excludeNotExistProps, useModel } from '@/smart-ui-vue/utils'
-import Icon from '@/components/Icon'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 
 export default {
   name: 'UnderlineRangePicker',

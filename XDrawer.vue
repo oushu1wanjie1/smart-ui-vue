@@ -22,7 +22,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { omit } from 'lodash'
-import Icon from '@/components/Icon.vue'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import { useModel } from '@/smart-ui-vue/utils'
 import { VNodeChild } from '@vue/runtime-core'
 

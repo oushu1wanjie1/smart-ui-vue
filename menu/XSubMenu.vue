@@ -18,7 +18,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 // @ts-ignore
-import Icon from '@/components/Icon.vue'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 
 export default defineComponent({
   name: 'XSubMenu',
