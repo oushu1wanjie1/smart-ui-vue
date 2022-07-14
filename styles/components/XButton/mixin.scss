@@ -245,20 +245,34 @@
   }
 }
 
-@mixin btn-text-icon-only {
-  @include button-variant-other($btn-default-color, transparent, transparent);
+@mixin btn-text-icon-only-theme($default-color: $btn-default-color) {
+  @include button-variant-other($default-color, transparent, transparent);
+  &:hover {
+    @include button-variant-other($default-color, rgba($color-line-bold, .5), rgba($color-line-bold, .5));
+  }
+
+  &:active {
+    @include button-variant-other($default-color, $color-line-bold, $color-line-bold);
+  }
+
+  &[disabled] {
+    &,
+    &:hover,
+    &:active {
+      @include button-color($color-line-bold, transparent, transparent);
+    }
+  }
+}
+
+@mixin btn-text-icon-only() {
+  @include btn-text-icon-only-theme($btn-default-color);
   box-shadow: none;
 
   &:hover {
-    @include button-variant-other($btn-default-color, rgba($color-line-bold, .5), rgba($color-line-bold, .5));
     box-shadow: none;
   }
-  //&:focus {
-  //  @include button-variant-other($btn-default-color, rgba($color-primary-blue, .2), rgba($color-primary-blue, .2));
-  //  box-shadow: none;
-  //}
+
   &:active {
-    @include button-variant-other($btn-default-color, $color-line-bold, $color-line-bold);
     box-shadow: none;
   }
 
@@ -267,7 +281,6 @@
     &:hover,
     &:active {
       box-shadow: none;
-      @include button-color($color-line-bold, transparent, transparent);
 
       .icon {
         opacity: 1;

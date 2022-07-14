@@ -58,6 +58,9 @@
 
     &-dangerous {
       @include btn-dangerous;
+      &.#{$ant-prefix}-btn-icon-only {
+        @include btn-text-icon-only-theme($color-danger)
+      }
     }
 
     // To ensure that a space will be placed between character and 'Icon'

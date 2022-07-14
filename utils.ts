@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 export function useModel(name: string, props: any, context: any) {
   return computed({
@@ -9,6 +9,13 @@ export function useModel(name: string, props: any, context: any) {
       context.emit(`update:${name}`, val)
     },
   })
+}
+
+export function useModelWithDefault(name: string, props: any, context: any) {
+  if (typeof props[`onUpdate:${name}`] === 'function')
+    return useModel(name, props, context)
+  else
+    return ref(props.name)
 }
 
 export function getModelType(formItemType: any) {

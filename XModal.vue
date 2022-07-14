@@ -1,5 +1,5 @@
 <template>
-  <a-modal dialogClass="x-modal" v-bind="{...$props}">
+  <a-modal class="x-modal" v-bind="{...$props}">
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"></slot>
     </template>
