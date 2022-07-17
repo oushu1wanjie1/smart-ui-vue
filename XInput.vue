@@ -3,7 +3,7 @@
     <template #default>
       <a-input
         ref="raw"
-        :class="`smartui-input ${wrapperClass}`"
+        :class="`smartui-input ${wrapperClass} ${noUnderline ? 'smartui-input-no-underline' : '' }`"
         :data-comp-id="compId"
         :style="wrapperStyle"
         v-bind="{ ...props }"
@@ -42,6 +42,10 @@ export default defineComponent({
       type: String,
       default: 'top',
     },
+    noUnderline: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props, context) {
     // 全部slots

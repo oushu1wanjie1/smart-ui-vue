@@ -45,7 +45,7 @@
     }
   }
 
-  &.#{$ant-prefix}-input {
+  &.#{$ant-prefix}-input:not(.smartui-input-no-underline) {
     @include input-underline($color-line-bold);
     // hover
     &:not(.#{$ant-prefix}-input[disabled]):hover {
