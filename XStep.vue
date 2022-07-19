@@ -237,8 +237,11 @@ $select-color: #336CFF;
   }
 
   .x-step-description {
+    max-width: 240px;
     padding: 0 10px;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 14px;
     font-weight: 400;
     color: #282B2E;
