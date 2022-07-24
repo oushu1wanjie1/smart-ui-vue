@@ -27,10 +27,6 @@ export default defineComponent({
   name: 'XInput',
   components: {
     SingleFormWrapper,
-    originForm: {
-      type: Boolean,
-      default: false
-    }
   },
   props: {
     ...excludeEventsInProps(Input.props),
