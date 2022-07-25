@@ -1,9 +1,14 @@
 <template>
-  <x-form v-if="rules">
+  <x-form v-if="rules && !originForm">
     <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value" auto-height>
       <slot v-bind="events"></slot>
     </x-form-item>
   </x-form>
+  <a-form v-else-if="rules && originForm">
+    <x-form-item v-bind="validateInfos.value" class="raw">
+      <slot v-bind="events"></slot>
+    </x-form-item>
+  </a-form>
   <slot v-else v-bind="events"></slot>
 </template>
 
@@ -31,6 +36,10 @@ export default defineComponent({
     errorTipPosition: {
       type: String,
       default: 'top'
+    },
+    originForm: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {

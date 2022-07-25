@@ -10,4 +10,37 @@
       }
     }
   }
+
+  &.#{$ant-prefix}-form.#{$ant-prefix}-form-horizontal {
+    // 默认右对齐 -> 左对齐
+    // 保持居中
+    .#{$ant-prefix}-form-item-label {
+      display: inline-flex;
+      align-items: center;
+
+      & > label {
+        min-height: 50px;
+      }
+    }
+
+    // 居中
+    .#{$ant-prefix}-form-item-control {
+      // default flex-direction: column
+      justify-content: center;
+    }
+
+    .#{$ant-prefix}-form-item-control-input {
+      min-height: 50px;
+    }
+
+    .#{$ant-prefix}-form-item[autoheight="true"] {
+      .#{$ant-prefix}-form-item-control-input {
+        min-height: unset;
+      }
+    }
+
+    .smartui-form-item-disabled > .#{$ant-prefix}-form-item-label > label {
+      color: $color-text-comment;
+    }
+  }
 }

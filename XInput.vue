@@ -1,9 +1,9 @@
 <template>
-  <single-form-wrapper ref="form" :error-tip-position="errorTipPosition" :rules="rules" :value="value">
+  <single-form-wrapper ref="form" :error-tip-position="errorTipPosition" :rules="rules" :value="value" :origin-form="originForm">
     <template #default>
       <a-input
         ref="raw"
-        :class="`smartui-input ${wrapperClass} ${noUnderline ? 'smartui-input-no-underline' : '' }`"
+        :class="`smartui-input ${wrapperClass} ${noUnderline ? 'smartui-input-no-underline' : '' } ${isEmpty ? 'smartui-input-empty' : ''}`"
         :data-comp-id="compId"
         :style="wrapperStyle"
         v-bind="{ ...props }"
@@ -45,9 +45,15 @@ export default defineComponent({
     noUnderline: {
       type: Boolean,
       default: false
+    },
+    originForm: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {
+    // 当前是否为空
+    const isEmpty = computed(() => props.value?.length === 0)
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
     const raw: Ref<InstanceType<typeof Input> | null> = ref(null)
@@ -91,6 +97,7 @@ export default defineComponent({
       wrapperStyle,
       mergedEvents,
       raw,
+      isEmpty,
     }
   },
 })

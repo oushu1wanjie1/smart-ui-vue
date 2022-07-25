@@ -133,6 +133,19 @@
       border: 1px solid rgba($color-line-bold, .5);
     }
   }
+
+  // 比较粗糙：当内容是选择框或者输入框的时候，认为其是可编辑表格
+  // 可能会影响很多
+  .antv-table-body {
+    .td-with-divider {
+      > .antv-select,
+      > .antv-input,
+      > .antv-form .antv-input{
+        margin-right: 10px !important;
+        margin-left: -10px !important;
+      }
+    }
+  }
 }
 
 .#{$ant-prefix}-table-thead > tr > th.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters {
