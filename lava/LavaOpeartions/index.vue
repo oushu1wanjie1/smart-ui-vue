@@ -53,9 +53,8 @@ export default defineComponent({
     provide('params', paramsLocal)
 
     watch(paramsLocal, (val) => {
-      console.log('operationchange', val)
       context.emit('change', val)
-    }, { deep: true, immediate: !props.async })
+    }, { deep: true, immediate: !(props.async && Object.values(props.items).some(item => item.async)) })
 
     // 合并item的props和events
     const createBindProps = (item: LavaOperationsItemParams) => {

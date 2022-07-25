@@ -10,4 +10,6 @@ export interface LavaOperationsItemParams {
   key?: string,
   // item组件是否位于右边
   right?: boolean,
+  // item组件是否为异步初始化组件
+  async?: boolean
 }

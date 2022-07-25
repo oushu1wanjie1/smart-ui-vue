@@ -59,9 +59,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-//svg.icon.#{$ant-prefix}-calendar-picker-icon {
-//  top: 12px;
-//}
+svg.icon.#{$ant-prefix}-calendar-picker-icon {
+  top: 12px;
+}
 .smartui-range-picker-bordered.custom-range-picker {
   position: relative;
   display: inline-block;
