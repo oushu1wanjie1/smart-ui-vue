@@ -11,6 +11,7 @@
         v-model:value="valueLocal"
         v-bind="{ ...mergedAttrs, class: '' }"
         style="width: 100%;"
+        ref="rawComponent"
         :class="[borderedNormal ? '' : 'smartui-select-no-bordered-normally', isInForm ? 'smartui-select-in-form' : '']"
       >
         <template v-for="item in slots.filter(item => item !== 'prefixIcon')" v-slot:[item]="scope">
@@ -76,23 +77,24 @@
   </template>
 </template>
 
-<script>
+<script lang="ts">
 /**
  * x-select扩展功能：
  * - 添加了自动异步加载选项的功能
  */
 import { useModel } from './utils'
-import { computed, onBeforeMount, onBeforeUpdate, ref, toRefs } from 'vue'
+import { computed, defineComponent, onBeforeMount, onBeforeUpdate, onMounted, ref, toRefs } from 'vue'
 import { debounce } from 'lodash'
 import { SelectProps } from 'ant-design-vue/es/select'
-import Icon from './helper/Icon'
+import Icon from './helper/Icon.vue'
+import { Select } from 'ant-design-vue'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
 const AUTO_LOAD_OFFSET = 0.7
 // 滚动事件防抖间隔(ms)
 const DEBOUNCE_GAP = 800
 
-export default {
+export default defineComponent({
   name: 'XSelect',
   components: { Icon },
   inheritAttrs: false,
@@ -148,6 +150,8 @@ export default {
     const slots = computed(() => {
       return Object.keys(context.slots)
     })
+    // aselector组件实例
+    const rawComponent = ref<InstanceType<typeof Select> | null>(null)
     // 内置翻页页数
     let page = 1
     // 可输入状态下，缓存的输入内容
@@ -160,20 +164,26 @@ export default {
      * 监听滚动事件，达到阈值时自动触发onSearch, onFocus
      */
     const handleMoreData = debounce((ev) => {
-      console.log(ev.target.scrollTop, ev.target.scrollHeight, ev.target.clientHeight)
       if (ev.target.scrollTop / (ev.target.scrollHeight - ev.target.clientHeight) > AUTO_LOAD_OFFSET) {
         page ++
-        handleSearch(inputCache, page)
-        handleFocus(page)
+        handleSearch(inputCache)
+        handleFocus()
       }
     }, DEBOUNCE_GAP)
+
+    // 传递ASelector的blur事件
+    const blur = () => {
+      // @ts-ignore
+      if (rawComponent.value) rawComponent.value.blur()
+      console.log(1231232)
+    }
 
     /**
      * @handler
      * 劫持search事件，添加page参数
      * @param {String} val 原search回调函数参数
      */
-    const handleSearch = (val) => {
+    const handleSearch = (val?: any) => {
       if (inputCache !== val) {
         page = 1
         inputCache = val
@@ -194,7 +204,7 @@ export default {
      * @handler
      * 当下拉菜单消失时, 重置page
      */
-    const handleDropdownVisibleChange = (...args) => {
+    const handleDropdownVisibleChange = (...args: any[]) => {
       page = 1
       if (props.onDropdownVisibleChange) props.onDropdownVisibleChange.apply(null, args)
     }
@@ -206,7 +216,9 @@ export default {
       const result = {
         ...context.attrs,
         style: {
+          // @ts-ignore
           ...context.attrs.style,
+          // @ts-ignore
           maxWidth: context.attrs.style?.width
         },
         ...props,
@@ -232,13 +244,17 @@ export default {
     // 处理过的attrs，注入自动异步加载时需求的方法
     mergedAttrs.value = updateAttrs()
 
+
+
     return {
       slots,
       valueLocal: useModel('value', props, context),
-      mergedAttrs
+      mergedAttrs,
+      rawComponent,
+      blur
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
