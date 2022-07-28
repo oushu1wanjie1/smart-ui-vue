@@ -4,7 +4,8 @@
     'smartui-table-border': bordered,
     'x-ant-table-empty': isEmpty || isConditionalEmpty,
     [`x-table-${id}`]: true,
-    'smartui-table-edit': editTable
+    'smartui-table-edit': editTable,
+    'smartui-table-divider': divider
   }"
     :columns="formattedColumns"
     :customHeaderRow="column => {
@@ -315,6 +316,8 @@ export default defineComponent({
     })
 
     onMounted(() => {
+      console.log('table on mounted')
+
       nextTick(() => {
         // 排序图标替换
         document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {

@@ -1,10 +1,10 @@
 <template>
-  <x-form v-if="rules && !originForm">
+  <x-form v-if="rules && !originForm" style="width: 100%;">
     <x-form-item :error-tip-position="errorTipPosition" v-bind="validateInfos.value" auto-height>
       <slot v-bind="events"></slot>
     </x-form-item>
   </x-form>
-  <a-form v-else-if="rules && originForm">
+  <a-form v-else-if="rules && originForm" style="width: 100%;">
     <x-form-item v-bind="validateInfos.value" class="raw">
       <slot v-bind="events"></slot>
     </x-form-item>
