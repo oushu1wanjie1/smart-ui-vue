@@ -1,5 +1,6 @@
 <template>
   <a-table
+    ref="xTableRef"
     :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
     :columns="formattedColumns"
     :customHeaderRow="column => {
@@ -13,7 +14,7 @@
     :expanded-row-keys="expandedRowKeys"
     :loading="loading"
     :pagination="mergedPagination"
-    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
+    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeightRef : 'auto' }"
     class="smartui-table"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
@@ -47,7 +48,7 @@
         </x-button>
       </template>
     </template>
-    <template v-if="!loading && (isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
+    <template v-if="(isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
       <x-empty v-if="isEmpty" :description="emptyDescription" :image="emptyImage"
                :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
@@ -127,6 +128,12 @@ export default defineComponent({
     // 空状态时高度，默认为auto
     emptyHeight: {
       type: [String, Number, undefined],
+      default: 'auto'
+    },
+    // 自动计算空状态下 table 的高度（至屏幕适口底部）
+    autoCalcEmptyHeight: {
+      type: Boolean,
+      default: false
     },
     emptyImage: {
       type: String,
@@ -262,6 +269,19 @@ export default defineComponent({
       if (!column.filterMultiple) scope.confirm()
     }
 
+    const xTableRef = ref(null)
+    const emptyHeightRef = ref(props.emptyHeight)
+    /**
+     * 仅在第一次加载完成后执行
+     * @type {WatchStopHandle}
+     */
+    const xTableRefWatchStop = watch(xTableRef, (now, pre) => {
+      console.log(now, pre)
+      if (props.autoCalcEmptyHeight)
+        emptyHeightRef.value = `calc(100vh - ${now.$el.getBoundingClientRect().top}px - 58px - 20px)`
+      xTableRefWatchStop()
+    })
+
     watch(() => [...(expandedRowKeys.value ?? [])], () => {
       const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
@@ -327,6 +347,8 @@ export default defineComponent({
       id,
       dynamicFilters,
       filteredColumnKeys,
+      xTableRef,
+      emptyHeightRef,
     }
   },
 })

@@ -38,4 +38,11 @@ export default defineComponent({
     }
   }
 }
+
+.#{$ant-prefix}-spin-nested-loading > div > .#{$ant-prefix}-table-spin-holder.#{$ant-prefix}-spin {
+  .#{$ant-prefix}-spin-dot {
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+}
 </style>
