@@ -1,7 +1,7 @@
 <template>
   <a-button :class="`x-btn`" v-bind="{ ...props }">
     <template v-if="!slots.includes('icon') && iconName" #icon>
-      <icon :name="iconName"/>
+      <icon :name="iconName" image/>
     </template>
     <template v-for="item in slots" v-slot:[item]>
       <slot :name="item"/>
