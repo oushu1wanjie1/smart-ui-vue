@@ -32,11 +32,19 @@ export default defineComponent({
 @import './styles/components/XSpin.scss';
 
 .smartui-spin:not(.raw) {
+  font-size: v-bind(dotFontSize);
+  min-height: 6em;
+
   &.#{$ant-prefix}-spin {
     .#{$ant-prefix}-spin-dot {
       font-size: v-bind(dotFontSize);
     }
   }
+}
+
+.antv-spin-nested-loading {
+  font-size: v-bind(dotFontSize);
+  min-height: 6em;
 }
 
 .#{$ant-prefix}-spin-nested-loading > div > .#{$ant-prefix}-table-spin-holder.#{$ant-prefix}-spin {
