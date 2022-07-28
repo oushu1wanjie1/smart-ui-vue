@@ -1,7 +1,11 @@
 <template>
   <a-table
-    ref="xTableRef"
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
+    :class="{
+    'smartui-table-border': bordered,
+    'x-ant-table-empty': isEmpty || isConditionalEmpty,
+    [`x-table-${id}`]: true,
+    'smartui-table-edit': editTable
+  }"
     :columns="formattedColumns"
     :customHeaderRow="column => {
       return {
@@ -167,6 +171,13 @@ export default defineComponent({
       type: Array,
       default: undefined,
     },
+    /**
+     * 是否为可编辑表（影响样式）
+     */
+    editTable: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props, context) {
     const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)

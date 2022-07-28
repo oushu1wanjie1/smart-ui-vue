@@ -136,13 +136,89 @@
 
   // 比较粗糙：当内容是选择框或者输入框的时候，认为其是可编辑表格
   // 可能会影响很多
-  .antv-table-body {
+  .#{$ant-prefix}-table-body {
     .td-with-divider {
-      > .antv-select,
-      > .antv-input,
-      > .antv-form .antv-input{
+      > .#{$ant-prefix}-select,
+      > .#{$ant-prefix}-input,
+      > .#{$ant-prefix}-form .#{$ant-prefix}-input{
         margin-right: 10px !important;
         margin-left: -10px !important;
+      }
+    }
+  }
+
+  &.smartui-table-edit {
+    .#{$ant-prefix}-table-wrapper {
+      height: calc(100% - 40px) !important;
+      max-height: calc(100% - 40px) !important;
+
+      .#{$ant-prefix}-spin-nested-loading {
+        height: 100%;
+        //max-height: calc(100% - 40px);
+
+        .#{$ant-prefix}-spin-container {
+          height: 100%;
+
+          .#{$ant-prefix}-table {
+            height: 100%;
+            border-bottom: none;
+
+            .#{$ant-prefix}-table-content {
+              height: 100%;
+
+              .#{$ant-prefix}-table-scroll {
+                height: 100%;
+
+                .#{$ant-prefix}-table-header.#{$ant-prefix}-table-hide-scrollbar {
+                  margin: 0 !important;
+                  overflow: auto !important;
+                  border-top: 1px solid $color-line-bold;
+                }
+
+                .#{$ant-prefix}-table-body {
+                  max-height: calc(100% - 40px) !important;
+                  overflow: auto !important;
+
+                  .td-with-divider {
+                    > .#{$ant-prefix}-select,
+                    > .#{$ant-prefix}-input,
+                    > .#{$ant-prefix}-form .#{$ant-prefix}-input{
+                      margin-right: 10px !important;
+                      margin-left: -10px !important;
+                    }
+                  }
+
+                  tr:last-child td {
+                    border-bottom: 1px solid $color-line-bold !important;
+                  }
+
+                  .#{$ant-prefix}-select {
+                    width: 100% !important;
+                  }
+
+                  .#{$ant-prefix}-select:not(:hover):not(:focus):not(:active):not([disabled]):not(.#{$ant-prefix}-select-open) {
+                    width: auto !important;
+
+                    .#{$ant-prefix}-select-selector {
+                      border-color: transparent !important;
+                    }
+                  }
+
+                  .#{$ant-prefix}-select.#{$ant-prefix}-select-focused:not(.#{$ant-prefix}-select-open):not(:hover):not(:focus):not(:active):not([disabled]) {
+                    .#{$ant-prefix}-select-selector {
+                      border-color: transparent !important;
+                      box-shadow: none !important;
+                    }
+                  }
+
+                  .#{$ant-prefix}-select:not(:hover):not(:focus):not(:active):not([disabled]) {
+                    border-color: transparent !important;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
