@@ -276,7 +276,6 @@ export default defineComponent({
      * @type {WatchStopHandle}
      */
     const xTableRefWatchStop = watch(xTableRef, (now, pre) => {
-      console.log(now, pre)
       if (props.autoCalcEmptyHeight)
         emptyHeightRef.value = `calc(100vh - ${now.$el.getBoundingClientRect().top}px - 58px - 20px)`
       xTableRefWatchStop()
@@ -343,7 +342,6 @@ export default defineComponent({
       isEmpty,
       isConditionalEmpty,
       mergedPagination,
-      console: console,
       id,
       dynamicFilters,
       filteredColumnKeys,
