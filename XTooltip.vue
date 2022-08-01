@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, PropType, ref, toRefs } from 'vue'
-import { Tooltip } from 'ant-design-vue'
-import { excludeEventsInProps, excludeNotExistProps, useModel, uuid } from './utils'
+import { computed, defineComponent, nextTick, PropType, toRefs } from 'vue'
+import { Tooltip as ATooltip } from 'ant-design-vue'
+import { useModel, uuid } from './utils'
 
 const DEFAULT_MOUSE_ENTER_DELAY = 0.1
 const DEFAULT_MOUSE_LEAVE_DELAY = 0.1
@@ -31,6 +31,7 @@ interface AlignProps {
 export default defineComponent({
   name: 'XTooltip',
   emits: ['visibleChange'],
+  components: { ATooltip },
   props: {
     /**
      * 该值将合并到 placement 的配置中，设置参考 [dom-align](https://github.com/yiminghe/dom-align)

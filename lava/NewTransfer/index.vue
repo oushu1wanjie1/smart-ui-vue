@@ -86,18 +86,17 @@
 /* tslint:disable */
 // eslint-disable-next-line no-unused-vars
 import { computed, defineComponent, PropType, reactive, Ref, ref, watch } from 'vue'
-import { SearchOutlined } from '@ant-design/icons-vue'
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import http, { Response } from 'lava-fe-lib/lib-common/http'
 // @ts-ignore
 // import smartUI from '../../index.ts'
-// @ts-ignore
-import smartUI from '@/smart-ui-vue/index.js'
 import { useModel } from '@/smart-ui-vue/utils'
 import LavaUserInfo from '@/smart-ui-vue/lava/LavaUserInfo.vue'
 import qs from 'qs'
 import { debounce } from 'lodash'
 import { message } from 'ant-design-vue-3'
+import XInput from '@/smart-ui-vue/XInput.vue'
+import XTable from '@/smart-ui-vue/XTable.vue'
 
 interface Params {
   pageNum: number,
@@ -212,7 +211,7 @@ export default defineComponent({
   },
   emits: ['update:selectedDataProp', 'change'],
   // eslint-disable-next-line vue/no-unused-components
-  components: { LavaUserInfo, SearchOutlined, Icon, ...smartUI },
+  components: { XTable, XInput, LavaUserInfo, Icon },
   setup(props, context) {
     // 穿梭框左侧数据
     const leftDataList: any[] = reactive([])

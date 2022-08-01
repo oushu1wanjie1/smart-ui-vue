@@ -87,7 +87,7 @@ import { computed, defineComponent, onBeforeMount, onBeforeUpdate, onMounted, re
 import { debounce } from 'lodash'
 import { SelectProps } from 'ant-design-vue/es/select'
 import Icon from './helper/Icon.vue'
-import { Select } from 'ant-design-vue'
+import { Select as ASelect } from 'ant-design-vue-3'
 
 // 触发自动加载阈值，为当前滚动高度占总高度的百分比
 const AUTO_LOAD_OFFSET = 0.7
@@ -96,7 +96,7 @@ const DEBOUNCE_GAP = 800
 
 export default defineComponent({
   name: 'XSelect',
-  components: { Icon },
+  components: { Icon, ASelect },
   inheritAttrs: false,
   emits: ['update:value'],
   props: {
@@ -151,7 +151,7 @@ export default defineComponent({
       return Object.keys(context.slots)
     })
     // aselector组件实例
-    const rawComponent = ref<InstanceType<typeof Select> | null>(null)
+    const rawComponent = ref<InstanceType<typeof ASelect> | null>(null)
     // 内置翻页页数
     let page = 1
     // 可输入状态下，缓存的输入内容

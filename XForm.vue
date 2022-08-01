@@ -6,9 +6,11 @@
 
 <script>
 import { ref } from 'vue'
+import { Form as AForm } from 'ant-design-vue'
 
 export default {
   name: 'XForm',
+  components: { AForm },
   props: {
     hideRequiredMark: {
       type: Boolean,

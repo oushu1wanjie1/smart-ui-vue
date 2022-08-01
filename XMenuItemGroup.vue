@@ -10,9 +10,13 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Menu } from 'ant-design-vue'
+import AMenuItemGroup from 'ant-design-vue/es/menu/src/ItemGroup'
 
 export default defineComponent({
   name: 'XMenuItemGroup',
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Menu, AMenuItemGroup },
   slots: ['title'],
   props: {
     title: String

@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
+import { Drawer as ADrawer } from 'ant-design-vue'
 import { omit } from 'lodash'
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import { useModel } from '@/smart-ui-vue/utils'
@@ -28,7 +29,7 @@ import { VNodeChild } from '@vue/runtime-core'
 
 const XDrawer = defineComponent({
   name: 'XDrawer',
-  components: { Icon },
+  components: { Icon, ADrawer },
   props: {
     // 默认离top 74px（header的高度）
     // 需要 top 为 0 设置本属性即可

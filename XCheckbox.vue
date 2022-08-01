@@ -8,10 +8,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, Prop } from 'vue'
+import { Checkbox as ACheckbox } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XCheckbox',
   __ANT_CHECKBOX: true,
+  components: { ACheckbox },
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots)),
