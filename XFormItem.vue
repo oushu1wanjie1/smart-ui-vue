@@ -16,7 +16,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { Form as AForm } from 'ant-design-vue'
-import AFormItem from 'ant-design-vue/es/form/index'
+import { FormItem as AFormItem } from 'ant-design-vue/es/form/index'
 import { VNodeChild } from '@vue/runtime-core'
 
 export default defineComponent({
