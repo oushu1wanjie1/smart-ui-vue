@@ -83,7 +83,7 @@ export default defineComponent({
   .btn-search-wrapper {
     position: absolute;
     top: 50%;
-    right: 9px;
+    right: 12px;
     margin-top: -9px;
     line-height: 1;
     cursor: pointer;
