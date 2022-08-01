@@ -87,7 +87,7 @@ export default defineComponent({
     margin-top: -9px;
     line-height: 1;
     cursor: pointer;
-    background-color: white;
+    background-color: transparent;
   }
 
   .btn-search-close-wrapper {
