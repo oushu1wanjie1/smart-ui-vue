@@ -13,7 +13,7 @@
 import { computed, CSSProperties, defineComponent, PropType } from 'vue'
 import { DropdownArrowOptions } from 'ant-design-vue-3/lib/dropdown/props'
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import { Dropdown as ADropdown } from 'ant-design-vue-3'
+import { Dropdown as ADropdown } from 'ant-design-vue'
 
 
 type Align = {
