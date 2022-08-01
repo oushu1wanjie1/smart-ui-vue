@@ -77,6 +77,7 @@ export default defineComponent({
 
     if (props.addKeyToRouter && route && route.query && route.query.activeTab) {
       localActiveKey.value = route.query.activeTab as string
+      context.emit('change', route.query.activeTab)
       context.emit('update:activeKey', route.query.activeTab)
     }
 
