@@ -6,9 +6,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Divider as ADivider } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XDivider',
+  components: { ADivider }
 })
 </script>
 

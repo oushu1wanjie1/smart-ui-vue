@@ -14,6 +14,7 @@
 <script lang='ts'>
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Tabs as ATabs } from 'ant-design-vue'
 
 interface TabsProps {
   selector?: string;
@@ -24,6 +25,7 @@ interface TabsProps {
 
 export default defineComponent({
   name: 'XTabs',
+  components: { ATabs },
   props: {
     selector: {
       type: String

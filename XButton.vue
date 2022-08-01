@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { Button } from 'ant-design-vue'
+import { Button as AButton } from 'ant-design-vue-3'
 import Icon from './helper/Icon.vue'
 
 export default defineComponent({
@@ -19,9 +19,9 @@ export default defineComponent({
   // 修复 disabled tooltip 未消失的问题
   // 详见 tooltip.tsx 源代码 getDisabledCompatibleChildren 方法（line 92）
   __ANT_BUTTON: true,
-  components: { Icon },
+  components: { Icon, AButton },
   props: {
-    ...Button.props,
+    ...AButton.props,
     /**
      * 作为 icon 组件的 name
      */

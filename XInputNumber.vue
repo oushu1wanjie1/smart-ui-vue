@@ -11,18 +11,19 @@
 
 <script>
 import { ref, toRefs, watch } from 'vue'
-import { InputNumber } from 'ant-design-vue'
+import { InputNumber as AInputNumber } from 'ant-design-vue-3'
 import { useModel } from '@/smart-ui-vue/utils'
 
 export default {
   name: 'XInputNumber',
   emits: ['change', 'update:value'],
+  components: { AInputNumber },
   props: {
     inputWidth: {
       type: String,
       default: '120px',
     },
-    ...InputNumber.props,
+    ...AInputNumber.props,
   },
   setup(props, context) {
     const wrapperStyle = ref(context.attrs.style)

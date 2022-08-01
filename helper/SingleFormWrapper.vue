@@ -18,12 +18,13 @@ import XFormItem from '../XFormItem.vue'
 import { computed, defineComponent, nextTick, ref, toRefs, PropType } from 'vue'
 import { useForm } from 'ant-design-vue/es/form'
 import { Props } from 'ant-design-vue/es/form/useForm'
+import { Form as AForm } from 'ant-design-vue'
 
 
 export default defineComponent({
   inheritAttrs: false,
   name: 'SingleFormWrapper',
-  components: { XFormItem, XForm },
+  components: { XFormItem, XForm, AForm },
   props: {
     rules: {
       type: Array as PropType<Props[]>,

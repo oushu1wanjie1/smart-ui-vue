@@ -89,12 +89,13 @@ import XEmpty from '@/smart-ui-vue/XEmpty'
 import { uuid } from '@/smart-ui-vue/utils'
 import { debounce } from 'lodash-es'
 import XButton from '@/smart-ui-vue/XButton'
+import { Table as ATable } from 'ant-design-vue'
 
 const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
-  components: { XButton, XEmpty, Icon },
+  components: { XButton, XEmpty, Icon, ATable },
   name: 'XTable',
   emits: ['filtered', 'expand'],
   props: {

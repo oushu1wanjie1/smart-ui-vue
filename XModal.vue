@@ -9,11 +9,13 @@
 <script lang="ts">
 import { computed, CSSProperties, defineComponent, PropType } from 'vue'
 import type { ButtonProps as ButtonPropsType, LegacyButtonType } from 'ant-design-vue/es/button/buttonTypes'
+import { Modal as AModal } from 'ant-design-vue'
 
 type getContainerFunc = () => HTMLElement;
 
 export default defineComponent({
   name: 'XModal',
+  components: { AModal },
   props: {
     prefixCls: String,
     visible: { type: Boolean, default: false },

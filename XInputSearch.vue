@@ -19,14 +19,16 @@
 import { computed, defineComponent, ref, Ref } from 'vue'
 import { omit } from 'lodash'
 import { excludeNotExistProps, useModel } from './utils'
-import { InputSearch } from 'ant-design-vue/lib/input'
+import AInputSearch from 'ant-design-vue/es/input/index'
+import { Input as AInput } from 'ant-design-vue'
 import Icon from './helper/Icon.vue'
 
 export default defineComponent({
-  components: { Icon },
   name: 'XInputSearch',
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Icon, AInputSearch, AInput },
   props: {
-    ...excludeNotExistProps(InputSearch.props),
+    ...excludeNotExistProps(AInputSearch.props),
     value: String
   },
   setup(props, context) {
