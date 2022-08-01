@@ -12,9 +12,11 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType } from 'vue'
 import { VNodeChild } from '@vue/runtime-core'
+import { Tabs as ATabs } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XTabPane',
+  components: { ATabPane: ATabs.TabPane },
   props: {},
   setup(props, context) {
 
