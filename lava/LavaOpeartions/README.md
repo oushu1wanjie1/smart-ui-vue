@@ -48,12 +48,12 @@ export default defineComponent({
 
 #### LavaOperations
 
-| 参数                   | 说明                                                                                     | 类型                                | 默认值   |
-|----------------------|----------------------------------------------------------------------------------------|-----------------------------------|-------|
-| async(即将depreceated) | 初始化时是否异步加载，在operation中有异步加载的组件时，该值应设为true，现在可在item内部配置                                 | ```boolean```                     | false |
-| items                | 每一项operation配置，为Key-value键值对，key值应严格等于operation的组件名，value具体配置项见下面LavaOperations.items， | ```Record<string, value>```       | {}    |
-| libs                 | 挂载组件应用的operation组件库，最终的operation组件库将为内置组件库和外部挂载组件库的结合                                  | ```Record<string, Component>[]``` | []    |
-| params(v-model)      | 最终传递到外部参数结构，应该与items配置中的key一一对应。                                                       | ```Record<string, any>```            | {}    |
+| 参数                 | 说明                                                                                     | 类型                                | 默认值   |
+|--------------------|----------------------------------------------------------------------------------------|-----------------------------------|-------|
+| async(depreceated) | 初始化时是否异步加载，在operation中有异步加载的组件时，该值应设为true，现在可在item内部配置                                 | ```boolean```                     | false |
+| items              | 每一项operation配置，为Key-value键值对，key值应严格等于operation的组件名，value具体配置项见下面LavaOperations.items， | ```Record<string, value>```       | {}    |
+| libs               | 挂载组件应用的operation组件库，最终的operation组件库将为内置组件库和外部挂载组件库的结合                                  | ```Record<string, Component>[]``` | []    |
+| params(v-model)    | 最终传递到外部参数结构，应该与items配置中的key一一对应。                                                       | ```Record<string, any>```            | {}    |
 
 #### LavaOperations.items
 
@@ -67,6 +67,6 @@ export default defineComponent({
 
 #### Events
 
-| 参数     | 说明             | 参数        |
+| 事件名    | 说明             | 参数        |
 |--------|----------------|-----------|
 | change | params发生变化触发事件 | ```params``` |
