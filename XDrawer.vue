@@ -11,7 +11,7 @@
       </div>
     </template>
     <template v-if="!slots.includes('title')" v-slot:title>
-      {{ title ?? '' }}
+      <span :title="title">{{ title ?? '' }}</span>
       <div v-if="closable" class="close-btn-wrapper">
         <icon class="close-icon" name="ui-modal/close"/>
       </div>
