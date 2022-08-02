@@ -14,6 +14,7 @@
 <script lang='ts'>
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Tabs as ATabs } from 'ant-design-vue'
 
 interface TabsProps {
   selector?: string;
@@ -24,6 +25,7 @@ interface TabsProps {
 
 export default defineComponent({
   name: 'XTabs',
+  components: { ATabs },
   props: {
     selector: {
       type: String
@@ -75,6 +77,7 @@ export default defineComponent({
 
     if (props.addKeyToRouter && route && route.query && route.query.activeTab) {
       localActiveKey.value = route.query.activeTab as string
+      context.emit('change', route.query.activeTab)
       context.emit('update:activeKey', route.query.activeTab)
     }
 

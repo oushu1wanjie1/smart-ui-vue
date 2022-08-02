@@ -7,8 +7,11 @@
 </template>
 
 <script>
+import { Progress as AProgress } from 'ant-design-vue-3'
+
 export default {
-  name: 'XProgress'
+  name: 'XProgress',
+  components: { AProgress },
 }
 </script>
 

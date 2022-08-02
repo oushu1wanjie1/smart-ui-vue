@@ -1,6 +1,12 @@
 <template>
   <a-table
-    :class="{ 'smartui-table-border': bordered, 'x-ant-table-empty': isEmpty || isConditionalEmpty, [`x-table-${id}`]: true }"
+    :class="{
+    'smartui-table-border': bordered,
+    'x-ant-table-empty': isEmpty || isConditionalEmpty,
+    [`x-table-${id}`]: true,
+    'smartui-table-edit': editTable,
+    'smartui-table-divider': divider
+  }"
     :columns="formattedColumns"
     :customHeaderRow="column => {
       return {
@@ -13,7 +19,7 @@
     :expanded-row-keys="expandedRowKeys"
     :loading="loading"
     :pagination="mergedPagination"
-    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeight : 'auto' }"
+    :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeightRef : 'auto' }"
     class="smartui-table"
   >
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
@@ -47,7 +53,7 @@
         </x-button>
       </template>
     </template>
-    <template v-if="!loading && (isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
+    <template v-if="(isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
       <x-empty v-if="isEmpty" :description="emptyDescription" :image="emptyImage"
                :image-style="{ width: '180px', height: '164.55px' }">
         <template #description>
@@ -83,12 +89,13 @@ import XEmpty from '@/smart-ui-vue/XEmpty'
 import { uuid } from '@/smart-ui-vue/utils'
 import { debounce } from 'lodash-es'
 import XButton from '@/smart-ui-vue/XButton'
+import { Table as ATable } from 'ant-design-vue'
 
 const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
-  components: { XButton, XEmpty, Icon },
+  components: { XButton, XEmpty, Icon, ATable },
   name: 'XTable',
   emits: ['filtered', 'expand'],
   props: {
@@ -127,6 +134,12 @@ export default defineComponent({
     // 空状态时高度，默认为auto
     emptyHeight: {
       type: [String, Number, undefined],
+      default: 'auto'
+    },
+    // 自动计算空状态下 table 的高度（至屏幕适口底部）
+    autoCalcEmptyHeight: {
+      type: Boolean,
+      default: false
     },
     emptyImage: {
       type: String,
@@ -160,6 +173,13 @@ export default defineComponent({
       type: Array,
       default: undefined,
     },
+    /**
+     * 是否为可编辑表（影响样式）
+     */
+    editTable: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props, context) {
     const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
@@ -262,6 +282,18 @@ export default defineComponent({
       if (!column.filterMultiple) scope.confirm()
     }
 
+    const xTableRef = ref(null)
+    const emptyHeightRef = ref(props.emptyHeight)
+    /**
+     * 仅在第一次加载完成后执行
+     * @type {WatchStopHandle}
+     */
+    const xTableRefWatchStop = watch(xTableRef, (now, pre) => {
+      if (props.autoCalcEmptyHeight)
+        emptyHeightRef.value = `calc(100vh - ${now.$el.getBoundingClientRect().top}px - 58px - 20px)`
+      xTableRefWatchStop()
+    })
+
     watch(() => [...(expandedRowKeys.value ?? [])], () => {
       const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
@@ -285,6 +317,8 @@ export default defineComponent({
     })
 
     onMounted(() => {
+      console.log('table on mounted')
+
       nextTick(() => {
         // 排序图标替换
         document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
@@ -323,10 +357,11 @@ export default defineComponent({
       isEmpty,
       isConditionalEmpty,
       mergedPagination,
-      console: console,
       id,
       dynamicFilters,
       filteredColumnKeys,
+      xTableRef,
+      emptyHeightRef,
     }
   },
 })

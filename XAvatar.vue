@@ -4,9 +4,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Avatar as AAvatar } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'x-avatar',
+  components: { AAvatar },
   props: {
     userId: {
       type: Number,

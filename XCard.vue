@@ -8,9 +8,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { Card as ACard } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XCard',
+  components: { ACard },
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))

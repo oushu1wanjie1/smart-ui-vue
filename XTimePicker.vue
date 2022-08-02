@@ -7,10 +7,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Prop } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { TimePicker as ATimePicker } from 'ant-design-vue-3'
 
 export default defineComponent({
   name: 'XTimePicker',
+  components: { ATimePicker },
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))

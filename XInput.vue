@@ -21,15 +21,16 @@
 import { computed, defineComponent, Ref, ref } from 'vue'
 import SingleFormWrapper from './helper/SingleFormWrapper.vue'
 import { excludeEventsInProps, isPropsStyleEventName, toNormalEventName } from './utils'
-import { Input } from 'ant-design-vue'
+import { Input as AInput } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XInput',
   components: {
     SingleFormWrapper,
+    AInput,
   },
   props: {
-    ...excludeEventsInProps(Input.props),
+    ...excludeEventsInProps(AInput.props),
     value: {
       type: String,
       default: '',
@@ -56,7 +57,7 @@ export default defineComponent({
     const isEmpty = computed(() => props.value?.length === 0)
     // 全部slots
     const slots = computed(() => Object.keys(context.slots))
-    const raw: Ref<InstanceType<typeof Input> | null> = ref(null)
+    const raw: Ref<InstanceType<typeof AInput> | null> = ref(null)
     const compId = context.attrs['data-comp-id'] || ''
     // 表单wrapper实例
     const form: Ref<InstanceType<typeof SingleFormWrapper> | null> = ref(null)

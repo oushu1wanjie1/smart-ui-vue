@@ -20,15 +20,15 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, defineComponent, Ref, ref } from 'vue'
-import { DatePicker } from 'ant-design-vue'
+import { DatePicker as ADatePicker } from 'ant-design-vue'
 import { excludeNotExistProps, useModel } from '@/smart-ui-vue/utils'
 import Icon from './helper/Icon.vue'
 
 export default defineComponent({
   name: 'XDatePicker',
-  components: { Icon },
+  components: { Icon, ADatePicker },
   props: {
-    ...DatePicker.props,
+    ...ADatePicker.props,
   },
   setup(props, context) {
     const resultProps = excludeNotExistProps(props) // 剔除未传参数

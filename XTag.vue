@@ -16,9 +16,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { Tag as ATag } from 'ant-design-vue-3'
 
 export default defineComponent({
   name: 'XTag',
+  components: { ATag },
   props: {
     // 预设的tag配色方案
     colorType: String

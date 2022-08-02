@@ -22,11 +22,12 @@
 import { computed, defineComponent } from 'vue'
 import Icon from '../helper/Icon.vue'
 import { useModel } from '@/smart-ui-vue/utils'
+import { DatePicker } from 'ant-design-vue'
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 
 export default defineComponent({
   name: 'BorderedRangePicker',
-  components: { Icon },
+  components: { Icon, ARangePicker: DatePicker.RangePicker },
   inheritAttrs: false,
   props: {
     value: Array,
@@ -59,9 +60,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-//svg.icon.#{$ant-prefix}-calendar-picker-icon {
-//  top: 12px;
-//}
+svg.icon.#{$ant-prefix}-calendar-picker-icon {
+  top: 12px;
+}
 .smartui-range-picker-bordered.custom-range-picker {
   position: relative;
   display: inline-block;

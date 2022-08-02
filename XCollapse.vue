@@ -12,11 +12,13 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import Icon from './helper/Icon.vue'
+import { Collapse as ACollapse } from 'ant-design-vue-3'
 
 export default defineComponent({
   name: 'XCollapse',
   components: {
-    Icon
+    Icon,
+    ACollapse,
   },
   props: {
     expandIconPosition: {
