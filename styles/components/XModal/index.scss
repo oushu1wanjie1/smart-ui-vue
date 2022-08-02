@@ -70,6 +70,7 @@
       // v3 modal 没有这个 div，引起了一些 button UI 错乱
       > div {
         display: flex;
+        width: 100%;
         justify-content: space-between;
       }
 
