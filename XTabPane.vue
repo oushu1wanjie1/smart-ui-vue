@@ -19,7 +19,6 @@ export default defineComponent({
   components: { ATabPane: ATabs.TabPane },
   props: {},
   setup(props, context) {
-
     return {
       slots: computed(() => Object.keys(context.slots))
     }
