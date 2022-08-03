@@ -35,10 +35,9 @@ export default defineComponent({
 
 .smartui-spin:not(.raw) {
   font-size: v-bind(dotFontSize);
-  min-height: 6em;
-
   &.#{$ant-prefix}-spin {
     .#{$ant-prefix}-spin-dot {
+      min-height: 6em;
       font-size: v-bind(dotFontSize);
     }
   }
@@ -46,7 +45,10 @@ export default defineComponent({
 
 .antv-spin-nested-loading {
   font-size: v-bind(dotFontSize);
-  min-height: 6em;
+
+  .antv-spin.antv-spin-spinning.smartui-spin {
+    min-height: 6em;
+  }
 }
 
 .#{$ant-prefix}-spin-nested-loading > div > .#{$ant-prefix}-table-spin-holder.#{$ant-prefix}-spin {
