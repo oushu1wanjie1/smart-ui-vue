@@ -7,9 +7,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { Row as ARow } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XRow',
+  components: { ARow },
   props: {
     /**
      * 转为 flex 布局
