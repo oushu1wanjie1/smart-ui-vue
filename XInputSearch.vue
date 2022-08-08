@@ -8,7 +8,7 @@
     <div v-if="!loading" class="btn-search-wrapper" @click="handleSearch">
       <icon color="black" image name="ui-input/search"/>
     </div>
-    <div v-if="!loading && allowClear && localValueRef.length > 0" class="btn-search-close-wrapper"
+    <div v-if="allowClear && localValueRef.length > 0" class="btn-search-close-wrapper"
          @click="handleClear">
       <icon color="comment" name="ui-input/clear"/>
     </div>
@@ -28,6 +28,10 @@ export default defineComponent({
   components: { Icon, AInputSearch: AInput.Search },
   props: {
     ...excludeNotExistProps(AInput.Search.props),
+    allowClear: {
+      type: Boolean,
+      default: true,
+    },
     value: String
   },
   setup(props, context) {
@@ -42,7 +46,6 @@ export default defineComponent({
           ...context.attrs,
           ...props,
           style: undefined,
-          allowClear: false,
         }, ['value', 'update:value', 'onUpdate:value']
       )
     })
@@ -72,7 +75,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.smartui-input-search {
+.smartui-input-search:not(.a) {
   position: relative;
 
   .#{$ant-prefix}-input-affix-wrapper {
@@ -86,7 +89,7 @@ export default defineComponent({
     margin-top: -9px;
     line-height: 1;
     cursor: pointer;
-    background-color: transparent;
+    background-color: white;
   }
 
   .btn-search-close-wrapper {
