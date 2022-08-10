@@ -13,6 +13,8 @@
 import { computed, CSSProperties, defineComponent, PropType } from 'vue'
 import { DropdownArrowOptions } from 'ant-design-vue-3/lib/dropdown/props'
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
+import { Dropdown as ADropdown } from 'ant-design-vue'
+
 
 type Align = {
   points?: [string, string];
@@ -30,6 +32,7 @@ type Align = {
 
 export default defineComponent({
   name: 'XDropdown',
+  components: { ADropdown },
   props: {
     arrow: {
       type: [Boolean, Object] as PropType<boolean | DropdownArrowOptions>,

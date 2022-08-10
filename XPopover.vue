@@ -10,8 +10,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, Prop, PropType, toRefs } from 'vue'
+import { computed, defineComponent, PropType, toRefs } from 'vue'
 import { useModel } from '@/smart-ui-vue/utils'
+import { Popover as APopover } from 'ant-design-vue-3'
 
 interface AlignProps {
   points?: string[],
@@ -33,6 +34,7 @@ const DEFAULT_MOUSE_LEAVE_DELAY = 0.1
 export default defineComponent({
   name: 'XPopover',
   emits: ['visibleChange'],
+  components: { APopover },
   props: {
     /**
      * 该值将合并到 placement 的配置中，设置参考 [dom-align](https://github.com/yiminghe/dom-align)

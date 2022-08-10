@@ -45,7 +45,7 @@
     }
   }
 
-  &.#{$ant-prefix}-input {
+  &.#{$ant-prefix}-input:not(.smartui-input-no-underline) {
     @include input-underline($color-line-bold);
     // hover
     &:not(.#{$ant-prefix}-input[disabled]):hover {
@@ -63,10 +63,15 @@
     }
   }
 
+  &.#{$ant-prefix}-input.smartui-input-no-underline {
+    &.antv-input:not(:hover):not(:focus):not(:active):not([disabled]):not(.smartui-input-empty) {
+      border-color: transparent !important;
+    }
+  }
+
 
   .#{$ant-prefix}-input-affix-wrapper, &.#{$ant-prefix}-input-affix-wrapper {
     &:not(.#{$ant-prefix}-input-search) {
-      @include input-underline($color-line-bold);
       padding: 0;
       overflow: hidden;
       // prefix
@@ -88,12 +93,19 @@
         margin-left: 5px;
         @include prefix-suffix-active-toggle(false);
       }
+    }
 
-      // 输入框hover
-      &:not(.#{$ant-prefix}-input-affix-wrapper-disabled):hover {
-        @include input-underline($color-text-comment);
+
+    &:not(.smartui-input-no-underline) .#{$ant-prefix}-input-affix-wrapper, &.#{$ant-prefix}-input-affix-wrapper {
+      &:not(.#{$ant-prefix}-input-search) {
+        @include input-underline($color-line-bold);
+        // 输入框hover
+        &:not(.#{$ant-prefix}-input-affix-wrapper-disabled):hover {
+          @include input-underline($color-text-comment);
+        }
       }
     }
+
 
     &.#{$ant-prefix}-input-affix-wrapper-disabled {
       background-color: transparent;
@@ -109,7 +121,7 @@
   &.#{$ant-prefix}-input-affix-wrapper-focused,
   &.#{$ant-prefix}-input-affix-wrapper-focused-focused:hover,
   &.#{$ant-prefix}-input-affix-wrapper-focused:focus {
-    &:not(.#{$ant-prefix}-input-search):not(.#{$ant-prefix}-input-affix-wrapper-disabled) {
+    &:not(.#{$ant-prefix}-input-search):not(.#{$ant-prefix}-input-affix-wrapper-disabled):not(.smartui-input-no-underline) {
       // 下划线
       @include input-underline($color-primary-blue);
       // prefix

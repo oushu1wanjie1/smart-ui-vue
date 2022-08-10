@@ -1,40 +1,41 @@
 <template>
-  <a-form ref="antdForm" class="smartui-form">
+  <a-form v-bind="{ ...$props, ...$attrs}" class="smartui-form" ref="formRef">
     <slot></slot>
   </a-form>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { Form } from 'ant-design-vue'
+import { Form as AForm } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XForm',
-  components: { AForm: Form },
+  components: { AForm },
+  props: {
+    hideRequiredMark: {
+      type: Boolean,
+      default: true,
+    }
+  },
   setup() {
-    const antdForm = ref<Record<string, any> | null>(null)
+    const formRef = ref<Record<string, any> | null>(null)
     const validate = () => {
-      if (antdForm.value) antdForm.value.validate.apply(this, arguments)
+      if (formRef.value) formRef.value.validate.apply(this, arguments)
     }
     const validateFields = () => {
-      if (antdForm.value) antdForm.value.validateFields.apply(this, arguments)
+      if (formRef.value) formRef.value.validateFields.apply(this, arguments)
     }
     const scrollToField = () => {
-      if (antdForm.value) antdForm.value.scrollToField.apply(this, arguments)
+      if (formRef.value) formRef.value.scrollToField.apply(this, arguments)
     }
     const resetFields = () => {
-      if (antdForm.value) antdForm.value.resetFields.apply(this, arguments)
+      if (formRef.value) formRef.value.resetFields.apply(this, arguments)
     }
     const clearValidate = () => {
-      if (antdForm.value) antdForm.value.clearValidate.apply(this, arguments)
+      if (formRef.value) formRef.value.clearValidate.apply(this, arguments)
     }
     return {
-      antdForm,
-      validate,
-      validateFields,
-      scrollToField,
-      resetFields,
-      clearValidate
+      formRef
     }
   }
 })

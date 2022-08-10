@@ -3,9 +3,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Menu as AMenu } from 'ant-design-vue'
 
 export default defineComponent({
-  name: 'XMenuDivider'
+  name: 'XMenuDivider',
+  // eslint-disable-next-line vue/no-unused-components
+  components: { AMenu, AMenuDivider: AMenu.Divider }
 })
 </script>
 <style lang="scss">

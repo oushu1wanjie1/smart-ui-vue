@@ -10,9 +10,11 @@
 <script lang="ts">
 import { computed, defineComponent, h, toRefs } from 'vue'
 import Icon from './helper/Icon.vue'
+import { Empty as AEmpty } from 'ant-design-vue-3'
 
 export default defineComponent({
   name: 'XEmpty',
+  components: { AEmpty },
   props: {
     image: String,
     imageStyle: {

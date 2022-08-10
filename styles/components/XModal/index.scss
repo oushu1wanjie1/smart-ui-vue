@@ -66,10 +66,17 @@
       border: 0;
 
       // 包裹 footer 底部按钮的 div 盒子
+      // @deprecated 从效果来看，集成时，oushudb v3 modal 会覆盖其他 repo 的 v2 modal
+      // v3 modal 没有这个 div，引起了一些 button UI 错乱
       > div {
         display: flex;
+        width: 100%;
         justify-content: space-between;
       }
+
+      // 兼容 V3
+      display: flex;
+
 
       // 只有一个 ok 按钮时，撑满
       // 有 ok 还有 cancel 时，两个均分

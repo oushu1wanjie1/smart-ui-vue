@@ -1,8 +1,5 @@
 <template>
   <a-tab-pane>
-<!--    <template v-for="item in slots" v-slot:[item]>-->
-<!--      <slot :name="item"></slot>-->
-<!--    </template>-->
     <template #default>
       <slot name="default"></slot>
     </template>
@@ -15,15 +12,13 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType } from 'vue'
 import { VNodeChild } from '@vue/runtime-core'
+import { Tabs as ATabs } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XTabPane',
-  props: {
-    forceRender: Boolean,
-    tab: Object as PropType<string | VNodeChild>
-  },
+  components: { ATabPane: ATabs.TabPane },
+  props: {},
   setup(props, context) {
-
     return {
       slots: computed(() => Object.keys(context.slots))
     }

@@ -1,7 +1,7 @@
 @import '../variables';
 @import '../mixins';
 
-.smartui-form-item {
+.smartui-form-item:not(.raw) {
   margin-bottom: 0;
   &.#{$ant-prefix}-form-item-with-help {
     margin-bottom: 0;
@@ -44,7 +44,7 @@
   &:not(.error-bottom):hover {
     .#{$ant-prefix}-form-item-explain-error {
       position: absolute;
-      top: -41px;
+      top: -100%;
       left: 0;
       z-index: 10000;
       background-color: white;
@@ -69,7 +69,7 @@
   &.error-bottom:hover {
     .#{$ant-prefix}-form-item-explain-error {
       position: absolute;
-      bottom: -52px;
+      top: calc(100% + 6px);
       left: 0;
       z-index: 10000;
       background-color: white;
@@ -82,7 +82,7 @@
         width: 0;
         height: 0;
         position: absolute;
-        top: -16px;
+        top: -6px;
         left: 0;
         border-left: 10px solid white;
         border-top: 6px solid transparent;
@@ -94,51 +94,46 @@
   // 验证失败时的表单（因为有嵌套表单的存在，这里必须一层层下探到指定元素）
   &.#{$ant-prefix}-form-item-has-error {
     & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input-affix-wrapper:not(.raw) {
-      &.#{$ant-prefix}-input-affix-wrapper {
+      &.smartui-input-no-underline.#{$ant-prefix}-input-affix-wrapper {
+        border-color: $color-danger;
+        &-focused, &:hover {
+          border-color: $color-danger;
+        }
+      }
+      &:not(.smartui-input-no-underline).#{$ant-prefix}-input-affix-wrapper {
         @include input-underline($color-danger);
         &-focused, &:hover {
           @include input-underline($color-danger);
         }
       }
-
     }
     & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input:not(.raw) {
-      &.#{$ant-prefix}-input {
+      &.#{$ant-prefix}-input.smartui-input-no-underline {
+        border-color: $color-danger;
+      }
+      &.#{$ant-prefix}-input:not(.smartui-input-no-underline) {
         @include input-underline($color-danger);
       }
     }
   }
 }
 
-.#{$ant-prefix}-form.#{$ant-prefix}-form-horizontal {
-  // 默认右对齐 -> 左对齐
-  // 保持居中
-  .#{$ant-prefix}-form-item-label {
-    display: inline-flex;
-    align-items: center;
+.smartui-form-item.raw {
+  margin-bottom: 0;
 
-    & > label {
-      min-height: 50px;
-    }
+  .antv-form-item-control-input {
+    min-height: 30px;
   }
 
-  // 居中
-  .#{$ant-prefix}-form-item-control {
-    // default flex-direction: column
-    justify-content: center;
+  .antv-form-item-explain, .antv-form-item-extra {
+    min-height: 0;
+    padding-top: 0;
+  }
+  .antv-form-item-explain.antv-form-item-explain-error {
+    padding-top: 2px;
   }
 
-  .#{$ant-prefix}-form-item-control-input {
-    min-height: 50px;
-  }
-
-  .#{$ant-prefix}-form-item[autoheight="true"] {
-    .#{$ant-prefix}-form-item-control-input {
-      min-height: unset;
-    }
-  }
-
-  .smartui-form-item-disabled > .#{$ant-prefix}-form-item-label > label {
-    color: $color-text-comment;
+  .antv-form-item {
+    // 会影响原生，没办法了
   }
 }

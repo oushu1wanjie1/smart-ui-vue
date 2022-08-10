@@ -12,6 +12,10 @@
         line-height: 38px;
         color: $color-primary-black;
         font-weight: 400;
+        padding-right: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       // 关闭按钮
       .#{$ant-prefix}-drawer-close {
@@ -71,11 +75,6 @@
     background-color: rgba(234, 234, 234, 0.8);
   }
 
-  // 默认不遮盖 header
-  .#{$ant-prefix}-drawer-right {
-    top: 60px;
-    height: calc(100% - 60px)
-  }
 
   // 例外情况，遮盖 header
   &[fullScreen="true"] {

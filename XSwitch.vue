@@ -7,11 +7,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, onMounted, toRefs, watch } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useModel } from './utils'
+import { Switch as ASwitch } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XSwitch',
+  components: { ASwitch },
   props: {
     checked: {
       type: Boolean,

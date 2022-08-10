@@ -26,7 +26,7 @@ import Icon from '@/smart-ui-vue/helper/Icon.vue'
 
 export default {
   name: 'UnderlineRangePicker',
-  components: { Icon },
+  components: { Icon, ARangePicker: DatePicker.RangePicker },
   inheritAttrs: false,
   props: {
     ...DatePicker.props,

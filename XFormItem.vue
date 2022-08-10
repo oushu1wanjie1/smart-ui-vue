@@ -15,12 +15,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import { tuple } from 'ant-design-vue/es/_util/type'
+import { Form as AForm } from 'ant-design-vue'
 import { VNodeChild } from '@vue/runtime-core'
 
 export default defineComponent({
   name: 'XFormItem',
+  // eslint-disable-next-line vue/no-unused-components
+  components: { AForm, AFormItem: AForm.Item },
   props: {
     /**
      * @type {String}

@@ -123,3 +123,9 @@ export const uuid = ({ dash } = { dash: true }) => {
   if (!dash) result = result.replaceAll('-', '')
   return result
 }
+
+export function windowOpen(url: string, strWindowName: string) {
+  window.open(url, strWindowName)
+}
+
+export const isProduction = process.env.NODE_ENV === 'production'

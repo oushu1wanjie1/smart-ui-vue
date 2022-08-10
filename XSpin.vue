@@ -5,15 +5,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, Prop } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { Spin as ASpin } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XSpin',
+  components: { ASpin },
   props: {
     // 指定字体大小
     fontSize: {
       type: [String, Number],
-      default: '10px'
+      default: '10px',
     },
   },
   setup(props, context) {
@@ -22,9 +24,9 @@ export default defineComponent({
       // 'font-size':
       dotFontSize: computed(() => {
         return typeof props.fontSize === 'string' ? props.fontSize : `${props.fontSize}px`
-      })
+      }),
     }
-  }
+  },
 })
 </script>
 
@@ -32,10 +34,27 @@ export default defineComponent({
 @import './styles/components/XSpin.scss';
 
 .smartui-spin:not(.raw) {
+  font-size: v-bind(dotFontSize);
   &.#{$ant-prefix}-spin {
     .#{$ant-prefix}-spin-dot {
+      min-height: 6em;
       font-size: v-bind(dotFontSize);
     }
+  }
+}
+
+.antv-spin-nested-loading {
+  font-size: v-bind(dotFontSize);
+
+  .antv-spin.antv-spin-spinning.smartui-spin {
+    min-height: 6em;
+  }
+}
+
+.#{$ant-prefix}-spin-nested-loading > div > .#{$ant-prefix}-table-spin-holder.#{$ant-prefix}-spin {
+  .#{$ant-prefix}-spin-dot {
+    margin: 0;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
