@@ -35,7 +35,12 @@ export default defineComponent({
       if (formRef.value) formRef.value.clearValidate.apply(this, arguments)
     }
     return {
-      formRef
+      formRef,
+      validate,
+      validateFields,
+      scrollToField,
+      resetFields,
+      clearValidate
     }
   }
 })
