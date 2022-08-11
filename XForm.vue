@@ -19,20 +19,20 @@ export default defineComponent({
   },
   setup() {
     const formRef = ref<Record<string, any> | null>(null)
-    const validate = () => {
-      if (formRef.value) formRef.value.validate.apply(this, arguments)
+    const validate = (...args) => {
+      if (formRef.value) formRef.value.validate.apply(this, args)
     }
-    const validateFields = () => {
-      if (formRef.value) formRef.value.validateFields.apply(this, arguments)
+    const validateFields = (...args) => {
+      if (formRef.value) formRef.value.validateFields.apply(this, args)
     }
-    const scrollToField = () => {
-      if (formRef.value) formRef.value.scrollToField.apply(this, arguments)
+    const scrollToField = (...args) => {
+      if (formRef.value) formRef.value.scrollToField.apply(this, args)
     }
-    const resetFields = () => {
-      if (formRef.value) formRef.value.resetFields.apply(this, arguments)
+    const resetFields = (...args) => {
+      if (formRef.value) formRef.value.resetFields.apply(this, args)
     }
-    const clearValidate = () => {
-      if (formRef.value) formRef.value.clearValidate.apply(this, arguments)
+    const clearValidate = (...args) => {
+      if (formRef.value) formRef.value.clearValidate.apply(this, args)
     }
     return {
       formRef,
