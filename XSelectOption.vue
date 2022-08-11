@@ -4,9 +4,10 @@
   </a-select-option>
 </template>
 <script>
-import { SelectOption as ASelectOption } from 'ant-design-vue-3/es/select'
+import { Select } from 'ant-design-vue-3'
+
 export default {
   name: 'XSelectOption',
-  components: { ASelectOption },
+  components: { ASelectOption: Select.Option },
 }
 </script>

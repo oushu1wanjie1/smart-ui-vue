@@ -9,12 +9,14 @@
 import { defineComponent, PropType } from 'vue'
 
 import { ColSize } from 'ant-design-vue/es/grid'
+import { Col as ACol } from 'ant-design-vue'
 
 const stringOrNumber = [String, Number] as PropType<string | number>
 const objectOrNumber = [Object, Number] as PropType<ColSize | number | Record<string, unknown> >
 
 export default defineComponent({
   name: 'XCol',
+  components: { ACol },
   props: {
     span: stringOrNumber,
     order: stringOrNumber,

@@ -15,12 +15,11 @@
 <script>
 import { defineComponent } from 'vue'
 import { Menu } from 'ant-design-vue'
-import AMenuItem from 'ant-design-vue/es/menu/src/MenuItem'
 
 export default defineComponent({
   name: 'XMenuItem',
   // eslint-disable-next-line vue/no-unused-components
-  components: { AMenuItem, Menu },
+  components: { AMenuItem: Menu.Item, Menu },
   props: {
     role: String,
     disabled: Boolean,

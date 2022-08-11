@@ -43,6 +43,7 @@ import { omit } from 'lodash'
 import { useModel } from './utils'
 import inputProps from 'ant-design-vue/es/input/inputProps'
 import PropTypes, { withUndefined } from 'ant-design-vue/es/_util/vue-types'
+import { Input } from 'ant-design-vue'
 
 const TextAreaProps = {
   ...inputProps,
@@ -56,6 +57,7 @@ const TextAreaProps = {
 export default defineComponent({
   inheritAttrs: false,
   props: { ...TextAreaProps },
+  components: { ATextarea: Input.TextArea },
   setup(props, context) {
     const slots = computed(() => {
       return Object.keys(context.slots)

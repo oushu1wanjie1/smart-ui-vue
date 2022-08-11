@@ -8,9 +8,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, Prop } from 'vue'
+import { Radio as ARadio } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XRadio',
+  components: { ARadio },
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))

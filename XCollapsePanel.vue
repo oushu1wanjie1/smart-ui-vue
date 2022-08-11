@@ -8,11 +8,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import ACollapsePanel from 'ant-design-vue-3/es/collapse/CollapsePanel'
+import { Collapse } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XCollapsePanel',
-  components: { ACollapsePanel },
+  components: { ACollapsePanel: Collapse.Panel },
   setup(props, context) {
 
     return {

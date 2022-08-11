@@ -19,10 +19,11 @@
 import { computed, defineComponent, PropType } from 'vue'
 // @ts-ignore
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
+import { Menu } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XSubMenu',
-  components: { Icon },
+  components: { Icon, ASubMenu: Menu.SubMenu },
   props: {
     /**
      * 是否禁用

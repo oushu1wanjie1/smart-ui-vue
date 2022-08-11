@@ -8,9 +8,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
+import { Upload as AUpload } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XUpload',
+  components: { AUpload },
   props: {
     type: {
       type: String as PropType<'select' | 'drag'>,
