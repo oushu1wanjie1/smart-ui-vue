@@ -1,3 +1,4 @@
+// TODO: 和constant合并， 级联记得改一下
 const VARS = {
   '@ant-prefix': 'antv',
   // 全局主色

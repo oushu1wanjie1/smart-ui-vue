@@ -11,6 +11,7 @@ export const DEBOUNCE_GAP = 800
 
 export default defineComponent({
   name: 'LavaOperationSearch',
+  inheritAttrs: false,
   components: { XInputSearch },
   props: {
     loading: {
@@ -28,6 +29,7 @@ export default defineComponent({
       value: ''
     })
     watch(() => state.value, debounce((val) => {
+      console.log('state.value', state.value)
       emit('change', val || '')
     }, DEBOUNCE_GAP))
     return {

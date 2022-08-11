@@ -7,12 +7,13 @@
       :is="itemLibs[name]"
       v-model:value="paramsLocal[item.key]"
       :class="{ 'operation': true, 'placement-right': item.right }"
+      @change="$ev => handleParamsChange(item.key, $ev)"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType, provide, watch } from 'vue'
+import { computed, defineComponent, inject, PropType, provide, watch, WritableComputedRef } from 'vue'
 import { LavaOperationsItemParams } from '@/smart-ui-vue/lava/LavaOpeartions/index'
 import internalLibs from '@/smart-ui-vue/lava/LavaOpeartions/libs/index'
 import { useModel } from '@/smart-ui-vue/utils'
@@ -44,7 +45,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const paramsLocal = useModel('params', props, context)
+    const paramsLocal = useModel('params', props, context) as WritableComputedRef<Record<any, any>>
     const scope = inject('scope')
 
     // provide父组件状态
@@ -80,12 +81,18 @@ export default defineComponent({
       }
     }
 
+    // 数据参数发生变化
+    function handleParamsChange(key: string, value: any) {
+      paramsLocal.value[key] = value
+    }
+
     return {
       paramsLocal,
       createBindProps,
       scope,
       // 所有item组件库
-      itemLibs: itemLibsRef
+      itemLibs: itemLibsRef,
+      handleParamsChange
     }
   }
 })

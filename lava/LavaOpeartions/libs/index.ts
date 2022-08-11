@@ -1,4 +1,4 @@
 import Search from './Search/index.vue'
-export default [
+export default [{
   Search,
-]
+}]
