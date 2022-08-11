@@ -1,0 +1,14 @@
+@import '../../variables';
+@import '../../mixins';
+@import './directory-tree.scss';
+
+.smartui-tree:not(.raw) {
+  &.#{$ant-prefix}-tree {
+    // tree的样式
+    // directory-tree的样式
+    &.smartui-tree-directory {
+      @include directory-tree
+    }
+  }
+
+}

@@ -9,12 +9,11 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { TimePicker } from 'ant-design-vue-3'
-import { TimeRangePicker as ATimeRangePicker } from 'ant-design-vue-3/es/time-picker/dayjs'
 
 export default defineComponent({
   name: 'XTimeRangePicker',
   // eslint-disable-next-line vue/no-unused-components
-  components: { TimePicker, ATimeRangePicker },
+  components: { TimePicker, ATimeRangePicker: TimePicker.TimeRangePicker },
   setup(props, context) {
     return {
       slots: computed(() => Object.keys(context.slots))

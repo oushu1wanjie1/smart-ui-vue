@@ -14,12 +14,14 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, Ref, ComponentPublicInstance } from 'vue'
 import { useInjectAnchor } from 'ant-design-vue/lib/anchor/context'
+import { Anchor as AAnchor } from 'ant-design-vue'
 
 const BASE_OFFSET = 17
 const DEPTH_OFFSET = 16
 
 export default defineComponent({
   name: 'XAnchorLink',
+  components: { AAnchorLink: AAnchor.Link },
   props: {
     depth: {
       type: Number,

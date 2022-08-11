@@ -8,11 +8,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { MenuTheme } from 'ant-design-vue'
+import { MenuTheme, Menu as AMenu } from 'ant-design-vue'
 import { MenuMode } from 'ant-design-vue/es/menu/src/interface'
 
 export default defineComponent({
   name: 'XMenu',
+  components: { AMenu },
   props: {
     /**
      * 用户鼠标离开子菜单后关闭延时，单位：秒

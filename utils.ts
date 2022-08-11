@@ -127,3 +127,5 @@ export const uuid = ({ dash } = { dash: true }) => {
 export function windowOpen(url: string, strWindowName: string) {
   window.open(url, strWindowName)
 }
+
+export const isProduction = process.env.NODE_ENV === 'production'
