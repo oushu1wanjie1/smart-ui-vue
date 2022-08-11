@@ -1,0 +1,40 @@
+$temp-font-size-normal: 12px;
+$temp-font-size-big: 14px;
+$temp-font-size-large: 16px;
+
+@mixin directory-tree {
+  font-size: $temp-font-size-normal;
+  .#{$ant-prefix}-tree-treenode {
+    height: 40px;
+    padding-bottom: 0;
+    padding-left: 20px;
+    align-items: center;
+    // switcher图标
+    .#{$ant-prefix}-tree-switcher {
+      width: 18px;
+      display: flex;
+      align-items: center;
+    }
+    // hover div
+    &:before {
+      bottom: 0;
+    }
+    // 文本
+    .#{$ant-prefix}-tree-node-content-wrapper {
+      padding-left: 0;
+      margin-left: -3px;
+    }
+  }
+  // selected效果
+  .#{$ant-prefix}-tree-treenode-selected {
+    &:before {
+      background-color: $color-primary-blue-light;
+    }
+    // 文本
+    .#{$ant-prefix}-tree-node-content-wrapper {
+      .#{$ant-prefix}-tree-title {
+        color: $color-primary-blue;
+      }
+    }
+  }
+}
