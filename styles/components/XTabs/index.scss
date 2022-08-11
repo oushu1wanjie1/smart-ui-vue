@@ -14,6 +14,7 @@
       // tab 标签
       .#{$ant-prefix}-tabs-tab {
         @include font-normal();
+        padding: 5px 0 10px 0;
 
         .x-ant-tabs-icon-active {
           display: none;
