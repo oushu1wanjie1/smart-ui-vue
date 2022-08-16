@@ -1,11 +1,11 @@
 <template>
   <x-tooltip v-if="tooltipContent" :title="tooltipContent" :overlayClassName="tooltipClassName">
     <svg :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
-      <use :xlink:href="`#${MODULE_NAME}/${namespace}${namespace ? '/': ''}${name}`"></use>
+      <use :xlink:href="`#${MODULE_NAME || fallbackModuleName}/${namespace}${namespace ? '/': ''}${name}`"></use>
     </svg>
   </x-tooltip>
   <svg v-else :image="image" class="icon" :class="iconExtraClass" :style="iconExtraStyle" :disabled="disabled" @click="handleClick">
-    <use :xlink:href="`#${MODULE_NAME}/${namespace}${namespace ? '/': ''}${name}`"></use>
+    <use :xlink:href="`#${MODULE_NAME || fallbackModuleName}/${namespace}${namespace ? '/': ''}${name}`"></use>
   </svg>
 </template>
 
@@ -67,6 +67,11 @@ export default {
         return {}
       },
     },
+    // 当获取不到provide的ModuleName时，通过这个参数手动添加
+    fallbackModuleName: {
+      type: String,
+      default: ''
+    }
   },
   emits: ['click'],
   setup(props: any, context: any) {
