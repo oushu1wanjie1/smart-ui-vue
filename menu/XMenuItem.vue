@@ -14,9 +14,11 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { Menu } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XMenuItem',
+  components: { AMenuItem: Menu.Item },
   props: {
     role: String,
     disabled: Boolean,
