@@ -54,7 +54,7 @@
   // 下拉框展开式定制箭头旋转
   &:not(.#{$ant-prefix}-select-customize-input).#{$ant-prefix}-select-show-arrow.#{$ant-prefix}-select-open {
     .#{$ant-prefix}-select-selection-item {
-      color: $color-primary-black;
+      color: $color-text-comment;
     }
 
     .x-select-custom-arrow {
