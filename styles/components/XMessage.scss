@@ -5,7 +5,7 @@
   @include font-normal;
 }
 .#{$ant-prefix}-message-notice-content {
-  padding: 0;
+  padding: 0 !important;
 
   .#{$ant-prefix}-message-custom-content {
     display: inline-flex;
