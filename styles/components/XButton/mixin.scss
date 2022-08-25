@@ -216,10 +216,10 @@
   width: 26px;
   box-shadow: none;
 
-  @include button-variant-other($btn-default-color, $color-primary-blue-light, transparent);
+  @include button-variant-other($btn-default-active-color, $color-primary-blue, $color-primary-blue);
   &:hover {
     box-shadow: none;
-    @include button-variant-other($btn-default-active-color, $btn-default-color,  transparent);
+    @include button-variant-other($btn-default-active-color, $color-primary-blue-heavy,  $color-primary-blue-heavy);
   }
 
   //&:focus {
@@ -227,9 +227,10 @@
   //  @include button-variant-other($btn-default-active-color, rgba($color-primary-blue, .4), transparent);
   //}
 
-  &:active {
-    box-shadow: none;
-    @include button-variant-other($btn-default-active-color, $btn-primary-active-bg-color, transparent);
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 2px $color-primary-blue-light;
+    @include button-variant-other($btn-default-active-color, $color-primary-blue-heavy, $color-primary-blue-heavy);
   }
 
   &[disabled] {
@@ -237,10 +238,11 @@
     &:hover,
     &:active {
       box-shadow: none;
-      @include button-color($btn-default-color, transparent, $color-line-bold);
-      .icon {
-        opacity: .3;
-      }
+      @include button-color($btn-default-active-color, $btn-primary-active-bg-color, $btn-primary-active-bg-color);
+      opacity: .3;
+      //.icon {
+      //  opacity: .3;
+      //}
     }
   }
 }
