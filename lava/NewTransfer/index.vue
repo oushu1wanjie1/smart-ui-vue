@@ -88,8 +88,6 @@
 import { computed, defineComponent, PropType, reactive, Ref, ref, watch } from 'vue'
 import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import http, { Response } from 'lava-fe-lib/lib-common/http'
-// @ts-ignore
-// import smartUI from '../../index.ts'
 import { useModel } from '@/smart-ui-vue/utils'
 import LavaUserInfo from '@/smart-ui-vue/lava/LavaUserInfo.vue'
 import qs from 'qs'

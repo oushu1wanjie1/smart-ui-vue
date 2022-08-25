@@ -4,6 +4,7 @@ $ant-prefix: 'antv';
 //  -----颜色-----
 // 主色调
 $color-primary-blue: #336CFF; // 主色调-蓝色
+$color-primary-blue-20p: rgba(51, 108, 255, 0.2); // 主色调-蓝色-20%
 $color-primary-blue-light: rgba(51, 108, 255, 0.2);
 $color-primary-orange: #F5991B; // 主色调-橙色
 $color-primary-black: #282B2E;
@@ -25,6 +26,7 @@ $color-bg: linear-gradient(0deg, #F1F1F1 57.89%, #FFFFFF 92.8%, #FFFFFF 95.08%);
 // 分割线颜色
 $color-line-light: #f6f6f6; // 分割线-浅
 $color-line-bold: #D5D8DB; // 分割线-深
+$color-line-bold-50p: rgba(213, 216, 219, 0.5); // 分割线-深-50%
 $color-line-black: $color-primary-black; // 分割线-黑
 
 // 提示色
@@ -47,6 +49,7 @@ $font-size-small: 12px;
 // 行高
 $font-line-height-small: 16px;
 $font-line-height-normal: 20px;
+$font-line-height-big: 22px;
 $font-line-height-large: 24px;
 
 // ----- svg ------

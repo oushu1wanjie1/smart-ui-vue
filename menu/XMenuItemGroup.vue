@@ -10,9 +10,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Menu } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'XMenuItemGroup',
+  components: { AMenuItemGroup: Menu.ItemGroup },
   slots: ['title'],
   props: {
     title: String

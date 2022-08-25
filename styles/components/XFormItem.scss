@@ -94,13 +94,13 @@
   // 验证失败时的表单（因为有嵌套表单的存在，这里必须一层层下探到指定元素）
   &.#{$ant-prefix}-form-item-has-error {
     & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input-affix-wrapper:not(.raw) {
-      &.smartui-input-no-underline.#{$ant-prefix}-input-affix-wrapper {
+      &.#{$ant-prefix}-input-affix-wrapper.smartui-input-no-underline {
         border-color: $color-danger;
         &-focused, &:hover {
           border-color: $color-danger;
         }
       }
-      &:not(.smartui-input-no-underline).#{$ant-prefix}-input-affix-wrapper {
+      &.#{$ant-prefix}-input-affix-wrapper:not(.smartui-input-no-underline) {
         @include input-underline($color-danger);
         &-focused, &:hover {
           @include input-underline($color-danger);
