@@ -1,27 +1,25 @@
 <template>
   <div class="lava-user-info">
     <lava-avatar v-if="showAvatar" :user-id="id" class="user-avatar"/>
-    <div class="user-info">
-      <!--      name      -->
-      <div>
-        <slot name="extra"/>
-        <x-button
-          v-if="id && name"
-          class="user-name"
-          type="link"
-          @click="$router.push(`/main/UserCenter/user/${id}`)"
-          :title="name"
-        >
-          {{ name }}
-        </x-button>
-        <span v-else-if="id" :title="defaultName">{{ defaultName }}</span>
-        <span v-else title="已注销">已注销</span>
-      </div>
-      <!--     remark       -->
-      <span v-if="id && remark" class="name-remark" :title="remark">{{ remark }}</span>
-      <span v-else-if="id" class="logoff-remark" :title="defaultRemark">{{ defaultRemark }}</span>
-      <span v-else class="logoff-remark" title="已注销">已注销</span>
+    <!--      name      -->
+    <div>
+      <slot name="extra"/>
+      <x-button
+        v-if="id && name"
+        class="user-name"
+        type="link"
+        @click="$router.push(`/main/UserCenter/user/${id}`)"
+        :title="name"
+      >
+        {{ name }}
+      </x-button>
+      <span v-else-if="id" :title="defaultName">{{ defaultName }}</span>
+      <span v-else title="已注销">已注销</span>
     </div>
+    <!--     remark       -->
+    <span v-if="id && remark" class="name-remark" :title="remark">{{ remark }}</span>
+    <span v-else-if="id" class="logoff-remark" :title="defaultRemark">{{ defaultRemark }}</span>
+    <span v-else class="logoff-remark" title="已注销">已注销</span>
   </div>
 </template>
 
@@ -79,39 +77,30 @@ export default defineComponent({
     flex-shrink: 0;
   }
 
-  .user-info {
-    display: flex;
-    flex-direction: column;
-    color: $color-text-comment;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  // 加权重
+  .user-name.#{$ant-prefix}-btn {
+    justify-content: flex-start;
+    padding: 0;
+    margin-right: 10px;
+    max-width: 100%;
 
-    // 加权重
-    .user-name.#{$ant-prefix}-btn {
-      justify-content: flex-start;
-      height: 20px;
-      padding: 0;
-      margin-bottom: 2px;
-      max-width: 100%;
-
-      > span {
-        overflow: hidden; //超出一行文字自动隐藏
-        text-overflow: ellipsis; //文字隐藏后添加省略号
-        white-space: nowrap; //强制不换行
-      }
-    }
-
-    .name-remark {
-      color: $color-primary-black;
-    }
-
-    .name-remark,
-    .logoff-remark {
-      @include font-small();
+    > span {
       overflow: hidden; //超出一行文字自动隐藏
       text-overflow: ellipsis; //文字隐藏后添加省略号
       white-space: nowrap; //强制不换行
     }
+  }
+
+  .name-remark {
+    color: $color-primary-black;
+  }
+
+  .name-remark,
+  .logoff-remark {
+    @include font-small();
+    overflow: hidden; //超出一行文字自动隐藏
+    text-overflow: ellipsis; //文字隐藏后添加省略号
+    white-space: nowrap; //强制不换行
   }
 }
 </style>
