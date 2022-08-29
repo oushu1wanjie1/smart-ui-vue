@@ -145,7 +145,7 @@
 @mixin btn-link {
   @include button-variant-other($btn-default-color, transparent, transparent);
   border: none;
-  font-size: 14px;
+  font-size: $font-size-normal;
   height: unset;
   justify-content: space-between;
   &,

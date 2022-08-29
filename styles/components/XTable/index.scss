@@ -12,10 +12,6 @@
 
 .smartui-table:not(.raw) {
   &.#{$ant-prefix}-table-wrapper {
-    .#{$ant-prefix}-table {
-      //border-bottom: 1px solid $color-line-bold;
-    }
-
     // 表格空状态
     @include empty;
 
@@ -54,10 +50,6 @@
     // 表格tr
     .#{$ant-prefix}-table-tbody > tr {
       position: relative;
-
-      &:last-of-type > td {
-        border-bottom-color: transparent;
-      }
     }
     // 表格td
     .#{$ant-prefix}-table-tbody > tr > td {
@@ -76,6 +68,10 @@
     // 表格hover效果
     .#{$ant-prefix}-table-tbody > tr:hover > td {
       background-color: $color-line-light;
+    }
+    // 移除表格最后一行的底边border
+    .#{$ant-prefix}-table-tbody > tr:last-of-type > td {
+      border-bottom-color: transparent;
     }
     // fixed table divider
     .#{$ant-prefix}-table.#{$ant-prefix}-table-layout-fixed {
