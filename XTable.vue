@@ -143,10 +143,11 @@ export default defineComponent({
     },
     emptyImage: {
       type: String,
-      default: '',
+      default: 'ui-empty/empty',
     },
     emptyDescription: {
       type: String,
+      default: '暂无数据'
     },
     conditionalEmptyImage: {
       type: String,
