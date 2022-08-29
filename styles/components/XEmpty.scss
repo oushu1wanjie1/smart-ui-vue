@@ -5,9 +5,10 @@
   &.#{$ant-prefix}-empty {
     .#{$ant-prefix}-empty-image {
       height: auto;
+      margin-bottom: 4px;
     }
     .#{$ant-prefix}-empty-description {
-      color: $color-primary-black;
+      color: $color-line-bold;
       //font-size: 18px;
       //font-weight: normal;
       @include font-normal;

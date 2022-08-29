@@ -54,14 +54,14 @@
       </template>
     </template>
     <template v-if="(isEmpty || isConditionalEmpty) && !slots.includes('footer')" #footer>
-      <x-empty v-if="isEmpty" :description="emptyDescription" :image="emptyImage"
-               :image-style="{ width: '180px', height: '164.55px' }">
+      <x-empty v-if="isEmpty" :description="emptyDescription || '暂无数据'" :image="emptyImage"
+               :image-style="{ width: '80px', height: '73.13px' }">
         <template #description>
           <slot name="emptyDescription"></slot>
         </template>
       </x-empty>
-      <x-empty v-if="isConditionalEmpty" :description="conditionalEmptyDescription" :image="conditionalEmptyImage"
-               :image-style="{ width: '180px', height: '164.55px' }">
+      <x-empty v-if="isConditionalEmpty" :description="conditionalEmptyDescription || '暂无数据'" :image="conditionalEmptyImage"
+               :image-style="{ width: '80px', height: '73.13px' }">
         <template #description>
           <slot name="conditionalEmptyDescription"></slot>
         </template>
@@ -141,13 +141,15 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    // 空状态图片
     emptyImage: {
       type: String,
       default: 'ui-empty/empty',
     },
+    // 空状态描述，不填则使用默认值"暂无数据"，默认值的颜色为灰色，非默认值的颜色为黑色，如果需要别的颜色自行修改
     emptyDescription: {
       type: String,
-      default: '暂无数据'
+      default: ''
     },
     conditionalEmptyImage: {
       type: String,
