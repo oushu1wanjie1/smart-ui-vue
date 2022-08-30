@@ -10,9 +10,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { Button as AButton } from 'ant-design-vue-3'
 import Icon from './helper/Icon.vue'
+import { ButtonType } from 'ant-design-vue/es/button'
 
 export default defineComponent({
   name: 'XButton',
@@ -26,6 +27,9 @@ export default defineComponent({
      * 作为 icon 组件的 name
      */
     iconName: String,
+    type: String as PropType<ButtonType>,
+    disabled: Boolean,
+    loading: Boolean
   },
   setup(props, context) {
     return {
