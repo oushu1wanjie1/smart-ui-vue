@@ -27,7 +27,9 @@
           </x-collapse-transition>
         </div>
         <div class="x-vertical-step-title-options">
-          <icon v-if="showCollapse" class="collapse-icon" color="#85888C" name="ui-vertical-step/collapse-close"
+          <icon v-if="showCollapse&&(!parent.props.noStep)"
+                class="collapse-icon" color="#85888C"
+                name="ui-vertical-step/collapse-close"
                 @click="toggleOpen"></icon>
           <x-tooltip>
             <template #title>前往设置</template>

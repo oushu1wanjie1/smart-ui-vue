@@ -1,5 +1,5 @@
 <template>
-  <div class="x-vertical-steps">
+  <div :class="{'no-step':noStep}" class="x-vertical-steps">
     <slot></slot>
   </div>
 </template>
@@ -19,6 +19,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    noStep: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [],
   setup(props) {
@@ -31,5 +35,14 @@ export default defineComponent({
 
 <style lang="scss">
 .x-vertical-steps {
+  &.no-step {
+    .x-vertical-step.open .x-vertical-step-container {
+      border-color: transparent !important;
+    }
+  }
+
+  .x-vertical-step-container {
+    cursor: auto !important;
+  }
 }
 </style>
