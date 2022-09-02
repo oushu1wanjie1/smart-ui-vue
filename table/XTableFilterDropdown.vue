@@ -5,21 +5,22 @@
       :key="item.value"
       :class="{
         'filter-item': true,
-        'filter-item-selected': scope.selectedKeys.includes(item.value)
+        'filter-item-selected': checkIfItemSelected(item, scope)
       }"
-      @click="handleFilterItemClick(item, scope, column)">
+      @click="handleItemClick(item, scope)">
       <span>{{ item.text }}</span>
     </div>
   </div>
-  <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">
+<!--  多选的确认按钮-->
+  <x-button v-if="scope.column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">
     确定
   </x-button>
 </template>
 
 <script lang="ts" setup>
 import XButton from '@/smart-ui-vue/XButton.vue'
-import { defineProps, inject, nextTick, PropType, Ref } from 'vue'
-import { ColumnFilterItem, ColumnType, FilterDropdownProps, Key } from 'ant-design-vue-3/lib/table/interface'
+import { defineProps, inject, PropType, Ref } from 'vue'
+import { ColumnFilterItem, FilterDropdownProps, Key } from 'ant-design-vue-3/lib/table/interface'
 
 defineProps({
   // scope
@@ -31,7 +32,8 @@ defineProps({
 const idInj = inject('id') as string
 const nullFilterValueRefInj = inject('nullFilterValueRef') as Ref
 
-const handleFilterItemClick = (item: ColumnFilterItem, scope: FilterDropdownProps<unknown>, column: ColumnType) => {
+// filter选项点击事件
+const handleItemClick = (item: ColumnFilterItem, scope: FilterDropdownProps<unknown>) => {
   if (item.value === nullFilterValueRefInj.value) {
     // 清除筛选
     if (scope.clearFilters) scope.clearFilters()
@@ -40,7 +42,7 @@ const handleFilterItemClick = (item: ColumnFilterItem, scope: FilterDropdownProp
     let value: Key[] = []
     // 建议不要用布尔值做value
     if (typeof item.value === 'boolean') return
-    if (column.filterMultiple) {
+    if (scope.column.filterMultiple) {
       // 多选操作
       value = [...scope.selectedKeys]
       // 反选
@@ -53,10 +55,16 @@ const handleFilterItemClick = (item: ColumnFilterItem, scope: FilterDropdownProp
     }
     scope.setSelectedKeys(value)
   }
-  if (!column.filterMultiple) scope.confirm()
+  // 如果是单选直接提交；如果是多选，不在此处提交，点击确认按钮才提交
+  if (!scope.column.filterMultiple) scope.confirm()
+}
+
+// 检测filter item是否被选中
+const checkIfItemSelected = (item: ColumnFilterItem, scope: FilterDropdownProps<unknown>) => {
+  return typeof(item.value) !== 'boolean' && scope.selectedKeys.includes(item.value)
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>

@@ -1,5 +1,6 @@
-import { TableColumnProps } from 'ant-design-vue-3'
+import { Table, TableColumnProps } from 'ant-design-vue-3'
 import { ColumnFilterItem } from 'ant-design-vue-3/lib/table/interface'
+import { DefineComponent, Ref } from 'vue'
 
 // XTable的filter item, 除了text和value外可以加其他参数
 export type XTableColumnFilterItem = ColumnFilterItem & Record<string, unknown>
@@ -29,6 +30,13 @@ export interface XTableState {
   // table唯一标识
   id: string,
   // 所有动态加载的filters列表
-  dynamicFilters: Record<string, { item: XTableColumnFilterItem[], pageNum: number }>
+  dynamicFilters: Record<string, { item: XTableColumnFilterItem[], pageNum: number }>,
+  // 最终控制空状态table高度的值
+  finalEmptyHeight: string
 }
 
+export type XTableHandlerParams = {
+  state: XTableState,
+  propEmptyHeight: Ref<string>
+  aTableRef: Ref<InstanceType<typeof Table> | null>
+}

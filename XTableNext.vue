@@ -7,9 +7,11 @@
       'smartui-table-edit': editTable,
       'smartui-table-divider': divider
     }"
+    ref="aTableRef"
     :columns="mergedColumnsCpt"
     :loading="loading"
     :pagination="mergedPaginationCpt"
+    :style="{ height: dataSource.length ? emptyHeight : 'auto' }"
   >
 <!--    兼容antd2.x的写法，因为3.x的column不能再配置slots-->
 <!--    slots.title to headerCell-->
@@ -26,48 +28,73 @@
 <!--    slot.filterDropdown to customFilterDropdown-->
     <template v-slot:customFilterDropdown="scope">
       <!--      用户自定义的filter-->
-      <slot v-if="columnsWithSlotsCpt.customFilterDropdown[scope.column.key]" :name="columnsWithSlotsCpt.customFilterDropdown[scope.column.key]" v-bind="scope" />
+      <slot
+        v-if="columnsWithSlotsCpt.customFilterDropdown[scope.column.key]"
+        :name="columnsWithSlotsCpt.customFilterDropdown[scope.column.key]"
+        v-bind="scope"
+      />
       <!--      默认的filter-->
-      <template v-else>
-        <div :id="`filter-${id}-${scope.column.key}`" :class="{'filter-container': true, 'filter-container-multiple': scope.column.filterMultiple }">
-          <div
-            v-for="item in scope.filters"
-            :key="item.value"
-            :class="{
-              'filter-item': true,
-              'filter-item-selected': scope.selectedKeys.includes(item.value)
-            }"
-            @click="handleFilterItemClick(item, scope, column)">
-            <span>{{ item.text }}</span>
-          </div>
-        </div>
-        <x-button v-if="column.filterMultiple" class="filter-multiple-confirm-btn" type="link" @click="scope.confirm()">
-          确定
-        </x-button>
-      </template>
+      <x-table-filter-dropdown v-else :scope="scope" />
     </template>
 <!--    slot.filterIcon 使用固定的icon-->
     <template v-slot:customFilterIcon>
       <icon class="btn-filter-icon" color="currentColor" name="ui-table/filter"/>
     </template>
+<!--    空状态-->
+    <template #emptyText>
+      <x-empty :description="emptyDescription" :image="emptyImage"
+               :image-style="{ width: '80px', height: '73.13px' }">
+        <template #description>
+          <slot name="emptyDescription"></slot>
+        </template>
+      </x-empty>
+    </template>
   </a-table>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, h, PropType, provide, reactive, ref, toRefs } from 'vue'
+import {
+  computed,
+  defineComponent,
+  h,
+  inject,
+  nextTick,
+  onMounted,
+  PropType,
+  provide,
+  reactive,
+  ref,
+  toRefs
+} from 'vue'
 import { Table as ATable } from 'ant-design-vue-3'
-import { XTableColumnFilterItem, XTableColumnProps, XTableState } from '@/smart-ui-vue/table/x-table'
-import { uuid } from '@/smart-ui-vue/utils'
+import {
+  XTableColumnFilterItem,
+  XTableColumnProps,
+  XTableHandlerParams,
+  XTableState
+} from '@/smart-ui-vue/table/x-table'
+import { toHandler, toNewFuncMap, useHandler, useHandler1, uuid } from '@/smart-ui-vue/utils'
 import Icon from '@/components/Icon.vue'
 import { TablePaginationConfig } from 'ant-design-vue-3/lib/table/interface'
+import XTableFilterDropdown from '@/smart-ui-vue/table/XTableFilterDropdown.vue'
+import XEmpty from '@/smart-ui-vue/XEmpty.vue'
+
+// header高度(px)，用于计算空状态高度
+const HEADER_HEIGHT = 60
+// main-container margin(px)，用于计算空状态高度,包含上下margin
+const MAIN_CONTAINER_MARGIN = 20
 
 export default defineComponent({
   name: 'XTableNext',
-  components: { Icon, ATable },
+  components: { XEmpty, XTableFilterDropdown, Icon, ATable },
   props: {
     columns: {
       type: [Array, null] as PropType<XTableColumnProps[] | null>,
       default: null,
+    },
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     // 是否给table添加边框
     // 效果
@@ -112,23 +139,47 @@ export default defineComponent({
     nullFilterValue: {
       default: '',
     },
+    // 空状态图片
+    emptyImage: {
+      type: String,
+      default: 'ui-empty/empty',
+    },
+    // 空状态描述，默认值"暂无数据"
+    emptyDescription: {
+      type: String,
+      default: '暂无数据'
+    },
+    // 空状态时高度，默认为auto
+    emptyHeight: {
+      type: String,
+      default: 'auto'
+    },
   },
   setup(props) {
     const {
       columns: propColumns,
       pagination: propPagination,
       customPageSize: propCustomPageSize,
-      nullFilterValue: propNullFilterValue
+      nullFilterValue: propNullFilterValue,
+      emptyHeight: propEmptyHeight
     } = toRefs(props)
+
     const state: XTableState = reactive({
       id: uuid(),
-      dynamicFilters: (props.columns || []).filter(item => item.key && item.filters instanceof Function).reduce((prev, item) => {
+      dynamicFilters: (propColumns.value || []).filter(item => item.key && item.filters instanceof Function).reduce((prev, item) => {
         return {
           ...prev,
           [item.key as string]: { item: [], pageNum: 1 },
         }
       }, {} as Record<string, { item: XTableColumnFilterItem[], pageNum: number }>),
+      finalEmptyHeight: propEmptyHeight.value
     })
+
+    // 模块名，用于配置sorter图标样式
+    const MODULE_NAME = inject('$moduleName')
+
+    // a-table el实例
+    const aTableRef = ref<InstanceType<typeof ATable> | null>(null)
 
     // 所有antd2.x slots映射到antd3.x slot的column HashMap
     const columnsWithSlotsCpt = computed(() => {
@@ -186,6 +237,15 @@ export default defineComponent({
       return result
     })
 
+    handler.setEmptyHeight('111')
+    handler1.setEmptyHeight('1111')
+
+    onMounted(() => {
+      nextTick(() => {
+        handler.setEmptyHeight('1111')
+      })
+    })
+
     provide('id', state.id)
     provide('nullFilterValueRef', propNullFilterValue)
 
@@ -197,6 +257,16 @@ export default defineComponent({
     }
   }
 })
+
+// 设置高度
+function setEmptyHeight({ state, propEmptyHeight, aTableRef }: XTableHandlerParams, test: string): void {
+  console.log(test)
+  if (aTableRef.value && propEmptyHeight.value === 'auto') {
+    state.finalEmptyHeight = `
+      calc(100vh - ${(aTableRef.value.$el as HTMLElement).getBoundingClientRect().top - HEADER_HEIGHT - MAIN_CONTAINER_MARGIN}px)
+    `
+  }
+}
 </script>
 
 <style scoped>
