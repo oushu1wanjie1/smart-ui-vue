@@ -35,8 +35,9 @@ export interface XTableState {
   finalEmptyHeight: string
 }
 
-export type XTableHandlerParams = {
+export type XTableComponentData = {
   state: XTableState,
   propEmptyHeight: Ref<string>
+  propColumns: Ref<XTableColumnProps[] | null>
   aTableRef: Ref<InstanceType<typeof Table> | null>
 }

@@ -129,34 +129,3 @@ export function windowOpen(url: string, strWindowName: string) {
 }
 
 export const isProduction = process.env.NODE_ENV === 'production'
-
-
-export declare function toHandler<T, U extends any[], V>(f: (x: T, ...args: U) => V, x: T): (...args: U) => V
-
-
-type F<T, U extends any[], V, S extends string> = Record<S, (x: T, ...args: U) => V>
-
-export const useHandler = <T, U extends any[], V, S extends string>(params: T, functions: F<T, U, V, S>) => {
-  const result = {} as Record<S, (...args: U) => V>
-  (Object.keys(functions) as S[]).forEach(key => {
-    result[key] = (...args) => functions[key](params, ...args)
-  })
-  return result
-}
-
-export const useHandler1 = <T, U extends any[], V, K extends string>(params: T, functions: Record<K, (p: T, ...args: U) => V>) => {
-  const result = {} as Record<K, (...args: U) => V>
-  (Object.keys(functions) as K[]).forEach(key => {
-    result[key] = (...args) => functions[key](params, ...args)
-  })
-  return result
-}
-
-// declare function bind<T, U extends any[], V>(f: (x: T, ...args: U) => V, x: T): (...args: U) => V;
-//
-// declare function f3(x: number, y: string, z: boolean): void;
-//
-// const f2 = bind(f3, 42) // (y: string, z: boolean) => void
-// const f1 = bind(f2, 'hello') // (z: boolean) => void
-// const f0 = bind(f1, true) // () => void
-

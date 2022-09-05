@@ -43,7 +43,7 @@
 <!--    空状态-->
     <template #emptyText>
       <x-empty :description="emptyDescription" :image="emptyImage"
-               :image-style="{ width: '80px', height: '73.13px' }">
+               :image-style="{ width: `${DEFAULT_EMPTY_IMAGE_WIDTH}px`, height: `${DEFAULT_EMPTY_IMAGE_HEIGHT}73.13px` }">
         <template #description>
           <slot name="emptyDescription"></slot>
         </template>
@@ -58,7 +58,7 @@ import {
   defineComponent,
   h,
   inject,
-  nextTick,
+  nextTick, onBeforeMount,
   onMounted,
   PropType,
   provide,
@@ -70,19 +70,24 @@ import { Table as ATable } from 'ant-design-vue-3'
 import {
   XTableColumnFilterItem,
   XTableColumnProps,
-  XTableHandlerParams,
+  XTableComponentData,
   XTableState
 } from '@/smart-ui-vue/table/x-table'
-import { toHandler, toNewFuncMap, useHandler, useHandler1, uuid } from '@/smart-ui-vue/utils'
+import { uuid } from '@/smart-ui-vue/utils'
 import Icon from '@/components/Icon.vue'
 import { TablePaginationConfig } from 'ant-design-vue-3/lib/table/interface'
 import XTableFilterDropdown from '@/smart-ui-vue/table/XTableFilterDropdown.vue'
 import XEmpty from '@/smart-ui-vue/XEmpty.vue'
+import { Key } from 'ant-design-vue-3/lib/_util/type'
 
 // header高度(px)，用于计算空状态高度
 const HEADER_HEIGHT = 60
 // main-container margin(px)，用于计算空状态高度,包含上下margin
 const MAIN_CONTAINER_MARGIN = 20
+// 默认空状态图标宽度
+const DEFAULT_EMPTY_IMAGE_WIDTH = 80
+// 默认空状态图标高度
+const DEFAULT_EMPTY_IMAGE_HEIGHT = 78.18
 
 export default defineComponent({
   name: 'XTableNext',
@@ -181,68 +186,32 @@ export default defineComponent({
     // a-table el实例
     const aTableRef = ref<InstanceType<typeof ATable> | null>(null)
 
-    // 所有antd2.x slots映射到antd3.x slot的column HashMap
-    const columnsWithSlotsCpt = computed(() => {
-      const result = {
-        headerCell: {},
-        bodyCell: {},
-        customFilterDropdown: {},
-        customFilterIcon: {}
-      }
-      for (const column of (propColumns.value || [])) {
-        if (column.slots && column.key) {
-          if (column.slots.title) result.headerCell = { ...result.headerCell, [column.key]: column.slots.title }
-          if (column.slots.customRender) result.bodyCell = { ...result.bodyCell, [column.key]: column.slots.customRender }
-          if (column.slots.filterIcon) result.customFilterIcon = { ...result.customFilterIcon, [column.key]: column.slots.filterIcon }
-          if (column.slots.filterDropdown) result.customFilterDropdown = { ...result.customFilterDropdown, [column.key]: column.slots.filterDropdown }
-        }
-      }
-      return result
-    })
+    // antd3.x slot的column HashMap
+    const columnsWithSlotsCpt = computed(() => formatSlot(propColumns.value))
 
     // 处理后的columns的配置
-    const mergedColumnsCpt = computed(() => {
-      if (!propColumns.value) return null
-      return propColumns.value.map(item => {
-        const it = { ...item }
-        // 因为默认的filter也是自定义的，所以始终配置customFilterDropdown为true
-        it.customFilterDropdown = true
-        // 动态配置filter下，劫持默认的filter配置
-        if (item.key && item.filters instanceof Function) it.filters = state.dynamicFilters[item.key].item
-        return it
-      })
-    })
+    const mergedColumnsCpt = computed(() => mergeColumns(state, propColumns.value))
 
     // 处理后的pagination配置
-    const mergedPaginationCpt = computed(() => {
-      // 如果没有配置pagination返回false
-      if (!propPagination.value) return false
-      const result: TablePaginationConfig = {
-        ...propPagination.value,
-        // 配置前进后退按钮样式
-        itemRender: ({ type, originalElement }) => {
-          if (type === 'prev') return h(originalElement, {}, h(Icon, { name: 'ui-table/prev', color: '' }))
-          else if (type === 'next') return h(originalElement, {}, h(Icon, { name: 'ui-table/next', color: '' }))
-          else return originalElement
-        },
-        // 默认显示每页条数切换选择器
-        showSizeChanger: true,
-        // 同步每页条数切换选择器的变化到所有表格(CustomPageSize = false的)
-        onShowSizeChange: (current, size) => {
-          if (!propCustomPageSize.value) window.localStorage.setItem('PAGE_SIZE', String(size))
-        },
-      }
-      // 初始化时从系统localstorage获取pagesize
-      if (!propCustomPageSize.value) result.pageSize = Number(window.localStorage.getItem('PAGE_SIZE')) || 20
-      return result
-    })
+    const mergedPaginationCpt = computed(() => mergePagination(state, propPagination.value, propCustomPageSize.value))
 
-    handler.setEmptyHeight('111')
-    handler1.setEmptyHeight('1111')
+    const componentData: XTableComponentData = {
+      state,
+      propEmptyHeight,
+      propColumns,
+      aTableRef
+    }
+
+    const handleSetEmptyHeight = () => _handleSetEmptyHeight(componentData)
+    const handleInitDynamicFilters = () => _handleInitDynamicFilters(componentData)
+
+    onBeforeMount(() => {
+      handleInitDynamicFilters()
+    })
 
     onMounted(() => {
       nextTick(() => {
-        handler.setEmptyHeight('1111')
+        handleSetEmptyHeight()
       })
     })
 
@@ -250,6 +219,8 @@ export default defineComponent({
     provide('nullFilterValueRef', propNullFilterValue)
 
     return {
+      DEFAULT_EMPTY_IMAGE_WIDTH,
+      DEFAULT_EMPTY_IMAGE_HEIGHT,
       ...toRefs(state),
       columnsWithSlotsCpt,
       mergedColumnsCpt,
@@ -258,14 +229,108 @@ export default defineComponent({
   }
 })
 
-// 设置高度
-function setEmptyHeight({ state, propEmptyHeight, aTableRef }: XTableHandlerParams, test: string): void {
-  console.log(test)
+/**
+ * 将2.x的column式的slot结构同步成3.x的table prop式的slot结构
+ * @param columns columns配置列表
+ */
+function formatSlot(columns?: XTableColumnProps[] | null) {
+  const result = {
+    headerCell: {},
+    bodyCell: {},
+    customFilterDropdown: {},
+    customFilterIcon: {}
+  }
+  for (const column of (columns || [])) {
+    if (column.slots && column.key) {
+      if (column.slots.title) result.headerCell = { ...result.headerCell, [column.key]: column.slots.title }
+      if (column.slots.customRender) result.bodyCell = { ...result.bodyCell, [column.key]: column.slots.customRender }
+      if (column.slots.filterIcon) result.customFilterIcon = { ...result.customFilterIcon, [column.key]: column.slots.filterIcon }
+      if (column.slots.filterDropdown) result.customFilterDropdown = { ...result.customFilterDropdown, [column.key]: column.slots.filterDropdown }
+    }
+  }
+  return result
+}
+
+/**
+ * 处理columns配置
+ * @param state
+ * @param columns
+ */
+function mergeColumns(state: XTableState, columns?: XTableColumnProps[] | null) {
+  if (!columns) return null
+  return columns.map(item => {
+    const it = { ...item }
+    // 因为默认的filter也是自定义的，所以始终配置customFilterDropdown为true
+    it.customFilterDropdown = true
+    // 动态配置filter下，劫持默认的filter配置
+    if (item.key && item.filters instanceof Function) it.filters = state.dynamicFilters[item.key].item
+    return it
+  })
+}
+
+/**
+ * 处理pagination配置
+ * @param state
+ * @param pagination
+ * @param customPageSize
+ */
+function mergePagination(state: XTableState, pagination: TablePaginationConfig | false | undefined, customPageSize: boolean) {
+  // 如果没有配置pagination返回false
+  if (!pagination) return false
+  const result: TablePaginationConfig = {
+    ...pagination,
+    // 配置前进后退按钮样式
+    itemRender: ({ type, originalElement }) => {
+      if (type === 'prev') return h(originalElement, {}, h(Icon, { name: 'ui-table/prev', color: '' }))
+      else if (type === 'next') return h(originalElement, {}, h(Icon, { name: 'ui-table/next', color: '' }))
+      else return originalElement
+    },
+    // 默认显示每页条数切换选择器
+    showSizeChanger: true,
+    // 同步每页条数切换选择器的变化到所有表格(CustomPageSize = false的)
+    onShowSizeChange: (current, size) => {
+      if (!pagination) window.localStorage.setItem('PAGE_SIZE', String(size))
+    },
+  }
+  // 初始化时从系统localstorage获取pagesize
+  if (!customPageSize) result.pageSize = Number(window.localStorage.getItem('PAGE_SIZE')) || 20
+  return result
+}
+
+/**
+ * 设置列表空状态时高度
+ * @handler
+ * @param state
+ * @param propEmptyHeight
+ * @param aTableRef
+ */
+function _handleSetEmptyHeight({ state, propEmptyHeight, aTableRef }: XTableComponentData): void {
   if (aTableRef.value && propEmptyHeight.value === 'auto') {
     state.finalEmptyHeight = `
       calc(100vh - ${(aTableRef.value.$el as HTMLElement).getBoundingClientRect().top - HEADER_HEIGHT - MAIN_CONTAINER_MARGIN}px)
     `
   }
+}
+
+/**
+ * 初始化动态的filters数据
+ * @handler
+ * @param state
+ * @param propColumns
+ */
+function _handleInitDynamicFilters({ state, propColumns }: XTableComponentData): Promise<void> {
+  (propColumns.value || []).forEach(item => {
+    if (item.key && typeof item.filters === 'function' && state.dynamicFilters[item.key]?.pageNum > -1) {
+      let getFilterItems = item.filters(state.dynamicFilters[item.key]?.pageNum)
+      getFilterItems = getFilterItems instanceof Promise ? getFilterItems : Promise.resolve(getFilterItems)
+      getFilterItems.then(res => {
+        if (item.key) state.dynamicFilters[item.key] = {
+          item: res,
+          pageNum: state.dynamicFilters[item.key].pageNum + 1
+        }
+      })
+    }
+  })
 }
 </script>
 
