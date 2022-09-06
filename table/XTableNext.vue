@@ -9,9 +9,10 @@
     }"
     ref="aTableRef"
     :columns="mergedColumnsCpt"
+    :dataSource="dataSource"
     :loading="loading"
     :pagination="mergedPaginationCpt"
-    :style="{ height: dataSource.length ? emptyHeight : 'auto' }"
+    :style="{ height: dataSource.length ? 'auto' : emptyHeight }"
   >
 <!--    兼容antd2.x的写法，因为3.x的column不能再配置slots-->
 <!--    slots.title to headerCell-->
@@ -74,11 +75,11 @@ import {
   XTableState
 } from '@/smart-ui-vue/table/x-table'
 import { uuid } from '@/smart-ui-vue/utils'
-import Icon from '@/components/Icon.vue'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import { TablePaginationConfig } from 'ant-design-vue-3/lib/table/interface'
 import XTableFilterDropdown from '@/smart-ui-vue/table/XTableFilterDropdown.vue'
 import XEmpty from '@/smart-ui-vue/XEmpty.vue'
-import { Key } from 'ant-design-vue-3/lib/_util/type'
+import { useDebounceFn } from '@vueuse/core'
 
 // header高度(px)，用于计算空状态高度
 const HEADER_HEIGHT = 60
@@ -88,6 +89,8 @@ const MAIN_CONTAINER_MARGIN = 20
 const DEFAULT_EMPTY_IMAGE_WIDTH = 80
 // 默认空状态图标高度
 const DEFAULT_EMPTY_IMAGE_HEIGHT = 78.18
+// 触发下拉自动加载的scoll位置比阈值
+const AUTO_LOAD_OFFSET = 0.7
 
 export default defineComponent({
   name: 'XTableNext',
@@ -181,7 +184,7 @@ export default defineComponent({
     })
 
     // 模块名，用于配置sorter图标样式
-    const MODULE_NAME = inject('$moduleName')
+    const MODULE_NAME = inject('$moduleName') as string
 
     // a-table el实例
     const aTableRef = ref<InstanceType<typeof ATable> | null>(null)
@@ -204,6 +207,7 @@ export default defineComponent({
 
     const handleSetEmptyHeight = () => _handleSetEmptyHeight(componentData)
     const handleInitDynamicFilters = () => _handleInitDynamicFilters(componentData)
+    const handlerDynamicFiltersInfinityScroll = () => _handlerDynamicFiltersInfinityScroll(componentData)
 
     onBeforeMount(() => {
       handleInitDynamicFilters()
@@ -212,6 +216,8 @@ export default defineComponent({
     onMounted(() => {
       nextTick(() => {
         handleSetEmptyHeight()
+        chageSortIcon(MODULE_NAME)
+        handlerDynamicFiltersInfinityScroll()
       })
     })
 
@@ -298,6 +304,20 @@ function mergePagination(state: XTableState, pagination: TablePaginationConfig |
 }
 
 /**
+ * 排序图标替换
+ */
+function chageSortIcon(moduleName: string) {
+  document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
+    /* eslint-disable max-len */
+    item.innerHTML = `
+              <svg image="false" class="icon btn-sort-icon" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${moduleName}/ui-table/sort"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-asc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor"><use xlink:href="#${moduleName}/ui-table/sort-asc"></use></svg>
+              <svg image="false" class="icon btn-sort-icon btn-sort-icon-desc" disabled="false" style="color: currentcolor; stroke: none; fill: currentColor""><use xlink:href="#${moduleName}/ui-table/sort-desc"></use></svg>
+            `
+  })
+}
+
+/**
  * 设置列表空状态时高度
  * @handler
  * @param state
@@ -313,22 +333,47 @@ function _handleSetEmptyHeight({ state, propEmptyHeight, aTableRef }: XTableComp
 }
 
 /**
+ * 设置动态filter的选项数据
+ * @param state
+ * @param column
+ */
+function handlerSetDynamicFilters({ state }: XTableComponentData, column: XTableColumnProps) {
+  if (column.key && typeof column.filters === 'function' && state.dynamicFilters[column.key]?.pageNum > -1) {
+    let getFilterItems = column.filters(state.dynamicFilters[column.key]?.pageNum)
+    getFilterItems = getFilterItems instanceof Promise ? getFilterItems : Promise.resolve(getFilterItems)
+    getFilterItems.then(res => {
+      if (column.key) state.dynamicFilters[column.key] = {
+        item: res,
+        pageNum: state.dynamicFilters[column.key].pageNum + 1
+      }
+    })
+  }
+}
+
+/**
  * 初始化动态的filters数据
  * @handler
- * @param state
- * @param propColumns
+ * @param componentData
  */
-function _handleInitDynamicFilters({ state, propColumns }: XTableComponentData): Promise<void> {
-  (propColumns.value || []).forEach(item => {
-    if (item.key && typeof item.filters === 'function' && state.dynamicFilters[item.key]?.pageNum > -1) {
-      let getFilterItems = item.filters(state.dynamicFilters[item.key]?.pageNum)
-      getFilterItems = getFilterItems instanceof Promise ? getFilterItems : Promise.resolve(getFilterItems)
-      getFilterItems.then(res => {
-        if (item.key) state.dynamicFilters[item.key] = {
-          item: res,
-          pageNum: state.dynamicFilters[item.key].pageNum + 1
-        }
-      })
+function _handleInitDynamicFilters(componentData: XTableComponentData): void {
+  const { propColumns } = componentData;
+  (propColumns.value || []).forEach(item => handlerSetDynamicFilters(componentData, item))
+}
+
+/**
+ * 动态filters设置滚动无限加载
+ * @param componentData
+ */
+function _handlerDynamicFiltersInfinityScroll(componentData: XTableComponentData) {
+  const { state, propColumns } = componentData;
+  (propColumns.value ?? []).forEach(item => {
+    if (typeof item.filters === 'function') {
+      const handleMoreData = useDebounceFn((ev: Event) => {
+        const target = ev.target as (HTMLElement | null)
+        if (target && target.scrollTop / (target.scrollHeight - 300) > AUTO_LOAD_OFFSET) handlerSetDynamicFilters(componentData, item)
+      }, 1000)
+      const scrollElement = document.getElementById(`filter-${state.id}-${item.key}`)?.parentElement
+      if (scrollElement) scrollElement.addEventListener('scroll', handleMoreData)
     }
   })
 }
