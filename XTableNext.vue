@@ -267,6 +267,7 @@ function mergeColumns(state: XTableState, columns?: XTableColumnProps[] | null) 
     it.customFilterDropdown = true
     // 动态配置filter下，劫持默认的filter配置
     if (item.key && item.filters instanceof Function) it.filters = state.dynamicFilters[item.key].item
+    delete it.slots
     return it
   })
 }
