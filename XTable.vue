@@ -210,7 +210,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
+    const { conditional, dataSource, pagination, customPageSize, expandedRowKeys: propExpandedRowKeys } = toRefs(props)
     const MODULE_NAME = inject('$moduleName')
     const id = uuid()
     // 动态filters列表
@@ -272,8 +272,8 @@ export default defineComponent({
 
     const localExpandedRowKeysRef = ref([])
     const expandedRowKeysRef = computed(() => {
-      if (expandedRowKeys.value)
-        return expandedRowKeys.value
+      if (propExpandedRowKeys.value)
+        return propExpandedRowKeys.value
       else
         return localExpandedRowKeysRef.value
     })
@@ -332,10 +332,10 @@ export default defineComponent({
       xTableRefWatchStop()
     })
 
-    watch(() => [...(expandedRowKeys.value ?? [])], () => {
+    watch(() => [...(propExpandedRowKeys.value ?? [])], () => {
       const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
-        if ((expandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
+        if ((propExpandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
           row.classList.add('x-ant-table-row-expanded')
         } else {
           row.classList.remove('x-ant-table-row-expanded')
