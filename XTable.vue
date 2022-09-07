@@ -16,12 +16,26 @@
       }
     }"
     :dataSource="dataSource"
-    :expanded-row-keys="expandedRowKeys"
+    :expanded-row-keys="expandedRowKeysRef"
     :loading="loading"
     :pagination="mergedPagination"
     :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeightRef : 'auto' }"
+    :rowKey="rowKey"
     class="smartui-table"
+    @expand="handleExpand"
+    @expandedRowsChange="handleExpandedRowsChange"
   >
+    <template v-if="!slots.includes('expandIcon')" #expandIcon="props">
+      <icon
+        image
+        name="ui-common/select_arrow"
+        color="comment"
+        class="x-table-expand-icon"
+        :class="{ 'x-table-expand-icon-shrink': props.expanded}"
+        :style="{ visibility:  props.record?.children || slots.includes('expandedRowRender') ? 'unset' : 'hidden' }"
+        @click="handleExpandIconClick(!props.expanded, props.record)"
+      />
+    </template>
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
@@ -97,7 +111,7 @@ export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
   components: { XButton, XEmpty, Icon, ATable },
   name: 'XTable',
-  emits: ['filtered', 'expand'],
+  emits: ['filtered', 'expand', 'expandedRowsChange'],
   props: {
     columns: {
       type: [Array, null],
@@ -177,11 +191,22 @@ export default defineComponent({
       default: undefined,
     },
     /**
+     * 手风琴
+     */
+    accordion: Boolean,
+    /**
      * 是否为可编辑表（影响样式）
      */
     editTable: {
       type: Boolean,
       default: false
+    },
+    /**
+     * 若 record 无 key，
+     * 则必须指定 row key，否则会影响功能
+     */
+    rowKey: {
+      type: [String, Number]
     }
   },
   setup(props, context) {
@@ -209,23 +234,7 @@ export default defineComponent({
           it.slots.filterIcon = `filterIcon_${item.key}`
           it.slots.filterDropdown = item.slots?.filterDropdown || `filterDropdown_${item.key}`
         }
-        // 处理divider
-        if (props.divider || item.divider) {
-          let render = null
-          if ((it.slots && it.slots.customRender) || it.customRender) {
-            render = it.slots.customRender || it.customRender
-          }
-          return {
-            ...it,
-            slots: { ...it.slots, customRender: undefined },
-            customRender: (args) => {
-              return {
-                children: h('div', { className: 'td-with-divider' }, (render && context.slots[render]) ? context.slots[render](args) : args.text),
-                props: {},
-              }
-            },
-          }
-        } else return it
+        return it
       })
 
       return result
@@ -260,6 +269,32 @@ export default defineComponent({
     })
 
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
+
+    const localExpandedRowKeysRef = ref([])
+    const expandedRowKeysRef = computed(() => {
+      if (expandedRowKeys.value)
+        return expandedRowKeys.value
+      else
+        return localExpandedRowKeysRef.value
+    })
+    const handleExpand = (expanded, record) => {
+      context.emit('expand', expanded, record)
+    }
+    const handleExpandedRowsChange = (expandedRowKeys) => {
+      context.emit('expandedRowsChange', expandedRowKeys)
+    }
+    const handleExpandIconClick = (expanded, record) => {
+      if (expanded) {
+        if (props.accordion) localExpandedRowKeysRef.value = [record.key ?? record[props.rowKey]]
+        else localExpandedRowKeysRef.value.push(record.key ?? record[props.rowKey])
+      } else {
+        localExpandedRowKeysRef.value.splice(
+          localExpandedRowKeysRef.value.findIndex(
+            (item => (item.key ?? item[props.rowKey]) === (record.key ?? record[props.rowKey])), 1))
+      }
+      context.emit('expand', expanded, record)
+      context.emit('expandedRowsChange', localExpandedRowKeysRef.value)
+    }
 
     const handleFilterItemClick = (item, scope, column) => {
       if (item.value === props.nullFilterValue) {
@@ -320,8 +355,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      console.log('table on mounted')
-
       nextTick(() => {
         // 排序图标替换
         document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
@@ -356,6 +389,9 @@ export default defineComponent({
       formattedColumns,
       columnsHasFilter,
       handleFilterItemClick,
+      handleExpand,
+      handleExpandedRowsChange,
+      handleExpandIconClick,
       getEmptyImage,
       isEmpty,
       isConditionalEmpty,
@@ -365,6 +401,7 @@ export default defineComponent({
       filteredColumnKeys,
       xTableRef,
       emptyHeightRef,
+      expandedRowKeysRef,
     }
   },
 })

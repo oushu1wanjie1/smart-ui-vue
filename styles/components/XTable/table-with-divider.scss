@@ -1,31 +1,29 @@
 @mixin td-with-divider {
-  .td-with-divider {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-  }
-  .td-with-divider:after {
+  position: relative;
+  padding-right: 10px;
+
+  &:after {
     content: '';
     position: absolute;
     width: 1px;
-    height: 100%;
     background-color: $color-line-bold;
-    top: 0px;
+    top: 6px;
+    bottom: 6px;
     right: 0;
   }
-  &:last-of-type .td-with-divider:after {
+  &:last-of-type:after {
     display: none;
   }
 }
 
 @mixin th-with-divider {
-  content: '';
-  height: calc(100% - 10px);
-  width: 1px;
-  background: $color-line-bold;
-  position: absolute;
-  top: 5px;
-  right: 0;
+  &:before {
+    content: '';
+    height: calc(100% - 10px);
+    width: 1px;
+    background: $color-line-bold;
+    position: absolute;
+    top: 5px;
+    right: 0;
+  }
 }
