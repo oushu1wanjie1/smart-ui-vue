@@ -101,12 +101,13 @@
 
   .#{$ant-prefix}-select-selection-placeholder {
     color: $color-text-comment;
+    @include font-small();
   }
 
   &.#{$ant-prefix}-select-single.#{$ant-prefix}-select-show-arrow .#{$ant-prefix}-select-selection-item,
   &.#{$ant-prefix}-select-single.#{$ant-prefix}-select-show-arrow .#{$ant-prefix}-select-selection-placeholder {
     padding-right: 10px;
-    @include font-normal();
+    @include font-small();
   }
 
   // 多选
