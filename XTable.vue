@@ -25,7 +25,10 @@
     @expand="handleExpand"
     @expandedRowsChange="handleExpandedRowsChange"
   >
-    <template v-if="!slots.includes('expandIcon')" #expandIcon="props">
+    <template
+      v-if="!slots.includes('expandIcon') && (slots.includes('expandedRowRender') || isTreeDataRef)"
+      #expandIcon="props"
+    >
       <icon
         image
         name="ui-common/select_arrow"
@@ -322,6 +325,9 @@ export default defineComponent({
 
     const xTableRef = ref(null)
     const emptyHeightRef = ref(props.emptyHeight)
+
+    const isTreeDataRef = computed(() => props.dataSource.some(item => Array.isArray(item.children)))
+
     /**
      * 仅在第一次加载完成后执行
      * @type {WatchStopHandle}
@@ -385,6 +391,7 @@ export default defineComponent({
       })
     })
     return {
+      isTreeDataRef,
       slots: computed(() => Object.keys(context.slots)),
       formattedColumns,
       columnsHasFilter,
