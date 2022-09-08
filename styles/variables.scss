@@ -1,5 +1,6 @@
 // ant 前缀
 $ant-prefix: 'antv';
+$ant: $ant-prefix;
 
 //  -----颜色-----
 // 主色调
@@ -18,8 +19,9 @@ $color-assist-purple-light: rgba(163, 127, 255, 0.3);
 
 // 文字颜色
 $color-text: $color-primary-black; // 正文
-$color-text-sub: #85888c;
-$color-text-comment: #85888c; // 注释
+$color-text-gray: #85888C; // 灰色
+$color-text-sub: $color-text-gray;
+$color-text-comment: $color-text-gray; // 注释
 
 // 背景颜色
 $color-bg: linear-gradient(0deg, #F1F1F1 57.89%, #FFFFFF 92.8%, #FFFFFF 95.08%);

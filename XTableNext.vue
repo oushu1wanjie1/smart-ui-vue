@@ -1,7 +1,7 @@
 <template>
   <a-table
     :class="{
-      'smartui-table': true,
+      'smartui-table-next': true,
       'smartui-table-border': bordered,
       [`x-table-${id}`]: true,
       'smartui-table-edit': editTable,
@@ -13,18 +13,21 @@
     :loading="loading"
     :pagination="mergedPaginationCpt"
     :style="{ height: dataSource.length ? 'auto' : emptyHeight }"
+    :showSorterTooltip="false"
   >
 <!--    兼容antd2.x的写法，因为3.x的column不能再配置slots-->
 <!--    slots.title to headerCell-->
-    <template v-slot:headerCell="scope">
-      <slot v-if="columnsWithSlotsCpt.headerCell[scope.column.key]" :name="columnsWithSlotsCpt.headerCell[scope.column.key]" v-bind="scope" />
+    <template #headerCell="scope">
+<!--      在有filter的情况下header需要和filter放置在一起，点击header也可以弹出filter，所以用filter上的文字代替本来的header-->
+      <span v-if="scope.column.filters">{{ '' }}</span>
+      <slot v-else-if="columnsWithSlotsCpt.headerCell[scope.column.key]" :name="columnsWithSlotsCpt.headerCell[scope.column.key]" v-bind="scope" />
     </template>
 <!--    slots.customRender to bodyCell-->
-    <template v-slot:bodyCell="scope">
+    <template #bodyCell="scope">
       <slot v-if="columnsWithSlotsCpt.bodyCell[scope.column.key]" :name="columnsWithSlotsCpt.bodyCell[scope.column.key]" v-bind="scope" />
     </template>
 <!--    slot.filterDropdown to customFilterDropdown-->
-    <template v-slot:customFilterDropdown="scope">
+    <template #customFilterDropdown="scope">
       <!--      用户自定义的filter-->
       <slot
         v-if="columnsWithSlotsCpt.customFilterDropdown[scope.column.key]"
@@ -35,8 +38,11 @@
       <x-table-filter-dropdown v-else :scope="scope" />
     </template>
 <!--    slot.filterIcon 使用固定的icon-->
-    <template v-slot:customFilterIcon>
-      <icon class="btn-filter-icon" color="currentColor" name="ui-table/filter"/>
+    <template #customFilterIcon="{ column }">
+      <template v-if="column.filters">
+        <span class="smartui-filter-pseudo-title">{{ column.title }}</span>
+        <icon class="btn-filter-icon" color="currentColor" name="ui-table/filter"/>
+      </template>
     </template>
 <!--    空状态-->
     <template #emptyText>
@@ -264,7 +270,7 @@ function mergeColumns(state: XTableState, columns?: XTableColumnProps[] | null) 
   return columns.map(item => {
     const it = { ...item }
     // 因为默认的filter也是自定义的，所以始终配置customFilterDropdown为true
-    it.customFilterDropdown = true
+    if (item.filters) it.customFilterDropdown = true
     // 动态配置filter下，劫持默认的filter配置
     if (item.key && item.filters instanceof Function) it.filters = state.dynamicFilters[item.key].item
     delete it.slots
@@ -377,6 +383,6 @@ function _handlerDynamicFiltersInfinityScroll(componentData: XTableComponentData
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import "./styles/components/XTableNext/index";
 </style>

@@ -1,0 +1,15 @@
+@import '../../variables';
+@import '../../mixins';
+@import './head';
+@import './bordered-table';
+
+.smartui-table-next:not(.raw) {
+  // default table style
+  &.#{$ant-prefix}-table-wrapper {
+    // head
+    @include head
+  }
+
+  // 带边框的table
+  @include bordered-table;
+}

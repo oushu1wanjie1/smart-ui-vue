@@ -1,0 +1,49 @@
+// 表格头部样式
+@import '../../variables';
+@import '../../mixins';
+@import './sort';
+
+@mixin head {
+  .#{$ant}-table-container table > thead {
+    // th 基础样式
+    tr > th {
+      color: $color-text-gray;
+      font-size: $font-size-small;
+      font-weight: bold;
+      padding: 11px 15px;
+      background: white;
+      // 因为column hover时需要控制border的颜色，所以不再由head提供第一行的上border，改为第一行自己提供
+      border-bottom: none;
+
+      // 去掉默认的th上的divider(在divider table模式下会加回)
+      &:not(:last-child):not(.#{$ant}-table-selection-column):not(.#{$ant}-table-row-expand-icon-cell):not([colspan])::before {
+        display: none;
+      }
+
+      // filter icon配置
+      .#{$ant}-table-filter-column {
+        // 隐藏原来的head title
+        .#{$ant}-table-column-title {
+          display: none;
+        }
+        // 调整filter icon位置和文字颜色，使得看上去和默认的header一致
+        .#{$ant}-table-filter-trigger {
+          margin-left: 0;
+          padding-left: 0;
+          color: $color-text-gray;
+          font-size: $font-size-small;
+          font-weight: bold;
+
+          // 调整filter icon hover 效果
+          &:hover {
+            background: transparent;
+            color: $color-primary-blue;
+          }
+        }
+      }
+
+      // sorter icon配置
+      @include sort
+    }
+  }
+}

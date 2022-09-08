@@ -1,0 +1,78 @@
+@import '../../variables';
+@import '../../mixins';
+
+@mixin sort {
+  &.#{$ant-prefix}-table-column-has-sorters {
+    .#{$ant-prefix}-table-column-sorters {
+      // 去掉title的flex1，去掉space-between，使得sort图标能够挨着title
+      justify-content: flex-start;
+      .#{$ant}-table-column-title {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: auto;
+      }
+    }
+    // sorter 文本颜色，背景色去除
+    .#{$ant-prefix}-table-column-sorters:hover {
+      color: $color-primary-blue;
+      &:before {
+        background: transparent;
+      }
+    }
+    // sorter 没有筛选时状态
+    .#{$ant-prefix}-table-column-sorter {
+      .#{$ant-prefix}-table-column-sorter-inner {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        color: $color-text-comment;
+        .btn-sort-icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: $color-text-comment;
+        }
+        .#{$ant-prefix}-table-column-sorter-up {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          .btn-sort-icon-asc { display: none; }
+          .btn-sort-icon-desc { display: none; }
+        }
+        .#{$ant-prefix}-table-column-sorter-down {
+          position: absolute;
+          top: 4px;
+          left: 0;
+
+          .btn-sort-icon { display: none; }
+          .btn-sort-icon-asc { display: none; }
+          .btn-sort-icon-desc { display: none; }
+        }
+      }
+    }
+  }
+
+  // 处于排序状态
+  &.#{$ant-prefix}-table-column-has-sorters.#{$ant-prefix}-table-column-sort {
+    .#{$ant-prefix}-table-column-title {
+      color: $color-primary-blue;
+    }
+    .#{$ant-prefix}-table-column-sorter {
+      .#{$ant-prefix}-table-column-sorter-inner {
+        .#{$ant-prefix}-table-column-sorter-up {
+          .btn-sort-icon { display: none; }
+          &.active {
+            .btn-sort-icon-asc { display: inline; }
+          }
+        }
+        .#{$ant-prefix}-table-column-sorter-down {
+          &.active {
+            .btn-sort-icon-desc { display: inline; }
+          }
+        }
+      }
+    }
+  }
+
+}
