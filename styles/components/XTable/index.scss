@@ -25,7 +25,7 @@
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding: 3px 0 11px 15px;
+      padding: 8px 7px;
       @include font-small;
       white-space: nowrap;
       border-bottom: 1px solid $color-line-bold;
@@ -40,7 +40,8 @@
 
     // thead with divider
     .#{$ant-prefix}-table-thead > tr.thead-tr-with-divider {
-      th:before {
+      th {
+        padding: 8px 14px;
         @include th-with-divider
       }
 
@@ -56,8 +57,7 @@
 
     // 表格td
     .#{$ant-prefix}-table-tbody > tr > td {
-      padding: 6px 0 6px 15px;
-      height: 39px;
+      padding: 8px 7px;
       @include font-normal;
       border-bottom: 1px solid $color-line-bold;
 
@@ -74,15 +74,16 @@
 
       .#{$ant-prefix}-table-tbody > tr > td {
         // td with divider配置
+        padding: 8px 14px;
         @include td-with-divider;
       }
 
       // 比较粗糙：当内容是选择框或者输入框的时候，认为其是可编辑表格
       // 可能会影响很多
-      .#{$ant-prefix}-table-body > tr > td {
-        > .#{$ant-prefix}-select,
-        > .#{$ant-prefix}-input,
-        > .#{$ant-prefix}-form .#{$ant-prefix}-input {
+      .#{$ant-prefix}-table-tbody > tr > td {
+        .#{$ant-prefix}-select:first-of-type,
+        .#{$ant-prefix}-input:first-of-type,
+        .#{$ant-prefix}-form:first-of-type .#{$ant-prefix}-input {
           margin-left: -10px !important;
         }
       }
