@@ -3,8 +3,8 @@
     <template #backIcon>
       <x-button icon-name="ui-page-header/back" type="text" />
     </template>
-    <template v-for="item in $slots" v-slot:[item]>
-      <slot :name="item"></slot>
+    <template v-for="(item, name) in $slots" v-slot:[name]>
+      <slot :name="name"></slot>
     </template>
   </a-page-header>
 </template>
