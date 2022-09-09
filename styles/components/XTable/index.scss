@@ -92,7 +92,7 @@
 
     // 表格hover效果
     .#{$ant-prefix}-table-tbody > tr:hover > td {
-      background-color: rgba(213, 216, 219, 0.5);
+      background-color: rgba(213, 216, 219, 0.3);
     }
 
     // 移除表格最后一行的底边border
@@ -149,7 +149,7 @@
 
   .#{$ant-prefix}-table-tbody {
     > :not(.#{$ant-prefix}-table-row-level-0) {
-      background-color: rgba(213, 216, 219, 0.3);
+      background-color: $color-line-light;
     }
   }
 }
