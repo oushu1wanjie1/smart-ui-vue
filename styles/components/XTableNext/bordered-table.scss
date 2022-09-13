@@ -1,0 +1,6 @@
+@mixin bordered-table {
+  &.smartui-table-border {
+    border: 1px solid $color-line-bold;
+    border-radius: 4px;
+  }
+}

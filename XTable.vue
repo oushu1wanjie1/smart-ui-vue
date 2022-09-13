@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import Icon from './helper/Icon.vue'
+import Icon from '@/smart-ui-vue/helper/Icon.vue'
 import {
   computed,
   defineComponent,

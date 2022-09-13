@@ -102,9 +102,9 @@
       }
       &:not(.smartui-input-no-underline).#{$ant-prefix}-input-affix-wrapper {
         @include input-underline($color-danger);
-        &-focused, &:hover {
-          @include input-underline($color-danger);
-        }
+        //&-focused, &:hover {
+        //  @include input-underline($color-danger);
+        //}
       }
     }
     & > .#{$ant-prefix}-form-item-control > .#{$ant-prefix}-form-item-control-input > .#{$ant-prefix}-form-item-control-input-content > .#{$ant-prefix}-input:not(.raw) {
