@@ -1,0 +1,21 @@
+@import '../variables';
+@import '../mixins';
+
+.smartui-page-header:not(.raw) {
+  &.#{$ant-prefix}-page-header {
+    // 去除默认padding
+    padding: 0;
+
+    // back按钮
+    .#{$ant-prefix}-page-header-back {
+      // 去除右边距
+      margin-right: 0;
+    }
+
+    // 标题文字样式
+    .#{$ant-prefix}-page-header-heading-title {
+      font-size: $font-size-big;
+      font-weight: normal;
+    }
+  }
+}

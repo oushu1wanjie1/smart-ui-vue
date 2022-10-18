@@ -25,7 +25,7 @@
       background-color: white;
       position: relative;
       color: $color-text-comment;
-      padding: 3px 0 11px 15px;
+      padding: 8px 7px;
       @include font-small;
       white-space: nowrap;
       border-bottom: 1px solid $color-line-bold;
@@ -37,11 +37,14 @@
       @include sort;
 
     }
+
     // thead with divider
     .#{$ant-prefix}-table-thead > tr.thead-tr-with-divider {
-      th:before {
+      th {
+        padding: 8px 14px;
         @include th-with-divider
       }
+
       th:last-of-type:before, th.#{$ant-prefix}-table-selection-column:before {
         display: none;
       }
@@ -51,10 +54,10 @@
     .#{$ant-prefix}-table-tbody > tr {
       position: relative;
     }
+
     // 表格td
     .#{$ant-prefix}-table-tbody > tr > td {
-      padding: 6px 0 6px 15px;
-      height: 39px;
+      padding: 8px 7px;
       @include font-normal;
       border-bottom: 1px solid $color-line-bold;
 
@@ -62,29 +65,56 @@
       .#{$ant-prefix}-btn-link {
         padding: 0;
       }
-      // td with divider配置
-      @include td-with-divider;
     }
+
+    &.smartui-table-divider {
+      .#{$ant-prefix}-table-tbody > tr > th {
+        @include th-with-divider;
+      }
+
+      .#{$ant-prefix}-table-tbody > tr > td {
+        // td with divider配置
+        padding: 8px 14px;
+        @include td-with-divider;
+      }
+
+      // 比较粗糙：当内容是选择框或者输入框的时候，认为其是可编辑表格
+      // 可能会影响很多
+      .#{$ant-prefix}-table-tbody > tr > td {
+        .#{$ant-prefix}-select:first-of-type,
+        .#{$ant-prefix}-input:first-of-type,
+        .#{$ant-prefix}-form:first-of-type .#{$ant-prefix}-input {
+          margin-left: -10px !important;
+        }
+      }
+    }
+
+
     // 表格hover效果
     .#{$ant-prefix}-table-tbody > tr:hover > td {
-      background-color: $color-line-light;
+      background-color: rgba(213, 216, 219, 0.3);
     }
+
     // 移除表格最后一行的底边border
     .#{$ant-prefix}-table-tbody > tr:last-of-type > td {
       border-bottom-color: transparent;
     }
+
     // fixed table divider
     .#{$ant-prefix}-table.#{$ant-prefix}-table-layout-fixed {
       @include fixed-table-divider
     }
+
     // 选择框与x-checkbox样式一致
     .#{$ant-prefix}-table-selection, .#{$ant-prefix}-table-selection-column {
       @include checkbox-style;
     }
+
     // footer
     .#{$ant-prefix}-table-footer {
       background-color: white;
     }
+
     // 分页
     @include pagination;
   }
@@ -98,20 +128,30 @@
     }
   }
 
-  // 比较粗糙：当内容是选择框或者输入框的时候，认为其是可编辑表格
-  // 可能会影响很多
-  .#{$ant-prefix}-table-body {
-    .td-with-divider {
-      > .#{$ant-prefix}-select,
-      > .#{$ant-prefix}-input,
-      > .#{$ant-prefix}-form .#{$ant-prefix}-input{
-        margin-left: -10px !important;
-      }
+
+  // 可编辑表格的配置移动到editable.scss中
+  @include table-editable;
+
+  .x-table-expand-icon {
+    cursor: pointer;
+    transform: rotate(-90deg);
+  }
+
+  .#{$ant-prefix}-table-row-expand-icon-cell {
+    .x-table-expand-icon {
+      margin-right: 0;
     }
   }
-  // 可编辑表格的配置移动到editable.scss中
-  @include table-editable
 
+  .x-table-expand-icon-shrink {
+    transform: rotate(0deg);
+  }
+
+  .#{$ant-prefix}-table-tbody {
+    > :not(.#{$ant-prefix}-table-row-level-0) {
+      background-color: $color-line-light;
+    }
+  }
 }
 
 .#{$ant-prefix}-table-thead > tr > th.#{$ant-prefix}-table-column-has-actions.#{$ant-prefix}-table-column-has-filters {
@@ -125,6 +165,7 @@
       // 表格td
       .#{$ant-prefix}-table-tbody > tr > td {
         @include font-small;
+
         .#{$ant-prefix}-btn-link {
           @include font-small;
         }

@@ -16,12 +16,29 @@
       }
     }"
     :dataSource="dataSource"
-    :expanded-row-keys="expandedRowKeys"
+    :expanded-row-keys="expandedRowKeysRef"
     :loading="loading"
     :pagination="mergedPagination"
     :style="{ height: (isEmpty || isConditionalEmpty) ? emptyHeightRef : 'auto' }"
+    :rowKey="rowKey"
     class="smartui-table"
+    @expand="handleExpand"
+    @expandedRowsChange="handleExpandedRowsChange"
   >
+    <template
+      v-if="!slots.includes('expandIcon') && (slots.includes('expandedRowRender') || isTreeDataRef)"
+      #expandIcon="props"
+    >
+      <icon
+        image
+        name="ui-common/select_arrow"
+        color="comment"
+        class="x-table-expand-icon"
+        :class="{ 'x-table-expand-icon-shrink': props.expanded}"
+        :style="{ visibility:  props.record?.children || slots.includes('expandedRowRender') ? 'unset' : 'hidden' }"
+        @click="handleExpandIconClick(!props.expanded, props.record)"
+      />
+    </template>
     <template v-for="item in slots" :key="item" v-slot:[item]="scope">
       <slot :name="item" v-bind="scope"></slot>
     </template>
@@ -96,8 +113,8 @@ const AUTO_LOAD_OFFSET = 0.7
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components
   components: { XButton, XEmpty, Icon, ATable },
-  name: 'XTableCurrent',
-  emits: ['filtered', 'expand'],
+  name: 'XTable',
+  emits: ['filtered', 'expand', 'expandedRowsChange'],
   props: {
     columns: {
       type: [Array, null],
@@ -177,15 +194,26 @@ export default defineComponent({
       default: undefined,
     },
     /**
+     * 手风琴
+     */
+    accordion: Boolean,
+    /**
      * 是否为可编辑表（影响样式）
      */
     editTable: {
       type: Boolean,
       default: false
+    },
+    /**
+     * 若 record 无 key，
+     * 则必须指定 row key，否则会影响功能
+     */
+    rowKey: {
+      type: [String, Number]
     }
   },
   setup(props, context) {
-    const { conditional, dataSource, pagination, customPageSize, expandedRowKeys } = toRefs(props)
+    const { conditional, dataSource, pagination, customPageSize, expandedRowKeys: propExpandedRowKeys } = toRefs(props)
     const MODULE_NAME = inject('$moduleName')
     const id = uuid()
     // 动态filters列表
@@ -209,23 +237,7 @@ export default defineComponent({
           it.slots.filterIcon = `filterIcon_${item.key}`
           it.slots.filterDropdown = item.slots?.filterDropdown || `filterDropdown_${item.key}`
         }
-        // 处理divider
-        if (props.divider || item.divider) {
-          let render = null
-          if ((it.slots && it.slots.customRender) || it.customRender) {
-            render = it.slots.customRender || it.customRender
-          }
-          return {
-            ...it,
-            slots: { ...it.slots, customRender: undefined },
-            customRender: (args) => {
-              return {
-                children: h('div', { className: 'td-with-divider' }, (render && context.slots[render]) ? context.slots[render](args) : args.text),
-                props: {},
-              }
-            },
-          }
-        } else return it
+        return it
       })
 
       return result
@@ -261,6 +273,32 @@ export default defineComponent({
 
     const getEmptyImage = (name) => name ? h(Icon, { name }) : undefined
 
+    const localExpandedRowKeysRef = ref([])
+    const expandedRowKeysRef = computed(() => {
+      if (propExpandedRowKeys.value)
+        return propExpandedRowKeys.value
+      else
+        return localExpandedRowKeysRef.value
+    })
+    const handleExpand = (expanded, record) => {
+      context.emit('expand', expanded, record)
+    }
+    const handleExpandedRowsChange = (expandedRowKeys) => {
+      context.emit('expandedRowsChange', expandedRowKeys)
+    }
+    const handleExpandIconClick = (expanded, record) => {
+      if (expanded) {
+        if (props.accordion) localExpandedRowKeysRef.value = [record.key ?? record[props.rowKey]]
+        else localExpandedRowKeysRef.value.push(record.key ?? record[props.rowKey])
+      } else {
+        localExpandedRowKeysRef.value.splice(
+          localExpandedRowKeysRef.value.findIndex(
+            (item => (item.key ?? item[props.rowKey]) === (record.key ?? record[props.rowKey])), 1))
+      }
+      context.emit('expand', expanded, record)
+      context.emit('expandedRowsChange', localExpandedRowKeysRef.value)
+    }
+
     const handleFilterItemClick = (item, scope, column) => {
       if (item.value === props.nullFilterValue) {
         // 清除筛选
@@ -287,6 +325,9 @@ export default defineComponent({
 
     const xTableRef = ref(null)
     const emptyHeightRef = ref(props.emptyHeight)
+
+    const isTreeDataRef = computed(() => props.dataSource.some(item => Array.isArray(item.children)))
+
     /**
      * 仅在第一次加载完成后执行
      * @type {WatchStopHandle}
@@ -297,10 +338,10 @@ export default defineComponent({
       xTableRefWatchStop()
     })
 
-    watch(() => [...(expandedRowKeys.value ?? [])], () => {
+    watch(() => [...(propExpandedRowKeys.value ?? [])], () => {
       const rowList = document.querySelectorAll(`.x-table-${id} tbody tr.antv-table-row`)
       rowList.forEach(row => {
-        if ((expandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
+        if ((propExpandedRowKeys.value ?? []).includes(row.getAttribute('data-row-key'))) {
           row.classList.add('x-ant-table-row-expanded')
         } else {
           row.classList.remove('x-ant-table-row-expanded')
@@ -320,8 +361,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      console.log('table on mounted')
-
       nextTick(() => {
         // 排序图标替换
         document.querySelectorAll('.antv-table-column-sorter-inner .anticon').forEach(item => {
@@ -352,10 +391,14 @@ export default defineComponent({
       })
     })
     return {
+      isTreeDataRef,
       slots: computed(() => Object.keys(context.slots)),
       formattedColumns,
       columnsHasFilter,
       handleFilterItemClick,
+      handleExpand,
+      handleExpandedRowsChange,
+      handleExpandIconClick,
       getEmptyImage,
       isEmpty,
       isConditionalEmpty,
@@ -365,6 +408,7 @@ export default defineComponent({
       filteredColumnKeys,
       xTableRef,
       emptyHeightRef,
+      expandedRowKeysRef,
     }
   },
 })

@@ -5,21 +5,15 @@
     <div>
       <slot name="extra"/>
       <x-button
-        v-if="id && name"
+        v-if="id"
         class="user-name"
         type="link"
         @click="$router.push(`/main/UserCenter/user/${id}`)"
-        :title="name"
+        :title="remark || name || id"
       >
-        {{ name }}
+        {{ remark || name || id }}
       </x-button>
-      <span v-else-if="id" :title="defaultName">{{ defaultName }}</span>
-      <span v-else title="已注销">已注销</span>
     </div>
-    <!--     remark       -->
-    <span v-if="id && remark" class="name-remark" :title="remark">{{ remark }}</span>
-    <span v-else-if="id" class="logoff-remark" :title="defaultRemark">{{ defaultRemark }}</span>
-    <span v-else class="logoff-remark" title="已注销">已注销</span>
   </div>
 </template>
 
