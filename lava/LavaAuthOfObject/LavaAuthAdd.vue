@@ -152,7 +152,7 @@ export default defineComponent({
         actions.value = options
       }).catch(err => {
         actions.value = []
-        message.error(`获取权限列表失败: ${err}`)
+        // message.error(`获取权限列表失败: ${err}`)
       }).finally(() => {
         actionsSelected.value = []
       })
@@ -195,7 +195,7 @@ export default defineComponent({
         message.success('新建成功')
         handleClose(true)
       }).catch(err => {
-        message.error(`新建失败: ${err}`)
+        // message.error(`新建失败: ${err}`)
       })
     }
 

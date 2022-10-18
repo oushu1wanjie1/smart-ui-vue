@@ -95,7 +95,7 @@ export default defineComponent({
       strategy.getAuthSourceRoles(auth.id, actionFlag).then(data => {
         action.roles.push(...data)
       }).catch(err => {
-        message.error(`获取继承角色失败: ${err}`)
+        // message.error(`获取继承角色失败: ${err}`)
       })
     }
 

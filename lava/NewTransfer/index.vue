@@ -300,8 +300,6 @@ export default defineComponent({
           leftDataList.push(...resultData)
           handleNewData(resultData)
           localLoading.value = false
-        } else {
-          message.error(`获取数据失败：${result.meta.status_code}`)
         }
       } catch (e) {
         message.error(`获取数据失败：${e}`)

@@ -273,14 +273,14 @@ export default defineComponent({
       editVisible.value = true
     }
 
-    const handleAddOrEditDrawerClose = (userOrRole: string, success: boolean) => {
+    const handleAddOrEditDrawerClose = (userRole: string, success: boolean) => {
       addVisible.value = false
       editVisible.value = false
       // 如果是因 "新建" or "编辑" 成功触发的关闭抽屉，那么应该刷新列表
-      if (success && userOrRole === USER) {
+      if (success && userRole === USER) {
         handleGetAuthList(USER)
       }
-      if (success && userOrRole === ROLE) {
+      if (success && userRole === ROLE) {
         handleGetAuthList(ROLE)
       }
     }
@@ -295,8 +295,6 @@ export default defineComponent({
             type: USER,
             remark: item.name_remark
           })) : []
-        } else {
-          throw new Error(meta.message || meta.status_code)
         }
       }).catch(err => {
         message.error(`获取用户列表失败: ${err}`)
@@ -313,8 +311,6 @@ export default defineComponent({
             type: ROLE,
             remark: item.description
           })) : []
-        } else {
-          throw new Error(meta.message || meta.status_code)
         }
       }).catch(err => {
         message.error(`获取角色列表失败: ${err}`)
@@ -340,7 +336,7 @@ export default defineComponent({
       roleList.value = []
     }
 
-    const handleGetAuthList = (userOrRole = USER) => {
+    const handleGetAuthList = (userRole = USER) => {
       if (props.rsType === RS_COMMON && typeof props.apiGetAuthList !== 'function') {
         return
       }
@@ -352,8 +348,8 @@ export default defineComponent({
       }
 
       loading.value = true
-      strategy.getAuthList(userOrRole, searchVal.value).then(data => {
-        if (userOrRole === USER) {
+      strategy.getAuthList(userRole, searchVal.value).then(data => {
+        if (userRole === USER) {
           userAuthList.value = data
         } else {
           roleAuthList.value = data

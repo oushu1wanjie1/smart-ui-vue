@@ -67,8 +67,6 @@ export async function _handleLogin(state: State) {
   if (res.meta.success) {
     message.success('登录成功')
     _handleToggleLoginModal(state)
-  } else {
-    message.error('登录失败: e')
   }
 }
 </script>

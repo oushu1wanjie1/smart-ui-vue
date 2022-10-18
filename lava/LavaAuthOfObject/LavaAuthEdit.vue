@@ -119,7 +119,7 @@ export default defineComponent({
         actionsSelected.value = value
         actionsSelectedDefault.value = [ ...value ] // 新建一个数组，避免指向同一个引用
       }).catch(err => {
-        message.error(`获取权限列表失败: ${err}`)
+        // message.error(`获取权限列表失败: ${err}`)
       })
     }
 
@@ -129,7 +129,7 @@ export default defineComponent({
       strategy.getAuthSourceRoles(props.id, actionFlag).then(data => {
         action.roles.push(...data)
       }).catch(err => {
-        message.error(`获取继承角色失败: ${err}`)
+        // message.error(`获取继承角色失败: ${err}`)
       })
     }
 
@@ -143,7 +143,7 @@ export default defineComponent({
         message.success('编辑成功')
         handleClose(true)
       }).catch(err => {
-        message.error(`编辑失败: ${err}`)
+        // message.error(`编辑失败: ${err}`)
       })
     }
 
